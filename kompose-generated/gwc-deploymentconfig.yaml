@@ -1,0 +1,56 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    io.kompose.service: gwc
+  name: gwc
+spec:
+  replicas: 1
+  selector:
+    io.kompose.service: gwc
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.network/geoserver-cloud-gs-cloud-network: "true"
+        io.kompose.service: gwc
+    spec:
+      containers:
+        - env:
+            - name: GEOSERVER_DATA_DIR
+              value: /opt/app/data_directory
+            - name: GEOWEBCACHE_CACHE_DIR
+              value: /data/geowebcache
+            - name: SPRING_PROFILES_ACTIVE
+              value: datadir
+          image: ' '
+          name: gwc
+          resources:
+            limits:
+              cpu: "2"
+              memory: "1073741824"
+          volumeMounts:
+            - mountPath: /opt/app/data_directory
+              name: shared-data-directory
+            - mountPath: /data/geowebcache
+              name: geowebcache-data
+      restartPolicy: Always
+      volumes:
+        - name: shared-data-directory
+          persistentVolumeClaim:
+            claimName: shared-data-directory
+        - name: geowebcache-data
+          persistentVolumeClaim:
+            claimName: geowebcache-data
+  test: false
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - gwc
+        from:
+          kind: ImageStreamTag
+          name: gwc:1.5.0
+      type: ImageChange

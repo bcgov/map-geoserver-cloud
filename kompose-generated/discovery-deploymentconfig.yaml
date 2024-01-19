@@ -1,0 +1,39 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    io.kompose.service: discovery
+  name: discovery
+spec:
+  replicas: 1
+  selector:
+    io.kompose.service: discovery
+  template:
+    metadata:
+      labels:
+        io.kompose.network/geoserver-cloud-gs-cloud-network: "true"
+        io.kompose.service: discovery
+    spec:
+      containers:
+        - image: ' '
+          name: discovery
+          ports:
+            - containerPort: 8761
+              hostPort: 8761
+              protocol: TCP
+          resources:
+            limits:
+              cpu: "2"
+              memory: "536870912"
+      restartPolicy: Always
+  test: false
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - discovery
+        from:
+          kind: ImageStreamTag
+          name: discovery:1.5.0
+      type: ImageChange

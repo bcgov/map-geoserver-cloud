@@ -1,0 +1,16 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    io.kompose.service: rabbitmq
+  name: rabbitmq
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+    - from:
+        kind: DockerImage
+        name: rabbitmq:3.9-management
+      name: 3.9-management
+      referencePolicy:
+        type: ""
