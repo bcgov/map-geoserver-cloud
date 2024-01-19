@@ -1,0 +1,48 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    io.kompose.service: config
+  name: config
+spec:
+  replicas: 1
+  selector:
+    io.kompose.service: config
+  template:
+    metadata:
+      labels:
+        io.kompose.network/geoserver-cloud-gs-cloud-network: "true"
+        io.kompose.service: config
+    spec:
+      containers:
+        - env:
+            - name: CONFIG_GIT_BASEDIR
+              value: /tmp/git_config
+            - name: CONFIG_GIT_URI
+              value: https://github.com/geoserver/geoserver-cloud-config.git
+            - name: CONFIG_NATIVE_PATH
+              value: /tmp/config
+            - name: SPRING_CLOUD_CONFIG_SERVER_GIT_DEFAULT_LABEL
+              value: v1.5.0
+            - name: SPRING_PROFILES_ACTIVE
+              value: git
+            - name: XDG_CONFIG_HOME
+              value: /tmp
+          image: ' '
+          name: config
+          resources:
+            limits:
+              cpu: "2"
+              memory: "536870912"
+      restartPolicy: Always
+  test: false
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - config
+        from:
+          kind: ImageStreamTag
+          name: config:1.5.0
+      type: ImageChange

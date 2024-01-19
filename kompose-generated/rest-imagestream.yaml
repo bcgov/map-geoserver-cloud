@@ -1,0 +1,16 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    io.kompose.service: rest
+  name: rest
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+    - from:
+        kind: DockerImage
+        name: geoservercloud/geoserver-cloud-rest:1.5.0
+      name: 1.5.0
+      referencePolicy:
+        type: ""

@@ -1,0 +1,39 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    io.kompose.service: admin
+  name: admin
+spec:
+  replicas: 1
+  selector:
+    io.kompose.service: admin
+  template:
+    metadata:
+      labels:
+        io.kompose.network/geoserver-cloud-gs-cloud-network: "true"
+        io.kompose.service: admin
+    spec:
+      containers:
+        - image: ' '
+          name: admin
+          ports:
+            - containerPort: 8080
+              hostPort: 9091
+              protocol: TCP
+          resources:
+            limits:
+              cpu: "2"
+              memory: "1073741824"
+      restartPolicy: Always
+  test: false
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - admin
+        from:
+          kind: ImageStreamTag
+          name: admin:1.5.0
+      type: ImageChange
