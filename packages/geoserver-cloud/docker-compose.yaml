@@ -14,7 +14,7 @@ volumes:
       #o: bind
       #device: $PWD/datadir
   rabbitmq_data: # volume for rabbitmq data, so it doesn't create an anonymous one on each container
-  geowebcache_data: # used by gwc and web-ui to locate the default gwc tile cache directory
+  # geowebcache_data: # used by gwc and web-ui to locate the default gwc tile cache directory
   
 networks:
   gs-cloud-network:
@@ -160,23 +160,23 @@ services:
           memory: 1G
 
   # WCS microservice, port dynamically allocated to allow scaling (e.g docker-compose scale wcs=5)
-  wcs:
-    image: geoservercloud/geoserver-cloud-wcs:1.5.0
-    user: 1000:1000 # set the userid:groupid the container runs as
-    depends_on:
-      - config
-    environment:
-      SPRING_PROFILES_ACTIVE: "datadir"
-      GEOSERVER_DATA_DIR: /opt/app/data_directory
-    volumes:
-      - shared_data_directory:/opt/app/data_directory
-    networks:
-      - gs-cloud-network
-    deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 1G
+  # wcs:
+  #   image: geoservercloud/geoserver-cloud-wcs:1.5.0
+  #   user: 1000:1000 # set the userid:groupid the container runs as
+  #   depends_on:
+  #     - config
+  #   environment:
+  #     SPRING_PROFILES_ACTIVE: "datadir"
+  #     GEOSERVER_DATA_DIR: /opt/app/data_directory
+  #   volumes:
+  #     - shared_data_directory:/opt/app/data_directory
+  #   networks:
+  #     - gs-cloud-network
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '2.0'
+  #         memory: 1G
 
   # REST config microservice, port dynamically allocated to allow scaling (e.g docker-compose scale rest=5)
   rest:
@@ -211,7 +211,7 @@ services:
       GEOWEBCACHE_CACHE_DIR: /data/geowebcache
     volumes:
       - shared_data_directory:/opt/app/data_directory
-      - geowebcache_data:/data/geowebcache
+      # - geowebcache_data:/data/geowebcache
     networks:
       - gs-cloud-network
     deploy:
@@ -219,22 +219,22 @@ services:
         limits:
           cpus: '2.0'
           memory: 1G
-  gwc:
-    image: geoservercloud/geoserver-cloud-gwc:1.5.0
-    user: 1000:1000 # set the userid:groupid the container runs as
-    depends_on:
-      - config
-    environment:
-      SPRING_PROFILES_ACTIVE: "datadir"
-      GEOSERVER_DATA_DIR: /opt/app/data_directory
-      GEOWEBCACHE_CACHE_DIR: /data/geowebcache
-    networks:
-      - gs-cloud-network
-    volumes:
-      - shared_data_directory:/opt/app/data_directory
-      - geowebcache_data:/data/geowebcache
-    deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 1G
+  # gwc:
+  #   image: geoservercloud/geoserver-cloud-gwc:1.5.0
+  #   user: 1000:1000 # set the userid:groupid the container runs as
+  #   depends_on:
+  #     - config
+  #   environment:
+  #     SPRING_PROFILES_ACTIVE: "datadir"
+  #     GEOSERVER_DATA_DIR: /opt/app/data_directory
+  #     GEOWEBCACHE_CACHE_DIR: /data/geowebcache
+  #   networks:
+  #     - gs-cloud-network
+  #   volumes:
+  #     - shared_data_directory:/opt/app/data_directory
+  #     - geowebcache_data:/data/geowebcache
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '2.0'
+  #         memory: 1G
