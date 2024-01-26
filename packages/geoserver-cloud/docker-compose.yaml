@@ -29,10 +29,10 @@ services:
     networks:
       - gs-cloud-network
     deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 1G
+      # resources:
+      #   limits:
+      #     cpus: '2.0'
+      #     memory: 1G
 
   # Eureka service discovery. This is a Discovery First Bootstrap configuration.
   # The discovery service is the only fixed entry point.
@@ -47,10 +47,10 @@ services:
       - gs-cloud-network
     restart: always
     deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 512M
+      # resources:
+      #   limits:
+      #     cpus: '2.0'
+      #     memory: 512M
 
   # Spring Cloud Config service, provides centralized configuration to all
   # microservices. Being a Discovery First Bootstrap configuration, it'll
@@ -82,10 +82,10 @@ services:
     #volumes:
     #  - ./config:/tmp/config
     deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 512M
+      # resources:
+      #   limits:
+      #     cpus: '2.0'
+      #     memory: 512M
 
   admin:
     image: geoservercloud/geoserver-cloud-admin-server:1.5.0
@@ -97,10 +97,10 @@ services:
     networks:
       - gs-cloud-network
     deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 1G
+      # resources:
+      #   limits:
+      #     cpus: '2.0'
+      #     memory: 1G
 
   # Application facade, provides a single entry point routing to all
   # microservices (e.g. http://localhost:9090/geoserver/wms, http://localhost:9090/geoserver/wfs, etc)
@@ -116,10 +116,10 @@ services:
     networks:
       - gs-cloud-network
     deploy:
-      resources:
-        limits:
-          cpus: '4.0'
-          memory: 1G
+      # resources:
+      #   limits:
+      #     cpus: '4.0'
+      #     memory: 1G
 
   # WFS microservice, port dynamically allocated to allow scaling (e.g docker-compose scale wfs=5)
   wfs:
@@ -135,10 +135,10 @@ services:
     networks:
       - gs-cloud-network
     deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 1G
+      # resources:
+      #   limits:
+      #     cpus: '2.0'
+      #     memory: 1G
 
   # WMS microservice, port dynamically allocated to allow scaling (e.g docker-compose scale wms=5)
   wms:
@@ -154,10 +154,10 @@ services:
     networks:
       - gs-cloud-network
     deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 1G
+      # resources:
+      #   limits:
+      #     cpus: '2.0'
+      #     memory: 1G
 
   # WCS microservice, port dynamically allocated to allow scaling (e.g docker-compose scale wcs=5)
   # wcs:
@@ -194,10 +194,10 @@ services:
     deploy:
       mode: replicated
       replicas: 1
-      resources:
-        limits:
-          cpus: '1.5'
-          memory: 1G
+      # resources:
+      #   limits:
+      #     cpus: '1.5'
+      #     memory: 1G
 
   # WEB UI microservice
   webui:
@@ -215,10 +215,10 @@ services:
     networks:
       - gs-cloud-network
     deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 1G
+      # resources:
+      #   limits:
+      #     cpus: '2.0'
+      #     memory: 1G
   # gwc:
   #   image: geoservercloud/geoserver-cloud-gwc:1.5.0
   #   user: 1000:1000 # set the userid:groupid the container runs as
