@@ -30,10 +30,6 @@ spec:
               value: /tmp
           image: ' '
           name: config
-          resources:
-            limits:
-              cpu: "2"
-              memory: "536870912"
       restartPolicy: Always
   test: false
   triggers:
