@@ -21,10 +21,6 @@ spec:
             - containerPort: 8761
               hostPort: 8761
               protocol: TCP
-          resources:
-            limits:
-              cpu: "2"
-              memory: "536870912"
       restartPolicy: Always
   test: false
   triggers:

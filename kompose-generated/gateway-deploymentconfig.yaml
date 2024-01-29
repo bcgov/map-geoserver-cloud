@@ -24,10 +24,6 @@ spec:
             - containerPort: 8080
               hostPort: 9090
               protocol: TCP
-          resources:
-            limits:
-              cpu: "4"
-              memory: "1073741824"
       restartPolicy: Always
   test: false
   triggers:

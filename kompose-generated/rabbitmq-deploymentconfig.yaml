@@ -19,10 +19,6 @@ spec:
       containers:
         - image: ' '
           name: rabbitmq
-          resources:
-            limits:
-              cpu: "2"
-              memory: "1073741824"
           volumeMounts:
             - mountPath: /var/lib/rabbitmq
               name: rabbitmq-data
