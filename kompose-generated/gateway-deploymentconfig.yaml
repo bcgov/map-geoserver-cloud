@@ -22,7 +22,7 @@ spec:
           name: gateway
           ports:
             - containerPort: 8080
-              hostPort: 9090
+              # hostPort: 9090
               protocol: TCP
       restartPolicy: Always
   test: false
