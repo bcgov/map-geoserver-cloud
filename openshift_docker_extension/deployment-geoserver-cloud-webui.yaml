@@ -1,0 +1,213 @@
+﻿kind: Deployment
+apiVersion: apps/v1
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: '2'
+    image.openshift.io/triggers: >-
+      [{"from":{"kind":"ImageStreamTag","name":"geoserver-cloud-webui:1.5.0"},"fieldPath":"spec.template.spec.containers[?(@.name==\"geoserver-cloud-webui\")].image"}]
+    openshift.io/generated-by: OpenShiftNewApp
+  resourceVersion: '2615596641'
+  name: geoserver-cloud-webui
+  uid: 9bb8fb61-266f-4286-8131-be166a5f4109
+  creationTimestamp: '2024-02-05T17:04:56Z'
+  generation: 2
+  managedFields:
+    - manager: oc
+      operation: Update
+      apiVersion: apps/v1
+      time: '2024-02-05T17:04:56Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:image.openshift.io/triggers': {}
+            'f:openshift.io/generated-by': {}
+          'f:labels':
+            .: {}
+            'f:app': {}
+            'f:app.kubernetes.io/component': {}
+            'f:app.kubernetes.io/instance': {}
+        'f:spec':
+          'f:progressDeadlineSeconds': {}
+          'f:replicas': {}
+          'f:revisionHistoryLimit': {}
+          'f:selector': {}
+          'f:strategy':
+            'f:rollingUpdate':
+              .: {}
+              'f:maxSurge': {}
+              'f:maxUnavailable': {}
+            'f:type': {}
+          'f:template':
+            'f:metadata':
+              'f:annotations':
+                .: {}
+                'f:openshift.io/generated-by': {}
+              'f:labels':
+                .: {}
+                'f:deployment': {}
+            'f:spec':
+              'f:containers':
+                'k:{"name":"geoserver-cloud-webui"}':
+                  .: {}
+                  'f:imagePullPolicy': {}
+                  'f:name': {}
+                  'f:ports':
+                    .: {}
+                    'k:{"containerPort":8080,"protocol":"TCP"}':
+                      .: {}
+                      'f:containerPort': {}
+                      'f:protocol': {}
+                    'k:{"containerPort":8081,"protocol":"TCP"}':
+                      .: {}
+                      'f:containerPort': {}
+                      'f:protocol': {}
+                  'f:resources': {}
+                  'f:terminationMessagePath': {}
+                  'f:terminationMessagePolicy': {}
+                  'f:volumeMounts':
+                    .: {}
+                    'k:{"mountPath":"/data/geowebcache"}':
+                      .: {}
+                      'f:mountPath': {}
+                      'f:name': {}
+                    'k:{"mountPath":"/opt/app/data_directory"}':
+                      .: {}
+                      'f:mountPath': {}
+                      'f:name': {}
+              'f:dnsPolicy': {}
+              'f:restartPolicy': {}
+              'f:schedulerName': {}
+              'f:securityContext': {}
+              'f:terminationGracePeriodSeconds': {}
+              'f:volumes':
+                .: {}
+                'k:{"name":"geoserver-cloud-webui-volume-1"}':
+                  .: {}
+                  'f:emptyDir': {}
+                  'f:name': {}
+                'k:{"name":"geoserver-cloud-webui-volume-2"}':
+                  .: {}
+                  'f:emptyDir': {}
+                  'f:name': {}
+    - manager: openshift-controller-manager
+      operation: Update
+      apiVersion: apps/v1
+      time: '2024-02-05T17:04:56Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          'f:template':
+            'f:spec':
+              'f:containers':
+                'k:{"name":"geoserver-cloud-webui"}':
+                  'f:image': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: apps/v1
+      time: '2024-02-05T17:06:00Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:deployment.kubernetes.io/revision': {}
+        'f:status':
+          'f:availableReplicas': {}
+          'f:conditions':
+            .: {}
+            'k:{"type":"Available"}':
+              .: {}
+              'f:lastTransitionTime': {}
+              'f:lastUpdateTime': {}
+              'f:message': {}
+              'f:reason': {}
+              'f:status': {}
+              'f:type': {}
+            'k:{"type":"Progressing"}':
+              .: {}
+              'f:lastTransitionTime': {}
+              'f:lastUpdateTime': {}
+              'f:message': {}
+              'f:reason': {}
+              'f:status': {}
+              'f:type': {}
+          'f:observedGeneration': {}
+          'f:readyReplicas': {}
+          'f:replicas': {}
+          'f:updatedReplicas': {}
+      subresource: status
+  namespace: ec38a0-dev
+  labels:
+    app: geoserver-cloud-webui
+    app.kubernetes.io/component: geoserver-cloud-webui
+    app.kubernetes.io/instance: geoserver-cloud-webui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: geoserver-cloud-webui
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        deployment: geoserver-cloud-webui
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+    spec:
+      volumes:
+        - name: geoserver-cloud-webui-volume-1
+          emptyDir: {}
+        - name: geoserver-cloud-webui-volume-2
+          emptyDir: {}
+      containers:
+        - name: geoserver-cloud-webui
+          image: >-
+            geoservercloud/geoserver-cloud-webui@sha256:6f1d8aa91cf993aa91b8fbb381b05a4d6e376a160a39d5bb1f2b499fc07ec6a9
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+            - containerPort: 8081
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - name: geoserver-cloud-webui-volume-1
+              mountPath: /data/geowebcache
+            - name: geoserver-cloud-webui-volume-2
+              mountPath: /opt/app/data_directory
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+status:
+  observedGeneration: 2
+  replicas: 1
+  updatedReplicas: 1
+  readyReplicas: 1
+  availableReplicas: 1
+  conditions:
+    - type: Progressing
+      status: 'True'
+      lastUpdateTime: '2024-02-05T17:05:03Z'
+      lastTransitionTime: '2024-02-05T17:04:56Z'
+      reason: NewReplicaSetAvailable
+      message: >-
+        ReplicaSet "geoserver-cloud-webui-747d8fcb9b" has successfully
+        progressed.
+    - type: Available
+      status: 'True'
+      lastUpdateTime: '2024-02-05T17:06:00Z'
+      lastTransitionTime: '2024-02-05T17:06:00Z'
+      reason: MinimumReplicasAvailable
+      message: Deployment has minimum availability.

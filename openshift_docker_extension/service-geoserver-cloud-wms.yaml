@@ -1,0 +1,72 @@
+﻿kind: Service
+apiVersion: v1
+metadata:
+  name: geoserver-cloud-wms
+  namespace: ec38a0-dev
+  uid: 83b738b6-622b-44ab-bb4d-a3e0a5b81574
+  resourceVersion: '2615563839'
+  creationTimestamp: '2024-02-05T16:53:01Z'
+  labels:
+    app: geoserver-cloud-wms
+    app.kubernetes.io/component: geoserver-cloud-wms
+    app.kubernetes.io/instance: geoserver-cloud-wms
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  managedFields:
+    - manager: oc
+      operation: Update
+      apiVersion: v1
+      time: '2024-02-05T16:53:01Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:openshift.io/generated-by': {}
+          'f:labels':
+            .: {}
+            'f:app': {}
+            'f:app.kubernetes.io/component': {}
+            'f:app.kubernetes.io/instance': {}
+        'f:spec':
+          'f:internalTrafficPolicy': {}
+          'f:ports':
+            .: {}
+            'k:{"port":8080,"protocol":"TCP"}':
+              .: {}
+              'f:name': {}
+              'f:port': {}
+              'f:protocol': {}
+              'f:targetPort': {}
+            'k:{"port":8081,"protocol":"TCP"}':
+              .: {}
+              'f:name': {}
+              'f:port': {}
+              'f:protocol': {}
+              'f:targetPort': {}
+          'f:selector': {}
+          'f:sessionAffinity': {}
+          'f:type': {}
+spec:
+  clusterIP: 10.98.161.115
+  ipFamilies:
+    - IPv4
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+    - name: 8081-tcp
+      protocol: TCP
+      port: 8081
+      targetPort: 8081
+  internalTrafficPolicy: Cluster
+  clusterIPs:
+    - 10.98.161.115
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    deployment: geoserver-cloud-wms
+status:
+  loadBalancer: {}

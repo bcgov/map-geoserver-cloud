@@ -1,0 +1,78 @@
+﻿kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+    openshift.io/image.dockerRepositoryCheck: '2024-02-05T16:50:09Z'
+  resourceVersion: '2615556730'
+  name: geoserver-cloud-admin-server
+  uid: 44389037-53a8-4cc5-b8e6-5102a15d52da
+  creationTimestamp: '2024-02-05T16:50:08Z'
+  generation: 2
+  managedFields:
+    - manager: oc
+      operation: Update
+      apiVersion: image.openshift.io/v1
+      time: '2024-02-05T16:50:08Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:openshift.io/generated-by': {}
+          'f:labels':
+            .: {}
+            'f:app': {}
+            'f:app.kubernetes.io/component': {}
+            'f:app.kubernetes.io/instance': {}
+        'f:spec':
+          'f:tags':
+            .: {}
+            'k:{"name":"1.5.0"}':
+              .: {}
+              'f:annotations':
+                .: {}
+                'f:openshift.io/imported-from': {}
+              'f:from': {}
+              'f:generation': {}
+              'f:importPolicy':
+                .: {}
+                'f:importMode': {}
+              'f:name': {}
+              'f:referencePolicy':
+                .: {}
+                'f:type': {}
+  namespace: ec38a0-dev
+  labels:
+    app: geoserver-cloud-admin-server
+    app.kubernetes.io/component: geoserver-cloud-admin-server
+    app.kubernetes.io/instance: geoserver-cloud-admin-server
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+    - name: 1.5.0
+      annotations:
+        openshift.io/imported-from: 'geoservercloud/geoserver-cloud-admin-server:1.5.0'
+      from:
+        kind: DockerImage
+        name: 'geoservercloud/geoserver-cloud-admin-server:1.5.0'
+      generation: 2
+      importPolicy:
+        importMode: Legacy
+      referencePolicy:
+        type: Source
+status:
+  dockerImageRepository: >-
+    image-registry.openshift-image-registry.svc:5000/ec38a0-dev/geoserver-cloud-admin-server
+  publicDockerImageRepository: >-
+    image-registry.apps.gold.devops.gov.bc.ca/ec38a0-dev/geoserver-cloud-admin-server
+  tags:
+    - tag: 1.5.0
+      items:
+        - created: '2024-02-05T16:50:09Z'
+          dockerImageReference: >-
+            geoservercloud/geoserver-cloud-admin-server@sha256:50da1f96ae58e48269f3f3920baf6a5d2841a49066c6be604c59fbebddc9e465
+          image: >-
+            sha256:50da1f96ae58e48269f3f3920baf6a5d2841a49066c6be604c59fbebddc9e465
+          generation: 2
