@@ -1,48 +1,7 @@
 ﻿kind: ImageStream
 apiVersion: image.openshift.io/v1
 metadata:
-  annotations:
-    openshift.io/generated-by: OpenShiftNewApp
-    openshift.io/image.dockerRepositoryCheck: '2024-02-05T16:47:16Z'
-  resourceVersion: '2615549695'
   name: geoserver-cloud-config
-  uid: ddd951d4-a6ab-46d7-9577-20c7295ff00f
-  creationTimestamp: '2024-02-05T16:47:15Z'
-  generation: 2
-  managedFields:
-    - manager: oc
-      operation: Update
-      apiVersion: image.openshift.io/v1
-      time: '2024-02-05T16:47:15Z'
-      fieldsType: FieldsV1
-      fieldsV1:
-        'f:metadata':
-          'f:annotations':
-            .: {}
-            'f:openshift.io/generated-by': {}
-          'f:labels':
-            .: {}
-            'f:app': {}
-            'f:app.kubernetes.io/component': {}
-            'f:app.kubernetes.io/instance': {}
-        'f:spec':
-          'f:tags':
-            .: {}
-            'k:{"name":"1.5.0"}':
-              .: {}
-              'f:annotations':
-                .: {}
-                'f:openshift.io/imported-from': {}
-              'f:from': {}
-              'f:generation': {}
-              'f:importPolicy':
-                .: {}
-                'f:importMode': {}
-              'f:name': {}
-              'f:referencePolicy':
-                .: {}
-                'f:type': {}
-  namespace: ec38a0-dev
   labels:
     app: geoserver-cloud-config
     app.kubernetes.io/component: geoserver-cloud-config
@@ -62,16 +21,3 @@ spec:
         importMode: Legacy
       referencePolicy:
         type: Source
-status:
-  dockerImageRepository: >-
-    image-registry.openshift-image-registry.svc:5000/ec38a0-dev/geoserver-cloud-config
-  publicDockerImageRepository: image-registry.apps.gold.devops.gov.bc.ca/ec38a0-dev/geoserver-cloud-config
-  tags:
-    - tag: 1.5.0
-      items:
-        - created: '2024-02-05T16:47:16Z'
-          dockerImageReference: >-
-            geoservercloud/geoserver-cloud-config@sha256:57683ff04d8a61919cfd05cb3ff9684bd46bad73310012753096a0375b20bae4
-          image: >-
-            sha256:57683ff04d8a61919cfd05cb3ff9684bd46bad73310012753096a0375b20bae4
-          generation: 2

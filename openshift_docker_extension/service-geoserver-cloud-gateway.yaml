@@ -2,51 +2,10 @@
 apiVersion: v1
 metadata:
   name: geoserver-cloud-gateway
-  namespace: ec38a0-dev
-  uid: fa8d0d16-a1f4-4e0a-ad68-1a41e49955af
-  resourceVersion: '2615558799'
-  creationTimestamp: '2024-02-05T16:50:58Z'
   labels:
     app: geoserver-cloud-gateway
     app.kubernetes.io/component: geoserver-cloud-gateway
     app.kubernetes.io/instance: geoserver-cloud-gateway
-  annotations:
-    openshift.io/generated-by: OpenShiftNewApp
-  managedFields:
-    - manager: oc
-      operation: Update
-      apiVersion: v1
-      time: '2024-02-05T16:50:58Z'
-      fieldsType: FieldsV1
-      fieldsV1:
-        'f:metadata':
-          'f:annotations':
-            .: {}
-            'f:openshift.io/generated-by': {}
-          'f:labels':
-            .: {}
-            'f:app': {}
-            'f:app.kubernetes.io/component': {}
-            'f:app.kubernetes.io/instance': {}
-        'f:spec':
-          'f:internalTrafficPolicy': {}
-          'f:ports':
-            .: {}
-            'k:{"port":8080,"protocol":"TCP"}':
-              .: {}
-              'f:name': {}
-              'f:port': {}
-              'f:protocol': {}
-              'f:targetPort': {}
-            'k:{"port":8081,"protocol":"TCP"}':
-              .: {}
-              'f:name': {}
-              'f:port': {}
-              'f:protocol': {}
-              'f:targetPort': {}
-          'f:selector': {}
-          'f:sessionAffinity': {}
-          'f:type': {}
 spec:
   clusterIP: 10.98.165.8
   ipFamilies:
@@ -68,5 +27,3 @@ spec:
   sessionAffinity: None
   selector:
     deployment: geoserver-cloud-gateway
-status:
-  loadBalancer: {}

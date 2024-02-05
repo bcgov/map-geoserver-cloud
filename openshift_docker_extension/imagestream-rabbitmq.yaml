@@ -1,48 +1,7 @@
 ﻿kind: ImageStream
 apiVersion: image.openshift.io/v1
 metadata:
-  annotations:
-    openshift.io/generated-by: OpenShiftNewApp
-    openshift.io/image.dockerRepositoryCheck: '2024-02-05T16:38:39Z'
-  resourceVersion: '2615528493'
   name: rabbitmq
-  uid: 86ad5a1e-c7ca-4b5f-a216-859493782eb5
-  creationTimestamp: '2024-02-05T16:38:38Z'
-  generation: 2
-  managedFields:
-    - manager: oc
-      operation: Update
-      apiVersion: image.openshift.io/v1
-      time: '2024-02-05T16:38:38Z'
-      fieldsType: FieldsV1
-      fieldsV1:
-        'f:metadata':
-          'f:annotations':
-            .: {}
-            'f:openshift.io/generated-by': {}
-          'f:labels':
-            .: {}
-            'f:app': {}
-            'f:app.kubernetes.io/component': {}
-            'f:app.kubernetes.io/instance': {}
-        'f:spec':
-          'f:tags':
-            .: {}
-            'k:{"name":"3.9-management"}':
-              .: {}
-              'f:annotations':
-                .: {}
-                'f:openshift.io/imported-from': {}
-              'f:from': {}
-              'f:generation': {}
-              'f:importPolicy':
-                .: {}
-                'f:importMode': {}
-              'f:name': {}
-              'f:referencePolicy':
-                .: {}
-                'f:type': {}
-  namespace: ec38a0-dev
   labels:
     app: rabbitmq
     app.kubernetes.io/component: rabbitmq
@@ -62,15 +21,3 @@ spec:
         importMode: Legacy
       referencePolicy:
         type: Source
-status:
-  dockerImageRepository: 'image-registry.openshift-image-registry.svc:5000/ec38a0-dev/rabbitmq'
-  publicDockerImageRepository: image-registry.apps.gold.devops.gov.bc.ca/ec38a0-dev/rabbitmq
-  tags:
-    - tag: 3.9-management
-      items:
-        - created: '2024-02-05T16:38:39Z'
-          dockerImageReference: >-
-            rabbitmq@sha256:cd2611ff526357b0763ae2937bee1a85b438274b55f2f2767041ca1f29f81c11
-          image: >-
-            sha256:cd2611ff526357b0763ae2937bee1a85b438274b55f2f2767041ca1f29f81c11
-          generation: 2

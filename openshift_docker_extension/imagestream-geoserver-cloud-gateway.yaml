@@ -1,48 +1,7 @@
 ﻿kind: ImageStream
 apiVersion: image.openshift.io/v1
 metadata:
-  annotations:
-    openshift.io/generated-by: OpenShiftNewApp
-    openshift.io/image.dockerRepositoryCheck: '2024-02-05T16:50:59Z'
-  resourceVersion: '2615558839'
   name: geoserver-cloud-gateway
-  uid: 10a2e638-8dde-4ada-b7e7-1e4e3da8278d
-  creationTimestamp: '2024-02-05T16:50:58Z'
-  generation: 2
-  managedFields:
-    - manager: oc
-      operation: Update
-      apiVersion: image.openshift.io/v1
-      time: '2024-02-05T16:50:58Z'
-      fieldsType: FieldsV1
-      fieldsV1:
-        'f:metadata':
-          'f:annotations':
-            .: {}
-            'f:openshift.io/generated-by': {}
-          'f:labels':
-            .: {}
-            'f:app': {}
-            'f:app.kubernetes.io/component': {}
-            'f:app.kubernetes.io/instance': {}
-        'f:spec':
-          'f:tags':
-            .: {}
-            'k:{"name":"1.5.0"}':
-              .: {}
-              'f:annotations':
-                .: {}
-                'f:openshift.io/imported-from': {}
-              'f:from': {}
-              'f:generation': {}
-              'f:importPolicy':
-                .: {}
-                'f:importMode': {}
-              'f:name': {}
-              'f:referencePolicy':
-                .: {}
-                'f:type': {}
-  namespace: ec38a0-dev
   labels:
     app: geoserver-cloud-gateway
     app.kubernetes.io/component: geoserver-cloud-gateway
@@ -62,16 +21,3 @@ spec:
         importMode: Legacy
       referencePolicy:
         type: Source
-status:
-  dockerImageRepository: >-
-    image-registry.openshift-image-registry.svc:5000/ec38a0-dev/geoserver-cloud-gateway
-  publicDockerImageRepository: image-registry.apps.gold.devops.gov.bc.ca/ec38a0-dev/geoserver-cloud-gateway
-  tags:
-    - tag: 1.5.0
-      items:
-        - created: '2024-02-05T16:50:59Z'
-          dockerImageReference: >-
-            geoservercloud/geoserver-cloud-gateway@sha256:0ef3e5b60001b4fbcb895e0068e69365d2f06795b47f6c11dcbe09fefc6d0e65
-          image: >-
-            sha256:0ef3e5b60001b4fbcb895e0068e69365d2f06795b47f6c11dcbe09fefc6d0e65
-          generation: 2
