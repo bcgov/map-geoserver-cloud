@@ -7,7 +7,6 @@ metadata:
     app.kubernetes.io/component: rabbitmq
     app.kubernetes.io/instance: rabbitmq
 spec:
-  clusterIP: 10.98.14.183
   ipFamilies:
     - IPv4
   ports:
@@ -44,8 +43,6 @@ spec:
       port: 25672
       targetPort: 25672
   internalTrafficPolicy: Cluster
-  clusterIPs:
-    - 10.98.14.183
   type: ClusterIP
   ipFamilyPolicy: SingleStack
   sessionAffinity: None

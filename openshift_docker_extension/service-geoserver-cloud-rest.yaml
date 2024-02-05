@@ -7,7 +7,6 @@ metadata:
     app.kubernetes.io/component: geoserver-cloud-rest
     app.kubernetes.io/instance: geoserver-cloud-rest
 spec:
-  clusterIP: 10.98.192.85
   ipFamilies:
     - IPv4
   ports:
@@ -20,8 +19,6 @@ spec:
       port: 8081
       targetPort: 8081
   internalTrafficPolicy: Cluster
-  clusterIPs:
-    - 10.98.192.85
   type: ClusterIP
   ipFamilyPolicy: SingleStack
   sessionAffinity: None

@@ -7,7 +7,6 @@ metadata:
     app.kubernetes.io/component: geoserver-cloud-gateway
     app.kubernetes.io/instance: geoserver-cloud-gateway
 spec:
-  clusterIP: 10.98.165.8
   ipFamilies:
     - IPv4
   ports:
@@ -20,8 +19,6 @@ spec:
       port: 8081
       targetPort: 8081
   internalTrafficPolicy: Cluster
-  clusterIPs:
-    - 10.98.165.8
   type: ClusterIP
   ipFamilyPolicy: SingleStack
   sessionAffinity: None

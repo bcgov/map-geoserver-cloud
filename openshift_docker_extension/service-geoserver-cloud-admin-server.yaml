@@ -7,7 +7,6 @@ metadata:
     app.kubernetes.io/component: geoserver-cloud-admin-server
     app.kubernetes.io/instance: geoserver-cloud-admin-server
 spec:
-  clusterIP: 10.98.201.137
   ipFamilies:
     - IPv4
   ports:
@@ -20,8 +19,6 @@ spec:
       port: 8081
       targetPort: 8081
   internalTrafficPolicy: Cluster
-  clusterIPs:
-    - 10.98.201.137
   type: ClusterIP
   ipFamilyPolicy: SingleStack
   sessionAffinity: None
