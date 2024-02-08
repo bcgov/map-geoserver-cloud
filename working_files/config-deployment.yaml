@@ -1,24 +1,35 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: rabbitmq
+  name: config
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: rabbitmq
+      app: config
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: rabbitmq
+        app: config
     spec:
-      volumes:
-        - name: rabbitmq-data
       containers:
-        - name: container
+        - name: config-container
           image: >-
-            rabbitmq:3.9-management
+            geoservercloud/geoserver-cloud-config:1.5.0
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: git
+            - name: CONFIG_GIT_URI
+              value: https://github.com/geoserver/geoserver-cloud-config.git
+            - name: SPRING_CLOUD_CONFIG_SERVER_GIT_DEFAULT_LABEL
+              value: v1.5.0
+            - name: CONFIG_GIT_BASEDIR
+              value: /tmp/git_config
+            - name: CONFIG_NATIVE_PATH
+              value: /tmp/config
+            - name: XDG_CONFIG_HOME
+              value: /tmp
           ports:
             - containerPort: 8080
               protocol: TCP
