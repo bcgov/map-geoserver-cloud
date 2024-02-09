@@ -14,9 +14,14 @@ spec:
     spec:
       volumes:
         - name: rabbitmq-data
+          persistentVolumeClaim:
+            claimName: rabbitmq-data
       containers:
         - name: rabbitmq-container
           image: >-
             rabbitmq:3.9-management
           ports:
             - containerPort: 8080
+          volumeMounts:
+            - name: rabbitmq-data
+              mountPath: /var/lib/rabbitmq
