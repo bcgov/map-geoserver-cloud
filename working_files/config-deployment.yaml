@@ -2,6 +2,8 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: config
+  labels:
+    app: config
 spec:
   replicas: 1
   selector:
@@ -31,3 +33,10 @@ spec:
               value: /tmp
           ports:
             - containerPort: 8080
+          resources:
+            limits:
+              cpu: 80m
+              memory: 250Mi
+            requests:
+              cpu: 20m
+              memory: 200Mi
