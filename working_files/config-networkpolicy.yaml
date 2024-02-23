@@ -26,6 +26,5 @@ spec:
         - podSelector:
             matchLabels:
               app: webui
-          namespaceSelector: {}
   policyTypes:
     - Ingress
