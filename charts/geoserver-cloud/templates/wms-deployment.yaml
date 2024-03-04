@@ -1,27 +1,26 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: webui
+  name: wms
   labels:
-    app: webui
+    app: wms
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: webui
+      app: wms
   template:
     metadata:
       labels:
-        app: webui
+        app: wms
     spec:
       volumes:
         - name: shared-data-directory
-          persistentVolumeClaim:
-            claimName: shared-data-directory
+          emptyDir: {}
       containers:
-        - name: webui-container
+        - name: wms-container
           image: >-
-            geoservercloud/geoserver-cloud-webui:1.5.0
+            geoservercloud/geoserver-cloud-wms:1.5.0
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: "datadir"
@@ -39,7 +38,7 @@ spec:
           resources:
             limits:
               cpu: 200m
-              memory: 600Mi
+              memory: 400Mi
             requests:
               cpu: 20m
-              memory: 400Mi
+              memory: 300Mi

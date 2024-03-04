@@ -16,8 +16,7 @@ spec:
     spec:
       volumes:
         - name: shared-data-directory
-          persistentVolumeClaim:
-            claimName: shared-data-directory
+          emptyDir: {}
       containers:
         - name: webui-container
           image: >-

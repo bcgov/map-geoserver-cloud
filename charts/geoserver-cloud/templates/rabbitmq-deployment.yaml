@@ -1,28 +1,31 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: gateway
+  name: rabbitmq
   labels:
-    app: gateway
+    app: rabbitmq
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: gateway
+      app: rabbitmq
   template:
     metadata:
       labels:
-        app: gateway
+        app: rabbitmq
     spec:
+      volumes:
+        - name: rabbitmq-data
+          emptyDir: {}
       containers:
-        - name: gateway-container
+        - name: rabbitmq-container
           image: >-
-            geoservercloud/geoserver-cloud-gateway:1.5.0
-          env:
-            - name: SPRING_PROFILES_ACTIVE
-              value: "datadir"
+            rabbitmq:3.9-management
           ports:
-            - containerPort: 8080
+            - containerPort: 5672
+          volumeMounts:
+            - name: rabbitmq-data
+              mountPath: /var/lib/rabbitmq
           resources:
             limits:
               cpu: 200m
