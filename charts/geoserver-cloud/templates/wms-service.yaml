@@ -7,4 +7,3 @@ spec:
     app: wms
   ports:
     - port: 8080
-    # - port: 8081
