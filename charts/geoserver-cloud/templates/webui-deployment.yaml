@@ -1,0 +1,44 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: webui
+  labels:
+    app: webui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webui
+  template:
+    metadata:
+      labels:
+        app: webui
+    spec:
+      volumes:
+        - name: shared-data-directory
+          emptyDir: {}
+      containers:
+        - name: webui-container
+          image: >-
+            geoservercloud/geoserver-cloud-webui:1.5.0
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "datadir"
+            - name: GEOSERVER_DATA_DIR
+              value: /opt/app/data_directory
+            - name: RABBITMQ_PORT
+              value: "5672"
+            - name: RABBITMQ_HOST
+              value: rabbitmq
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: shared-data-directory
+              mountPath: /opt/app/data_directory
+          resources:
+            limits:
+              cpu: 200m
+              memory: 600Mi
+            requests:
+              cpu: 20m
+              memory: 400Mi
