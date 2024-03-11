@@ -14,19 +14,23 @@ spec:
       labels:
         app: config
     spec:
+      volumes:
+        - name: extra-config-vol
+          secret:
+            secretName: extra-config
       containers:
         - name: config-container
           image: >-
             geoservercloud/geoserver-cloud-config:1.5.0
           env:
             - name: SPRING_PROFILES_ACTIVE
-              value: git
-            - name: CONFIG_GIT_URI
-              value: https://github.com/geoserver/geoserver-cloud-config.git
-            - name: SPRING_CLOUD_CONFIG_SERVER_GIT_DEFAULT_LABEL
-              value: v1.5.0
-            - name: CONFIG_GIT_BASEDIR
-              value: /tmp/git_config
+              value: native
+            # - name: CONFIG_GIT_URI
+            #   value: https://github.com/geoserver/geoserver-cloud-config.git
+            # - name: SPRING_CLOUD_CONFIG_SERVER_GIT_DEFAULT_LABEL
+            #   value: v1.5.0
+            # - name: CONFIG_GIT_BASEDIR
+            #   value: /tmp/git_config
             - name: CONFIG_NATIVE_PATH
               value: /tmp/config
             - name: XDG_CONFIG_HOME
@@ -40,3 +44,7 @@ spec:
             requests:
               cpu: 20m
               memory: 200Mi
+          volumeMounts:
+            - name: extra-config-vol
+              readOnly: true
+              mountPath: /tmp/config
