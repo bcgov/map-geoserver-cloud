@@ -40,7 +40,6 @@ runs:
           type=semver,pattern={{version}}
           type=semver,pattern={{major}}.{{minor}}
           type=semver,pattern={{major}}
-          type=sha
 
     - name: Build
       uses: docker/build-push-action@v4
