@@ -1,1 +1,1 @@
-FROM geoservercloud/geoserver-cloud-wms:1.7.0
+FROM geoservercloud/geoserver-cloud-wms:1.5.0
