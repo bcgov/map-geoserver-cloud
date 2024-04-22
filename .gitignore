@@ -8,3 +8,5 @@ LOCAL.md
 node_modules
 __pycache__
 _tmp
+_tmp*
+.DS_Store
