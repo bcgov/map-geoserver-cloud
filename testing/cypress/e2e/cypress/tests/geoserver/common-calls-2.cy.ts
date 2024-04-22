@@ -4,9 +4,9 @@ describe('Loop through real calls (batch 2)', () => {
   it('Matches the current environment', () => {
     cy.fixture('common-calls-2.txt').then((calls) => {
       calls.split('\n').forEach((call: any, index: number) => {
-        if (index < 100) {
+        if (index < 200 && !call.startsWith('SKIP')) {
           cy.visit(call.substring(IGNORE_FIRST_LEN)).then(() => {
-            cy.compareSnapshot({ name: `call-batch-2-${index}`, testThreshold: 0.2 })
+            cy.compareSnapshot({ name: `call-batch-2-${index + 1}`, testThreshold: 0.2 })
           })
         }
       })
