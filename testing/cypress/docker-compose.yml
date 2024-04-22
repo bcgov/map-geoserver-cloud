@@ -1,0 +1,64 @@
+version: "3.8"
+services:
+  cypress:
+    image: cypress-e2e:latest
+    container_name: cypress-e2e
+    environment:
+      - BASE_URL=http://htmlpage.localtest.me:3000
+    build:
+      context: ./e2e
+      dockerfile: Dockerfile
+    volumes:
+      - ./_tmp/coverage:/e2e/coverage
+      - ./_tmp/results:/e2e/results
+      - ./_tmp/imagediff:/e2e/imagediff
+    networks:
+      - map-net
+
+  image-diff-report:
+    image: cypress-e2e:latest
+    environment:
+      - BASE_URL=http://htmlpage.localtest.me:3000
+    command: "cy:imgdiff"
+    build:
+      context: ./e2e
+      dockerfile: Dockerfile
+    volumes:
+      - ./_tmp/coverage:/e2e/coverage
+      - ./_tmp/results:/e2e/results
+      - ./_tmp/imagediff:/e2e/imagediff
+    networks:
+      - map-net
+    ports:
+      - "6868:6868"
+
+  htmlpage-openmaps:
+    image: htmlpage:latest
+    build:
+      context: ./htmlpage
+      dockerfile: Dockerfile
+    environment:
+      - TARGET_URL=https://test.openmaps.gov.bc.ca/geo
+    networks:
+      map-net:
+        aliases:
+          - htmlpage.localtest.me
+    profiles:
+      - openmap
+
+  htmlpage-gscloud:
+    image: htmlpage:latest
+    build:
+      context: ./htmlpage
+      dockerfile: Dockerfile
+    environment:
+      - TARGET_URL=https://geoserver-ec38a0-test.apps.gold.devops.gov.bc.ca
+    networks:
+      map-net:
+        aliases:
+          - htmlpage.localtest.me
+    profiles:
+      - gscloud
+
+networks:
+  map-net: {}

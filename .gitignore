@@ -5,4 +5,5 @@ charts/aps-gateway
 *.tgz
 gwa
 LOCAL.md
-_tmp
+_tmp*
+.DS_Store

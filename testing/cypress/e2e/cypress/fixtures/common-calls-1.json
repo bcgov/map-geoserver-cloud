@@ -1,0 +1,24 @@
+{
+  "active": [
+    {
+      "uri": "/geo/ows?STYLES=&layers=pub%3AWHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_COUNTIES_SP&WIDTH=400&service=wms&FORMAT=image%2Fpng&request=getmap&HEIGHT=266&SRS=EPSG%3A3005&version=1.1.1&BBOX=794280.590063033%2C264941.75762325%2C1636273.15489024%2C888458.117582758"
+    },
+    {
+      "uri": "/geo/ows?STYLES=6122&layers=pub%3AWHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_COUNTIES_SP&WIDTH=400&service=wms&FORMAT=image%2Fpng&request=getmap&HEIGHT=266&SRS=EPSG%3A3005&version=1.1.1&BBOX=794280.590063033%2C264941.75762325%2C1636273.15489024%2C888458.117582758"
+    },
+    {
+      "uri": "/geo/pub/ows?service=WMS&request=GetMap&version=1.1.1&layers=pub%3AWHSE_HUMAN_CULTURAL_ECONOMIC.EMRG_ORDER_AND_ALERT_AREAS_SP&styles=6885&format=image%2Fpng&transparent=true&cql_filter=ORDER_ALERT_STATUS%20%3C%3E%20%27All%20Clear%27%20and%20EVENT_TYPE%20%3D%20%27Fire%27&srs=EPSG%3A3857&width=842&height=413&bbox=-13550450.6263,6483197.6466,-13518270.6374,6498981.8929"
+    },
+    {
+      "uri": "/geo/pub/ows?service=WMS&request=GetMap&version=1.1.1&layers=pub%3AWHSE_HUMAN_CULTURAL_ECONOMIC.EMRG_ORDER_AND_ALERT_AREAS_SP&styles=6885&format=image%2Fpng&transparent=true&cql_filter=ORDER_ALERT_STATUS%20%3C%3E%20%27All%20Clear%27%20and%20EVENT_TYPE%20%3D%20%27Fire%27&srs=EPSG%3A3857&width=842&height=413&bbox=-13550450.6263,6483197.6466,-13518270.6374,6498981.8929"
+    },
+    {
+      "uri": "/geo/pub/ows?service=WMS&request=GetMap&version=1.1.1&layers=pub%3AWHSE_HUMAN_CULTURAL_ECONOMIC.EMRG_ORDER_AND_ALERT_AREAS_SP&styles=6885&format=image%2Fpng&transparent=true&cql_filter=ORDER_ALERT_STATUS%20%3C%3E%20%27All%20Clear%27%20and%20EVENT_TYPE%20%3D%20%27Fire%27&srs=EPSG%3A3857&width=338&height=571&bbox=-13535072.4517,6490186.8574,-13533457.7194,6492914.7038"
+    }
+  ],
+  "ignore": [
+    {
+      "uri": "/geo/pub/WHSE_LAND_AND_NATURAL_RESOURCE.PROT_CURRENT_FIRE_PNTS_SP/ows?service=WMS&request=GetCapabilities"
+    }
+  ]
+}

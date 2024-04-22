@@ -1,0 +1,5 @@
+node_modules
+cypress-image-diff-html-report
+cypress-image-diff-screenshots
+*.png
+results
