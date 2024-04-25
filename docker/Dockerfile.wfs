@@ -1,0 +1,1 @@
+FROM geoservercloud/geoserver-cloud-wfs:1.7.0
