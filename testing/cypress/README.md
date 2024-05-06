@@ -2,12 +2,22 @@
 
 ## Executing suite of tests
 
+Build the images:
+
 ```sh
 docker compose --profile openmap build
-docker compose --profile openmap up
-
-docker compose --profile gscloud up
 ```
+
+Prepare the temp folder for holding cypress outputs
+
+```sh
+mkdir -p _tmp/results _tmp/coverage
+```
+
+Then choose one of `openmap` or `gscloud`:
+
+- `docker compose --profile openmap up`
+- `docker compose --profile gscloud up`
 
 ## Test development
 
