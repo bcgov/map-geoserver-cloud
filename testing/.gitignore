@@ -1,6 +1,8 @@
 node_modules
 cypress-image-diff-html-report
 cypress-image-diff-screenshots
-*.png
 results
 __pycache__
+cypress/imagediff/screenshots/comparison
+cypress/imagediff/screenshots/diff
+cypress/imagediff/reports
