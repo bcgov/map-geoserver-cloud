@@ -3,3 +3,4 @@ cypress-image-diff-html-report
 cypress-image-diff-screenshots
 *.png
 results
+__pycache__
