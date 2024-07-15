@@ -21,14 +21,14 @@ spec:
       containers:
         - name: config-container
           image: >-
-            geoservercloud/geoserver-cloud-config:1.5.0
+            geoservercloud/geoserver-cloud-config:1.9-SNAPSHOT
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: native
             # - name: CONFIG_GIT_URI
             #   value: https://github.com/geoserver/geoserver-cloud-config.git
             # - name: SPRING_CLOUD_CONFIG_SERVER_GIT_DEFAULT_LABEL
-            #   value: v1.5.0
+            #   value: vlatest
             # - name: CONFIG_GIT_BASEDIR
             #   value: /tmp/git_config
             - name: CONFIG_NATIVE_PATH
