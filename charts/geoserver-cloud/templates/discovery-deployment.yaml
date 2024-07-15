@@ -17,7 +17,7 @@ spec:
       containers:
         - name: discovery-container
           image: >-
-            geoservercloud/geoserver-cloud-discovery:1.5.0
+            geoservercloud/geoserver-cloud-discovery:latest
           ports:
             - containerPort: 8761
           resources:
