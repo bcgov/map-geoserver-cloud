@@ -17,7 +17,7 @@ spec:
       containers:
         - name: admin-container
           image: >-
-            geoservercloud/geoserver-cloud-admin-server:latest
+            geoservercloud/geoserver-cloud-admin-server:1.9-SNAPSHOT
           ports:
             - containerPort: 8080
           resources:

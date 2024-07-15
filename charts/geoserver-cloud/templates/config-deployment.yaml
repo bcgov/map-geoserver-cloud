@@ -21,7 +21,7 @@ spec:
       containers:
         - name: config-container
           image: >-
-            geoservercloud/geoserver-cloud-config:latest
+            geoservercloud/geoserver-cloud-config:1.9-SNAPSHOT
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: native

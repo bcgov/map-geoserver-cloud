@@ -1,4 +1,4 @@
-FROM geoservercloud/geoserver-cloud-wms:latest
+FROM geoservercloud/geoserver-cloud-wms:1.9-SNAPSHOT
 
 RUN apt update && apt install -y fonts-liberation
 # ttf-mscorefonts-installer <-- requires a license to be accepted :(
