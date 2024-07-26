@@ -130,7 +130,7 @@
   
   <bean id="gwcDefaultGridsets" class="org.geowebcache.config.DefaultGridsets">
     <!-- Should we used EPSG:900913 instead of EPSG:3857 ? -->
-    <constructor-arg type="boolean" value="TRUE" />
+    <constructor-arg type="boolean" value="FALSE" />
     <!--
       Should the default grids be named EPSG:4326 and EPSG:900913 (TRUE),
       or (FALSE) use the new names similar to what WMTS suggests,
