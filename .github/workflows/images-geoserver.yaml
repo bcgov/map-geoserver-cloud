@@ -44,6 +44,18 @@ jobs:
           registry_username: ${{ secrets.REGISTRY_USERNAME }}
           registry_password: ${{ secrets.REGISTRY_PASSWORD }}
 
+  build-wms-p6spy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: "./.github/templates/build"
+        with:
+          image_name: wms-p6spy
+          registry: ${{ env.REGISTRY }}
+          registry_repo_name: ${{ secrets.REGISTRY_REPO_NAME }}
+          registry_username: ${{ secrets.REGISTRY_USERNAME }}
+          registry_password: ${{ secrets.REGISTRY_PASSWORD }}
+        
   build-gwc:
     runs-on: ubuntu-latest
     steps:

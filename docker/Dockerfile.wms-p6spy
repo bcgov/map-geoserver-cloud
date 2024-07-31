@@ -1,0 +1,6 @@
+FROM geoservercloud/geoserver-cloud-wms:1.9-SNAPSHOT
+
+RUN apt update && apt install -y fonts-liberation
+
+RUN curl -O https://repo1.maven.org/maven2/p6spy/p6spy/3.9.1/p6spy-3.9.1.jar \
+ && mv p6spy-3.9.1.jar /opt/app/bin/BOOT-INF/lib/p6spy-3.9.1.jar
