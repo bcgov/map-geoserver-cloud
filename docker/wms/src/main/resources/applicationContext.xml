@@ -10,4 +10,6 @@
     <bean id="wfsLocalWorkspaceURLManger" class="org.geoserver.ows.LocalWorkspaceURLMangler">
       <constructor-arg value="wfs"/>
     </bean>
+
+    <bean id="srsNameKvpParser" class="org.geoserver.wfs.kvp.SrsNameKvpParser"/>
 </beans>
