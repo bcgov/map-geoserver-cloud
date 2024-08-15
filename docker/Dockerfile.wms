@@ -1,3 +1,9 @@
+FROM maven:latest AS BUILD
+
+WORKDIR /app
+COPY wms/. .
+RUN mvn package
+
 FROM geoservercloud/geoserver-cloud-wms:1.9-SNAPSHOT
 
 RUN apt update && apt install -y fonts-liberation
@@ -5,3 +11,5 @@ RUN apt update && apt install -y fonts-liberation
 
 # $ fc-match Arial
 # LiberationSans-Regular.ttf: "Liberation Sans" "Regular"
+
+COPY --from=BUILD /app/target/gs-wms-bcgov-2.26.0.jar /opt/app/bin/BOOT-INF/lib/.
