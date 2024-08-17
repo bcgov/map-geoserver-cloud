@@ -1,0 +1,37 @@
+name: Main
+
+on:
+    push:
+      branches: [images/*]
+  
+env:
+    REGISTRY: artifacts.developer.gov.bc.ca
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Release
+        uses: softprops/action-gh-release@v2
+  build-wms:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: "./.github/templates/build"
+        with:
+            image_name: wms
+            registry: ${{ env.REGISTRY }}
+            registry_repo_name: ${{ secrets.REGISTRY_REPO_NAME }}
+            registry_username: ${{ secrets.REGISTRY_USERNAME }}
+            registry_password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - uses: "./.github/templates/build"
+        with:
+            image_name: wms
+            registry: ${{ env.REGISTRY }}
+            registry_repo_name: ${{ secrets.REGISTRY_REPO_NAME }}
+            registry_username: ${{ secrets.REGISTRY_USERNAME }}
+            registry_password: ${{ secrets.REGISTRY_PASSWORD }}
+            

@@ -2,7 +2,7 @@ name: GeoServer Image Builds
 
 on:
   push:
-    branches: [main, images/*]
+    branches: [never/*]
 
 env:
   REGISTRY: artifacts.developer.gov.bc.ca
