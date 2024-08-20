@@ -1,0 +1,58 @@
+build:
+  runs-on: ubuntu-latest
+  env:
+    DOCKER_ITEM: ""
+    PREFIX: ""
+
+  steps:
+    - uses: actions/checkout@v2
+
+    - id: changed-files
+      uses: tj-actions/changed-files@v44
+
+    - name: Any changes?
+      id: changes
+      run: |
+        echo "BUILD=${{env.BUILD_ALL}}" >> $GITHUB_OUTPUT
+        for changed_file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+          echo "Changed file - do I care? ${changed_file}."
+          if  [[ ${changed_file} == docker/${{env.DOCKER_ITEM}}/* ]] || [[ ${changed_file} == docker/Dockerfile.${{env.DOCKER_ITEM}} ]] ;
+          then
+            echo "Detected change!"
+            echo "BUILD=YES" >> $GITHUB_OUTPUT
+          fi
+        done
+
+    - name: Get short SHA
+      if: steps.changes.outputs.BUILD == 'YES'
+      id: slug
+      run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
+
+    - name: Timestamp
+      id: date
+      run: echo "name=date::$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
+    - name: Login to registry
+      if: steps.changes.outputs.BUILD == 'YES'
+      uses: docker/login-action@v2
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ env.REGISTRY_USERNAME }}
+        password: ${{ env.REGISTRY_PASSWORD }}
+
+    - name: Set up Docker Buildx
+      if: steps.changes.outputs.BUILD == 'YES'
+      id: buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Build image
+      if: steps.changes.outputs.BUILD == 'YES'
+      uses: docker/build-push-action@v4
+      with:
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        platforms: linux/amd64
+        context: docker/${{env.DOCKER_ITEM}}
+        file: docker/Dockerfile.${{env.DOCKER_ITEM}}
+        tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_REPO_NAME }}/${{env.DOCKER_ITEM}}:${{ steps.date.outputs.date }}-${{ steps.slug.outputs.sha8 }}
+        push: true
