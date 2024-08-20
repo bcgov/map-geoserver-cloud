@@ -1,0 +1,12 @@
+FROM python:3.12.5-bookworm
+
+WORKDIR /app
+
+COPY . .
+
+RUN python -m venv app_env \
+ && . app_env/bin/activate
+
+RUN pip install requests python-dateutil fastapi uvicorn
+
+ENTRYPOINT [ "python",  "main.py" ]

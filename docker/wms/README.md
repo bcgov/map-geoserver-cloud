@@ -2,9 +2,9 @@
 
 ## Build
 
-```
+```sh
 docker build --tag gscloud-bcgov .
-docker run gscloud-bcgov
+docker run -ti --rm --entrypoint /bin/bash gscloud-bcgov
 ```
 
 ## Background
