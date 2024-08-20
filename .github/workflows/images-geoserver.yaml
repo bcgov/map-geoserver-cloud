@@ -2,7 +2,7 @@ name: GeoServer Image Builds
 
 on:
   push:
-    tags: [ * ]
+    tags: ["**"]
     branches: [never/*]
 
 env:
@@ -56,7 +56,7 @@ jobs:
   #         registry_repo_name: ${{ secrets.REGISTRY_REPO_NAME }}
   #         registry_username: ${{ secrets.REGISTRY_USERNAME }}
   #         registry_password: ${{ secrets.REGISTRY_PASSWORD }}
-        
+
   # build-gwc:
   #   runs-on: ubuntu-latest
   #   steps:
