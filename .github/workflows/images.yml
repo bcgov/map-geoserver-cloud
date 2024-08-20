@@ -70,7 +70,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           context: docker/${{env.DOCKER_ITEM}}
-          file: Dockerfile.${{env.DOCKER_ITEM}}
+          file: docker/Dockerfile.${{env.DOCKER_ITEM}}
           platforms: linux/amd64
           push: true
           tags:
@@ -117,7 +117,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           context: docker/${{env.DOCKER_ITEM}}
-          file: Dockerfile.${{env.DOCKER_ITEM}}
+          file: docker/Dockerfile.${{env.DOCKER_ITEM}}
           platforms: linux/amd64
           push: true
           tags:
@@ -164,7 +164,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           context: docker/${{env.DOCKER_ITEM}}
-          file: Dockerfile.${{env.DOCKER_ITEM}}
+          file: docker/Dockerfile.${{env.DOCKER_ITEM}}
           platforms: linux/amd64
           push: true
           tags:
@@ -211,7 +211,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           context: docker/${{env.DOCKER_ITEM}}
-          file: Dockerfile.${{env.DOCKER_ITEM}}
+          file: docker/Dockerfile.${{env.DOCKER_ITEM}}
           platforms: linux/amd64
           push: true
           tags:
@@ -258,7 +258,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           context: docker/${{env.DOCKER_ITEM}}
-          file: Dockerfile.${{env.DOCKER_ITEM}}
+          file: docker/Dockerfile.${{env.DOCKER_ITEM}}
           platforms: linux/amd64
           push: true
           tags:
@@ -305,7 +305,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           context: docker/${{env.DOCKER_ITEM}}
-          file: Dockerfile.${{env.DOCKER_ITEM}}
+          file: docker/Dockerfile.${{env.DOCKER_ITEM}}
           platforms: linux/amd64
           push: true
           tags:
@@ -352,7 +352,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           context: docker/${{env.DOCKER_ITEM}}
-          file: Dockerfile.${{env.DOCKER_ITEM}}
+          file: docker/Dockerfile.${{env.DOCKER_ITEM}}
           platforms: linux/amd64
           push: true
           tags:
@@ -399,7 +399,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           context: docker/${{env.DOCKER_ITEM}}
-          file: Dockerfile.${{env.DOCKER_ITEM}}
+          file: docker/Dockerfile.${{env.DOCKER_ITEM}}
           platforms: linux/amd64
           push: true
           tags:
