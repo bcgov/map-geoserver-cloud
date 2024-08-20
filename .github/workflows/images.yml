@@ -17,9 +17,14 @@ name: Dockerfiles
 on:
   push:
     branches: [ images/* ]
-
+  workflow_dispatch:
+    inputs:
+      build_all:
+        description: 'Build All'
+        required: true
+        default: 'NO'    
 env:
-  BUILD_ALL: 'NO'
+  BUILD_ALL: ${{ inputs.build_all }}
   REGISTRY: artifacts.developer.gov.bc.ca
   REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
   REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
