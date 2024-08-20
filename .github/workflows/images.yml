@@ -1,0 +1,380 @@
+
+#######################
+#######################
+#######################
+#######################
+# !!
+# DO NOT EDIT!!
+# !!
+# THIS IS GENERATED - SEE .github/job-docker-image.py
+# !!
+#######################
+#######################
+#######################
+#######################
+name: Dockerfiles
+
+on:
+  push:
+    branches: [ images/* ]
+
+env:
+  BUILD_ALL: 'NO'
+  REGISTRY: artifacts.developer.gov.bc.ca
+  REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+  REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+  REGISTRY_REPO_NAME: ${{ secrets.REGISTRY_REPO_NAME }}
+
+jobs:
+  geokml:
+    env:
+      DOCKER_ITEM: geokml
+      PREFIX: ''
+    name: geokml image
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - id: files
+      uses: tj-actions/changed-files@v44
+    - id: changes
+      name: Any changes?
+      run: "echo '::set-output name=BUILD::${{env.BUILD_ALL}}'\nfor changed_file in\
+        \ ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
+        \ file - do I care? ${changed_file}.\"\n  if  [[ ${changed_file} == docker/${{env.DOCKER_ITEM}}/*\
+        \ ]] || [[ ${changed_file} == docker/Dockerfile.${{env.DOCKER_ITEM}} ]] ;\n\
+        \  then\n    echo \"Detected change!\"\n    echo '::set-output name=BUILD::YES'\n\
+        \  fi\ndone\n"
+    - id: slug
+      name: Get short SHA
+      run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
+    - if: steps.changes.outputs.BUILD == 'YES'
+      name: Login to registry
+      uses: docker/login-action@v2
+      with:
+        password: ${{ env.REGISTRY_PASSWORD }}
+        registry: ${{ env.REGISTRY }}
+        username: ${{ env.REGISTRY_USERNAME }}
+    - id: buildx
+      if: steps.changes.outputs.BUILD == 'YES'
+      name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - if: steps.changes.outputs.BUILD == 'YES'
+      name: Build image
+      uses: docker/build-push-action@v4
+      with:
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        context: ${{ inputs.image_name }}
+        file: Dockerfile.${{ inputs.image_name }}
+        platforms: linux/amd64
+        push: true
+        tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_REPO_NAME }}/${{env.DOCKER_ITEM}}:${{env.PREFIX}}${{
+          steps.slug.outputs.sha8 }}
+  geosld:
+    env:
+      DOCKER_ITEM: geosld
+      PREFIX: ''
+    name: geosld image
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - id: files
+      uses: tj-actions/changed-files@v44
+    - id: changes
+      name: Any changes?
+      run: "echo '::set-output name=BUILD::${{env.BUILD_ALL}}'\nfor changed_file in\
+        \ ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
+        \ file - do I care? ${changed_file}.\"\n  if  [[ ${changed_file} == docker/${{env.DOCKER_ITEM}}/*\
+        \ ]] || [[ ${changed_file} == docker/Dockerfile.${{env.DOCKER_ITEM}} ]] ;\n\
+        \  then\n    echo \"Detected change!\"\n    echo '::set-output name=BUILD::YES'\n\
+        \  fi\ndone\n"
+    - id: slug
+      name: Get short SHA
+      run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
+    - if: steps.changes.outputs.BUILD == 'YES'
+      name: Login to registry
+      uses: docker/login-action@v2
+      with:
+        password: ${{ env.REGISTRY_PASSWORD }}
+        registry: ${{ env.REGISTRY }}
+        username: ${{ env.REGISTRY_USERNAME }}
+    - id: buildx
+      if: steps.changes.outputs.BUILD == 'YES'
+      name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - if: steps.changes.outputs.BUILD == 'YES'
+      name: Build image
+      uses: docker/build-push-action@v4
+      with:
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        context: ${{ inputs.image_name }}
+        file: Dockerfile.${{ inputs.image_name }}
+        platforms: linux/amd64
+        push: true
+        tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_REPO_NAME }}/${{env.DOCKER_ITEM}}:${{env.PREFIX}}${{
+          steps.slug.outputs.sha8 }}
+  getcaps:
+    env:
+      DOCKER_ITEM: getcaps
+      PREFIX: ''
+    name: getcaps image
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - id: files
+      uses: tj-actions/changed-files@v44
+    - id: changes
+      name: Any changes?
+      run: "echo '::set-output name=BUILD::${{env.BUILD_ALL}}'\nfor changed_file in\
+        \ ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
+        \ file - do I care? ${changed_file}.\"\n  if  [[ ${changed_file} == docker/${{env.DOCKER_ITEM}}/*\
+        \ ]] || [[ ${changed_file} == docker/Dockerfile.${{env.DOCKER_ITEM}} ]] ;\n\
+        \  then\n    echo \"Detected change!\"\n    echo '::set-output name=BUILD::YES'\n\
+        \  fi\ndone\n"
+    - id: slug
+      name: Get short SHA
+      run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
+    - if: steps.changes.outputs.BUILD == 'YES'
+      name: Login to registry
+      uses: docker/login-action@v2
+      with:
+        password: ${{ env.REGISTRY_PASSWORD }}
+        registry: ${{ env.REGISTRY }}
+        username: ${{ env.REGISTRY_USERNAME }}
+    - id: buildx
+      if: steps.changes.outputs.BUILD == 'YES'
+      name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - if: steps.changes.outputs.BUILD == 'YES'
+      name: Build image
+      uses: docker/build-push-action@v4
+      with:
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        context: ${{ inputs.image_name }}
+        file: Dockerfile.${{ inputs.image_name }}
+        platforms: linux/amd64
+        push: true
+        tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_REPO_NAME }}/${{env.DOCKER_ITEM}}:${{env.PREFIX}}${{
+          steps.slug.outputs.sha8 }}
+  gwc:
+    env:
+      DOCKER_ITEM: gwc
+      PREFIX: ''
+    name: gwc image
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - id: files
+      uses: tj-actions/changed-files@v44
+    - id: changes
+      name: Any changes?
+      run: "echo '::set-output name=BUILD::${{env.BUILD_ALL}}'\nfor changed_file in\
+        \ ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
+        \ file - do I care? ${changed_file}.\"\n  if  [[ ${changed_file} == docker/${{env.DOCKER_ITEM}}/*\
+        \ ]] || [[ ${changed_file} == docker/Dockerfile.${{env.DOCKER_ITEM}} ]] ;\n\
+        \  then\n    echo \"Detected change!\"\n    echo '::set-output name=BUILD::YES'\n\
+        \  fi\ndone\n"
+    - id: slug
+      name: Get short SHA
+      run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
+    - if: steps.changes.outputs.BUILD == 'YES'
+      name: Login to registry
+      uses: docker/login-action@v2
+      with:
+        password: ${{ env.REGISTRY_PASSWORD }}
+        registry: ${{ env.REGISTRY }}
+        username: ${{ env.REGISTRY_USERNAME }}
+    - id: buildx
+      if: steps.changes.outputs.BUILD == 'YES'
+      name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - if: steps.changes.outputs.BUILD == 'YES'
+      name: Build image
+      uses: docker/build-push-action@v4
+      with:
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        context: ${{ inputs.image_name }}
+        file: Dockerfile.${{ inputs.image_name }}
+        platforms: linux/amd64
+        push: true
+        tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_REPO_NAME }}/${{env.DOCKER_ITEM}}:${{env.PREFIX}}${{
+          steps.slug.outputs.sha8 }}
+  webui:
+    env:
+      DOCKER_ITEM: webui
+      PREFIX: ''
+    name: webui image
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - id: files
+      uses: tj-actions/changed-files@v44
+    - id: changes
+      name: Any changes?
+      run: "echo '::set-output name=BUILD::${{env.BUILD_ALL}}'\nfor changed_file in\
+        \ ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
+        \ file - do I care? ${changed_file}.\"\n  if  [[ ${changed_file} == docker/${{env.DOCKER_ITEM}}/*\
+        \ ]] || [[ ${changed_file} == docker/Dockerfile.${{env.DOCKER_ITEM}} ]] ;\n\
+        \  then\n    echo \"Detected change!\"\n    echo '::set-output name=BUILD::YES'\n\
+        \  fi\ndone\n"
+    - id: slug
+      name: Get short SHA
+      run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
+    - if: steps.changes.outputs.BUILD == 'YES'
+      name: Login to registry
+      uses: docker/login-action@v2
+      with:
+        password: ${{ env.REGISTRY_PASSWORD }}
+        registry: ${{ env.REGISTRY }}
+        username: ${{ env.REGISTRY_USERNAME }}
+    - id: buildx
+      if: steps.changes.outputs.BUILD == 'YES'
+      name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - if: steps.changes.outputs.BUILD == 'YES'
+      name: Build image
+      uses: docker/build-push-action@v4
+      with:
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        context: ${{ inputs.image_name }}
+        file: Dockerfile.${{ inputs.image_name }}
+        platforms: linux/amd64
+        push: true
+        tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_REPO_NAME }}/${{env.DOCKER_ITEM}}:${{env.PREFIX}}${{
+          steps.slug.outputs.sha8 }}
+  wfs:
+    env:
+      DOCKER_ITEM: wfs
+      PREFIX: ''
+    name: wfs image
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - id: files
+      uses: tj-actions/changed-files@v44
+    - id: changes
+      name: Any changes?
+      run: "echo '::set-output name=BUILD::${{env.BUILD_ALL}}'\nfor changed_file in\
+        \ ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
+        \ file - do I care? ${changed_file}.\"\n  if  [[ ${changed_file} == docker/${{env.DOCKER_ITEM}}/*\
+        \ ]] || [[ ${changed_file} == docker/Dockerfile.${{env.DOCKER_ITEM}} ]] ;\n\
+        \  then\n    echo \"Detected change!\"\n    echo '::set-output name=BUILD::YES'\n\
+        \  fi\ndone\n"
+    - id: slug
+      name: Get short SHA
+      run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
+    - if: steps.changes.outputs.BUILD == 'YES'
+      name: Login to registry
+      uses: docker/login-action@v2
+      with:
+        password: ${{ env.REGISTRY_PASSWORD }}
+        registry: ${{ env.REGISTRY }}
+        username: ${{ env.REGISTRY_USERNAME }}
+    - id: buildx
+      if: steps.changes.outputs.BUILD == 'YES'
+      name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - if: steps.changes.outputs.BUILD == 'YES'
+      name: Build image
+      uses: docker/build-push-action@v4
+      with:
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        context: ${{ inputs.image_name }}
+        file: Dockerfile.${{ inputs.image_name }}
+        platforms: linux/amd64
+        push: true
+        tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_REPO_NAME }}/${{env.DOCKER_ITEM}}:${{env.PREFIX}}${{
+          steps.slug.outputs.sha8 }}
+  wms:
+    env:
+      DOCKER_ITEM: wms
+      PREFIX: ''
+    name: wms image
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - id: files
+      uses: tj-actions/changed-files@v44
+    - id: changes
+      name: Any changes?
+      run: "echo '::set-output name=BUILD::${{env.BUILD_ALL}}'\nfor changed_file in\
+        \ ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
+        \ file - do I care? ${changed_file}.\"\n  if  [[ ${changed_file} == docker/${{env.DOCKER_ITEM}}/*\
+        \ ]] || [[ ${changed_file} == docker/Dockerfile.${{env.DOCKER_ITEM}} ]] ;\n\
+        \  then\n    echo \"Detected change!\"\n    echo '::set-output name=BUILD::YES'\n\
+        \  fi\ndone\n"
+    - id: slug
+      name: Get short SHA
+      run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
+    - if: steps.changes.outputs.BUILD == 'YES'
+      name: Login to registry
+      uses: docker/login-action@v2
+      with:
+        password: ${{ env.REGISTRY_PASSWORD }}
+        registry: ${{ env.REGISTRY }}
+        username: ${{ env.REGISTRY_USERNAME }}
+    - id: buildx
+      if: steps.changes.outputs.BUILD == 'YES'
+      name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - if: steps.changes.outputs.BUILD == 'YES'
+      name: Build image
+      uses: docker/build-push-action@v4
+      with:
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        context: ${{ inputs.image_name }}
+        file: Dockerfile.${{ inputs.image_name }}
+        platforms: linux/amd64
+        push: true
+        tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_REPO_NAME }}/${{env.DOCKER_ITEM}}:${{env.PREFIX}}${{
+          steps.slug.outputs.sha8 }}
+  wms-p6spy:
+    env:
+      DOCKER_ITEM: wms-p6spy
+      PREFIX: ''
+    name: wms-p6spy image
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - id: files
+      uses: tj-actions/changed-files@v44
+    - id: changes
+      name: Any changes?
+      run: "echo '::set-output name=BUILD::${{env.BUILD_ALL}}'\nfor changed_file in\
+        \ ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
+        \ file - do I care? ${changed_file}.\"\n  if  [[ ${changed_file} == docker/${{env.DOCKER_ITEM}}/*\
+        \ ]] || [[ ${changed_file} == docker/Dockerfile.${{env.DOCKER_ITEM}} ]] ;\n\
+        \  then\n    echo \"Detected change!\"\n    echo '::set-output name=BUILD::YES'\n\
+        \  fi\ndone\n"
+    - id: slug
+      name: Get short SHA
+      run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
+    - if: steps.changes.outputs.BUILD == 'YES'
+      name: Login to registry
+      uses: docker/login-action@v2
+      with:
+        password: ${{ env.REGISTRY_PASSWORD }}
+        registry: ${{ env.REGISTRY }}
+        username: ${{ env.REGISTRY_USERNAME }}
+    - id: buildx
+      if: steps.changes.outputs.BUILD == 'YES'
+      name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - if: steps.changes.outputs.BUILD == 'YES'
+      name: Build image
+      uses: docker/build-push-action@v4
+      with:
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        context: ${{ inputs.image_name }}
+        file: Dockerfile.${{ inputs.image_name }}
+        platforms: linux/amd64
+        push: true
+        tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_REPO_NAME }}/${{env.DOCKER_ITEM}}:${{env.PREFIX}}${{
+          steps.slug.outputs.sha8 }}
