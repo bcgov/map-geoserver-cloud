@@ -9,4 +9,5 @@ RUN python -m venv app_env \
 
 RUN pip install requests python-dateutil fastapi uvicorn
 
+
 ENTRYPOINT [ "python",  "main.py" ]
