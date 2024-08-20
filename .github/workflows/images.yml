@@ -89,7 +89,8 @@ jobs:
         uses: tj-actions/changed-files@v44
       - id: changes
         name: Any changes?
-        run: "echo \"BUILD=YES\" >> $GITHUB_OUTPUT\nfor changed_file\
+        run:
+          "echo \"BUILD=${{env.BUILD_ALL}}\" >> $GITHUB_OUTPUT\nfor changed_file\
           \ in ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
           \ file - do I care? ${changed_file}.\"\n  if  [[ ${changed_file} == docker/${{env.DOCKER_ITEM}}/*\
           \ ]] || [[ ${changed_file} == docker/Dockerfile.${{env.DOCKER_ITEM}} ]] ;\n\
@@ -135,8 +136,7 @@ jobs:
         uses: tj-actions/changed-files@v44
       - id: changes
         name: Any changes?
-        run:
-          "echo \"BUILD=${{env.BUILD_ALL}}\" >> $GITHUB_OUTPUT\nfor changed_file\
+        run: "echo \"BUILD=YES\" >> $GITHUB_OUTPUT\nfor changed_file\
           \ in ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
           \ file - do I care? ${changed_file}.\"\n  if  [[ ${changed_file} == docker/${{env.DOCKER_ITEM}}/*\
           \ ]] || [[ ${changed_file} == docker/Dockerfile.${{env.DOCKER_ITEM}} ]] ;\n\
