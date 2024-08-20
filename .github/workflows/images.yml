@@ -34,17 +34,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - id: files
+    - id: changed-files
       uses: tj-actions/changed-files@v44
     - id: changes
       name: Any changes?
-      run: "echo '::set-output name=BUILD::${{env.BUILD_ALL}}'\nfor changed_file in\
-        \ ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
+      run: "echo \"BUILD=${{env.BUILD_ALL}}\" >> $GITHUB_OUTPUT\nfor changed_file\
+        \ in ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
         \ file - do I care? ${changed_file}.\"\n  if  [[ ${changed_file} == docker/${{env.DOCKER_ITEM}}/*\
         \ ]] || [[ ${changed_file} == docker/Dockerfile.${{env.DOCKER_ITEM}} ]] ;\n\
-        \  then\n    echo \"Detected change!\"\n    echo '::set-output name=BUILD::YES'\n\
+        \  then\n    echo \"Detected change!\"\n    echo \"BUILD=YES\" >> $GITHUB_OUTPUT\n\
         \  fi\ndone\n"
     - id: slug
+      if: steps.changes.outputs.BUILD == 'YES'
       name: Get short SHA
       run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
     - if: steps.changes.outputs.BUILD == 'YES'
@@ -78,17 +79,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - id: files
+    - id: changed-files
       uses: tj-actions/changed-files@v44
     - id: changes
       name: Any changes?
-      run: "echo '::set-output name=BUILD::${{env.BUILD_ALL}}'\nfor changed_file in\
-        \ ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
+      run: "echo \"BUILD=${{env.BUILD_ALL}}\" >> $GITHUB_OUTPUT\nfor changed_file\
+        \ in ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
         \ file - do I care? ${changed_file}.\"\n  if  [[ ${changed_file} == docker/${{env.DOCKER_ITEM}}/*\
         \ ]] || [[ ${changed_file} == docker/Dockerfile.${{env.DOCKER_ITEM}} ]] ;\n\
-        \  then\n    echo \"Detected change!\"\n    echo '::set-output name=BUILD::YES'\n\
+        \  then\n    echo \"Detected change!\"\n    echo \"BUILD=YES\" >> $GITHUB_OUTPUT\n\
         \  fi\ndone\n"
     - id: slug
+      if: steps.changes.outputs.BUILD == 'YES'
       name: Get short SHA
       run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
     - if: steps.changes.outputs.BUILD == 'YES'
@@ -122,17 +124,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - id: files
+    - id: changed-files
       uses: tj-actions/changed-files@v44
     - id: changes
       name: Any changes?
-      run: "echo '::set-output name=BUILD::${{env.BUILD_ALL}}'\nfor changed_file in\
-        \ ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
+      run: "echo \"BUILD=${{env.BUILD_ALL}}\" >> $GITHUB_OUTPUT\nfor changed_file\
+        \ in ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
         \ file - do I care? ${changed_file}.\"\n  if  [[ ${changed_file} == docker/${{env.DOCKER_ITEM}}/*\
         \ ]] || [[ ${changed_file} == docker/Dockerfile.${{env.DOCKER_ITEM}} ]] ;\n\
-        \  then\n    echo \"Detected change!\"\n    echo '::set-output name=BUILD::YES'\n\
+        \  then\n    echo \"Detected change!\"\n    echo \"BUILD=YES\" >> $GITHUB_OUTPUT\n\
         \  fi\ndone\n"
     - id: slug
+      if: steps.changes.outputs.BUILD == 'YES'
       name: Get short SHA
       run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
     - if: steps.changes.outputs.BUILD == 'YES'
@@ -166,17 +169,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - id: files
+    - id: changed-files
       uses: tj-actions/changed-files@v44
     - id: changes
       name: Any changes?
-      run: "echo '::set-output name=BUILD::${{env.BUILD_ALL}}'\nfor changed_file in\
-        \ ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
+      run: "echo \"BUILD=${{env.BUILD_ALL}}\" >> $GITHUB_OUTPUT\nfor changed_file\
+        \ in ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
         \ file - do I care? ${changed_file}.\"\n  if  [[ ${changed_file} == docker/${{env.DOCKER_ITEM}}/*\
         \ ]] || [[ ${changed_file} == docker/Dockerfile.${{env.DOCKER_ITEM}} ]] ;\n\
-        \  then\n    echo \"Detected change!\"\n    echo '::set-output name=BUILD::YES'\n\
+        \  then\n    echo \"Detected change!\"\n    echo \"BUILD=YES\" >> $GITHUB_OUTPUT\n\
         \  fi\ndone\n"
     - id: slug
+      if: steps.changes.outputs.BUILD == 'YES'
       name: Get short SHA
       run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
     - if: steps.changes.outputs.BUILD == 'YES'
@@ -210,17 +214,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - id: files
+    - id: changed-files
       uses: tj-actions/changed-files@v44
     - id: changes
       name: Any changes?
-      run: "echo '::set-output name=BUILD::${{env.BUILD_ALL}}'\nfor changed_file in\
-        \ ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
+      run: "echo \"BUILD=${{env.BUILD_ALL}}\" >> $GITHUB_OUTPUT\nfor changed_file\
+        \ in ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
         \ file - do I care? ${changed_file}.\"\n  if  [[ ${changed_file} == docker/${{env.DOCKER_ITEM}}/*\
         \ ]] || [[ ${changed_file} == docker/Dockerfile.${{env.DOCKER_ITEM}} ]] ;\n\
-        \  then\n    echo \"Detected change!\"\n    echo '::set-output name=BUILD::YES'\n\
+        \  then\n    echo \"Detected change!\"\n    echo \"BUILD=YES\" >> $GITHUB_OUTPUT\n\
         \  fi\ndone\n"
     - id: slug
+      if: steps.changes.outputs.BUILD == 'YES'
       name: Get short SHA
       run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
     - if: steps.changes.outputs.BUILD == 'YES'
@@ -254,17 +259,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - id: files
+    - id: changed-files
       uses: tj-actions/changed-files@v44
     - id: changes
       name: Any changes?
-      run: "echo '::set-output name=BUILD::${{env.BUILD_ALL}}'\nfor changed_file in\
-        \ ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
+      run: "echo \"BUILD=${{env.BUILD_ALL}}\" >> $GITHUB_OUTPUT\nfor changed_file\
+        \ in ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
         \ file - do I care? ${changed_file}.\"\n  if  [[ ${changed_file} == docker/${{env.DOCKER_ITEM}}/*\
         \ ]] || [[ ${changed_file} == docker/Dockerfile.${{env.DOCKER_ITEM}} ]] ;\n\
-        \  then\n    echo \"Detected change!\"\n    echo '::set-output name=BUILD::YES'\n\
+        \  then\n    echo \"Detected change!\"\n    echo \"BUILD=YES\" >> $GITHUB_OUTPUT\n\
         \  fi\ndone\n"
     - id: slug
+      if: steps.changes.outputs.BUILD == 'YES'
       name: Get short SHA
       run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
     - if: steps.changes.outputs.BUILD == 'YES'
@@ -298,17 +304,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - id: files
+    - id: changed-files
       uses: tj-actions/changed-files@v44
     - id: changes
       name: Any changes?
-      run: "echo '::set-output name=BUILD::${{env.BUILD_ALL}}'\nfor changed_file in\
-        \ ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
+      run: "echo \"BUILD=${{env.BUILD_ALL}}\" >> $GITHUB_OUTPUT\nfor changed_file\
+        \ in ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
         \ file - do I care? ${changed_file}.\"\n  if  [[ ${changed_file} == docker/${{env.DOCKER_ITEM}}/*\
         \ ]] || [[ ${changed_file} == docker/Dockerfile.${{env.DOCKER_ITEM}} ]] ;\n\
-        \  then\n    echo \"Detected change!\"\n    echo '::set-output name=BUILD::YES'\n\
+        \  then\n    echo \"Detected change!\"\n    echo \"BUILD=YES\" >> $GITHUB_OUTPUT\n\
         \  fi\ndone\n"
     - id: slug
+      if: steps.changes.outputs.BUILD == 'YES'
       name: Get short SHA
       run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
     - if: steps.changes.outputs.BUILD == 'YES'
@@ -342,17 +349,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - id: files
+    - id: changed-files
       uses: tj-actions/changed-files@v44
     - id: changes
       name: Any changes?
-      run: "echo '::set-output name=BUILD::${{env.BUILD_ALL}}'\nfor changed_file in\
-        \ ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
+      run: "echo \"BUILD=${{env.BUILD_ALL}}\" >> $GITHUB_OUTPUT\nfor changed_file\
+        \ in ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
         \ file - do I care? ${changed_file}.\"\n  if  [[ ${changed_file} == docker/${{env.DOCKER_ITEM}}/*\
         \ ]] || [[ ${changed_file} == docker/Dockerfile.${{env.DOCKER_ITEM}} ]] ;\n\
-        \  then\n    echo \"Detected change!\"\n    echo '::set-output name=BUILD::YES'\n\
+        \  then\n    echo \"Detected change!\"\n    echo \"BUILD=YES\" >> $GITHUB_OUTPUT\n\
         \  fi\ndone\n"
     - id: slug
+      if: steps.changes.outputs.BUILD == 'YES'
       name: Get short SHA
       run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
     - if: steps.changes.outputs.BUILD == 'YES'
