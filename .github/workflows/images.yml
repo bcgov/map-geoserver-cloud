@@ -70,8 +70,8 @@ jobs:
       with:
         cache-from: type=gha
         cache-to: type=gha,mode=max
-        context: ${{ inputs.image_name }}
-        file: Dockerfile.${{ inputs.image_name }}
+        context: ${{env.DOCKER_ITEM}}
+        file: Dockerfile.${{env.DOCKER_ITEM}}
         platforms: linux/amd64
         push: true
         tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_REPO_NAME }}/${{env.DOCKER_ITEM}}:${{env.PREFIX}}${{
@@ -115,8 +115,8 @@ jobs:
       with:
         cache-from: type=gha
         cache-to: type=gha,mode=max
-        context: ${{ inputs.image_name }}
-        file: Dockerfile.${{ inputs.image_name }}
+        context: ${{env.DOCKER_ITEM}}
+        file: Dockerfile.${{env.DOCKER_ITEM}}
         platforms: linux/amd64
         push: true
         tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_REPO_NAME }}/${{env.DOCKER_ITEM}}:${{env.PREFIX}}${{
@@ -160,8 +160,8 @@ jobs:
       with:
         cache-from: type=gha
         cache-to: type=gha,mode=max
-        context: ${{ inputs.image_name }}
-        file: Dockerfile.${{ inputs.image_name }}
+        context: ${{env.DOCKER_ITEM}}
+        file: Dockerfile.${{env.DOCKER_ITEM}}
         platforms: linux/amd64
         push: true
         tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_REPO_NAME }}/${{env.DOCKER_ITEM}}:${{env.PREFIX}}${{
@@ -205,8 +205,8 @@ jobs:
       with:
         cache-from: type=gha
         cache-to: type=gha,mode=max
-        context: ${{ inputs.image_name }}
-        file: Dockerfile.${{ inputs.image_name }}
+        context: ${{env.DOCKER_ITEM}}
+        file: Dockerfile.${{env.DOCKER_ITEM}}
         platforms: linux/amd64
         push: true
         tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_REPO_NAME }}/${{env.DOCKER_ITEM}}:${{env.PREFIX}}${{
@@ -250,8 +250,8 @@ jobs:
       with:
         cache-from: type=gha
         cache-to: type=gha,mode=max
-        context: ${{ inputs.image_name }}
-        file: Dockerfile.${{ inputs.image_name }}
+        context: ${{env.DOCKER_ITEM}}
+        file: Dockerfile.${{env.DOCKER_ITEM}}
         platforms: linux/amd64
         push: true
         tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_REPO_NAME }}/${{env.DOCKER_ITEM}}:${{env.PREFIX}}${{
@@ -295,8 +295,8 @@ jobs:
       with:
         cache-from: type=gha
         cache-to: type=gha,mode=max
-        context: ${{ inputs.image_name }}
-        file: Dockerfile.${{ inputs.image_name }}
+        context: ${{env.DOCKER_ITEM}}
+        file: Dockerfile.${{env.DOCKER_ITEM}}
         platforms: linux/amd64
         push: true
         tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_REPO_NAME }}/${{env.DOCKER_ITEM}}:${{env.PREFIX}}${{
@@ -340,8 +340,8 @@ jobs:
       with:
         cache-from: type=gha
         cache-to: type=gha,mode=max
-        context: ${{ inputs.image_name }}
-        file: Dockerfile.${{ inputs.image_name }}
+        context: ${{env.DOCKER_ITEM}}
+        file: Dockerfile.${{env.DOCKER_ITEM}}
         platforms: linux/amd64
         push: true
         tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_REPO_NAME }}/${{env.DOCKER_ITEM}}:${{env.PREFIX}}${{
@@ -385,8 +385,8 @@ jobs:
       with:
         cache-from: type=gha
         cache-to: type=gha,mode=max
-        context: ${{ inputs.image_name }}
-        file: Dockerfile.${{ inputs.image_name }}
+        context: ${{env.DOCKER_ITEM}}
+        file: Dockerfile.${{env.DOCKER_ITEM}}
         platforms: linux/amd64
         push: true
         tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_REPO_NAME }}/${{env.DOCKER_ITEM}}:${{env.PREFIX}}${{
