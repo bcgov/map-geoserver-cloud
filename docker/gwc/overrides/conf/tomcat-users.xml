@@ -16,12 +16,12 @@
   limitations under the License.
 -->
 <tomcat-users xmlns="http://tomcat.apache.org/xml"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://tomcat.apache.org/xml tomcat-users.xsd"
-              version="1.0">
-  <user username="tomcat" password="1qazxdr5"
-  roles="manager-gui" />
-<!--
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://tomcat.apache.org/xml tomcat-users.xsd"
+  version="1.0">
+  <user username="tomcat" password="changeme"
+    roles="manager-gui" />
+  <!--
   NOTE:  By default, no user is included in the "manager-gui" role required
   to operate the "/manager/html" web application.  If you wish to use this app,
   you must define such a user - the username and password are arbitrary. It is
@@ -29,7 +29,7 @@
   section below since they are intended for use with the examples web
   application.
 -->
-<!--
+  <!--
   NOTE:  The sample user and role entries below are intended for use with the
   examples web application. They are wrapped in a comment and thus are ignored
   when reading this file. If you wish to configure these users for use with the
@@ -37,10 +37,10 @@
   them. You will also need to set the passwords to something appropriate.
 -->
   <role rolename="manager-gui" />
-  <role rolename="tomcat"/>
-  <role rolename="role1"/>
+  <role rolename="tomcat" />
+  <role rolename="role1" />
   <!-- <user username="tomcat" password="tomcat" roles="tomcat"/>-->
-  <user username="wfsadmin" password="dwmfsn"
-  roles="tomcat,role1,manager-gui" />
+  <user username="wfsadmin" password="changeme"
+    roles="tomcat,role1,manager-gui" />
   <!-- <user username="role1" password="tomcat" roles="role1"/>-->
 </tomcat-users>
