@@ -223,54 +223,6 @@ jobs:
         push: true
         tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_REPO_NAME }}/${{env.DOCKER_ITEM}}:${{
           steps.date.outputs.date }}-${{ steps.slug.outputs.sha8 }}
-  webui:
-    env:
-      DOCKER_ITEM: webui
-      PREFIX: ''
-    name: webui image
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - id: changed-files
-      uses: tj-actions/changed-files@v44
-    - id: changes
-      name: Any changes?
-      run: "echo \"BUILD=${{env.BUILD_ALL}}\" >> $GITHUB_OUTPUT\nfor changed_file\
-        \ in ${{ steps.changed-files.outputs.all_changed_files }}; do\n  echo \"Changed\
-        \ file - do I care? ${changed_file}.\"\n  if  [[ ${changed_file} == docker/${{env.DOCKER_ITEM}}/*\
-        \ ]] || [[ ${changed_file} == docker/Dockerfile.${{env.DOCKER_ITEM}} ]] ;\n\
-        \  then\n    echo \"Detected change!\"\n    echo \"BUILD=YES\" >> $GITHUB_OUTPUT\n\
-        \  fi\ndone\n"
-    - id: slug
-      if: steps.changes.outputs.BUILD == 'YES'
-      name: Get short SHA
-      run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
-    - id: date
-      name: Timestamp
-      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-    - if: steps.changes.outputs.BUILD == 'YES'
-      name: Login to registry
-      uses: docker/login-action@v2
-      with:
-        password: ${{ env.REGISTRY_PASSWORD }}
-        registry: ${{ env.REGISTRY }}
-        username: ${{ env.REGISTRY_USERNAME }}
-    - id: buildx
-      if: steps.changes.outputs.BUILD == 'YES'
-      name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-    - if: steps.changes.outputs.BUILD == 'YES'
-      name: Build image
-      uses: docker/build-push-action@v4
-      with:
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
-        context: docker/${{env.DOCKER_ITEM}}
-        file: docker/Dockerfile.${{env.DOCKER_ITEM}}
-        platforms: linux/amd64
-        push: true
-        tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_REPO_NAME }}/${{env.DOCKER_ITEM}}:${{
-          steps.date.outputs.date }}-${{ steps.slug.outputs.sha8 }}
   wfs:
     env:
       DOCKER_ITEM: wfs

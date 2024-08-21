@@ -30,7 +30,7 @@ build:
 
     - name: Timestamp
       id: date
-      run: echo "name=date::$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
     - name: Login to registry
       if: steps.changes.outputs.BUILD == 'YES'

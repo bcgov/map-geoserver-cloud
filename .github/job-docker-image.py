@@ -1,7 +1,7 @@
 # The workflows/images.yml jobs are created by running this!
 import yaml
 
-docker_items = ['gwc', 'webui', 'wfs', 'wms', 'wms-p6spy', 'geokml', 'geosld', 'getcaps']
+docker_items = ['gwc', 'wfs', 'wms', 'wms-p6spy', 'geokml', 'geosld', 'getcaps']
 
 workflow = """
 #######################
