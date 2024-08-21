@@ -1,7 +1,7 @@
 FROM maven:latest AS BUILD
 
 WORKDIR /app
-COPY wms/. .
+COPY . .
 RUN mvn package
 
 FROM geoservercloud/geoserver-cloud-wms:1.9-SNAPSHOT

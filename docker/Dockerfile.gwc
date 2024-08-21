@@ -18,14 +18,14 @@ COPY --from=BUILD /usr/local/tomcat/webapps/gwc /usr/local/tomcat/webapps/gwc
 
 RUN cp -r /usr/local/tomcat/webapps.dist/manager /usr/local/tomcat/webapps/manager
 
-COPY gwc/overrides /overrides/.
+COPY overrides /overrides/.
 
-COPY gwc/overrides/conf/tomcat-users.xml /usr/local/tomcat/conf/tomcat-users.xml
-COPY gwc/overrides/conf/server.xml /usr/local/tomcat/conf/server.xml
+COPY overrides/conf/tomcat-users.xml /usr/local/tomcat/conf/tomcat-users.xml
+COPY overrides/conf/server.xml /usr/local/tomcat/conf/server.xml
 
-COPY gwc/overrides/webapps/manager/META-INF/context.xml /usr/local/tomcat/webapps/manager/META-INF/context.xml
+COPY overrides/webapps/manager/META-INF/context.xml /usr/local/tomcat/webapps/manager/META-INF/context.xml
 
-COPY gwc/entrypoint.sh /
+COPY entrypoint.sh /
 
 ENV GWC_DISKQUOTA_DISABLED=true
 ENV GEOWEBCACHE_CACHE_DIR=/geowebcache/cache
