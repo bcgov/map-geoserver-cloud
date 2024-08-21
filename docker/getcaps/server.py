@@ -37,7 +37,7 @@ async def download_file(request: Request, rest_of_path: str):
         logger.warn("MISS URL  %s" % url)
         base_url = f'{get_base_url(request.url)}:8080'
         logger.warn("Forwarding to %s.." % base_url)
-        fwd_res = requests.get(f'{base_url}{url}')
+        fwd_res = requests.get(f'{base_url}{url}', headers=request.headers)
         return Response(status_code=fwd_res.status_code, content=fwd_res.content, media_type=fwd_res.headers['content-type'], headers=fwd_res.headers)
 
 
