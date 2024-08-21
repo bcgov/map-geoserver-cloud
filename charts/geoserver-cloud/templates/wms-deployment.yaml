@@ -20,7 +20,7 @@ spec:
       containers:
         - name: wms-container
           image: >-
-            geoservercloud/geoserver-cloud-wms:1.5.0
+            geoservercloud/geoserver-cloud-wms:1.9-SNAPSHOT
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: "datadir"

@@ -1,0 +1,11 @@
+{
+  "status": "success",
+  "name": "data.zip",
+  "lastModified": "2024-05-02T21:45:32Z",
+  "size": 46363108,
+  "etag": "3314d460a20f31fd1d202afc38e8675e-6",
+  "type": "file",
+  "metadata": {
+    "Content-Type": "application/x-zip-compressed"
+  }
+}

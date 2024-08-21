@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gwcConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://geowebcache.org/schema/1.24.0"
+  xsi:schemaLocation="http://geowebcache.org/schema/1.24.0 http://geowebcache.org/schema/1.24.0/geowebcache.xsd">
+  <version>1.8.0</version>
+  <backendTimeout>120</backendTimeout>
+  <serviceInformation>
+    <title>GeoWebCache for Maps</title>
+    <description>GeoWebCache is an advanced tile cache for WMS servers. It supports a large variety of protocols and
+      formats, including WMS-C, WMTS, KML, Google Maps and Virtual Earth.</description>
+    <keywords>
+      <string>WFS</string>
+      <string>WMS</string>
+      <string>WMTS</string>
+      <string>GEOWEBCACHE</string>
+    </keywords>
+    <serviceProvider>
+      <providerName>John Smith inc.</providerName>
+      <providerSite>http://www.example.com/</providerSite>
+      <serviceContact>
+        <individualName>John Smith</individualName>
+        <positionName>Geospatial Expert</positionName>
+        <addressType>Work</addressType>
+        <addressStreet>1 Bumpy St.</addressStreet>
+        <addressCity>Hobart</addressCity>
+        <addressAdministrativeArea>TAS</addressAdministrativeArea>
+        <addressPostalCode>7005</addressPostalCode>
+        <addressCountry>Australia</addressCountry>
+        <phoneNumber>+61 3 0000 0000</phoneNumber>
+        <faxNumber>+61 3 0000 0001</faxNumber>
+        <addressEmail>john.smith@example.com</addressEmail>
+      </serviceContact>
+    </serviceProvider>
+    <fees>NONE</fees>
+    <accessConstraints>NONE</accessConstraints>
+  </serviceInformation>
+
+  <blobStores>
+    <!-- A sample file blob store configuration. Enable and set as default to override the legacy lookup method for the cache directory  -->
+    <FileBlobStore default="false">
+      <id>defaultCache</id>
+      <enabled>false</enabled>
+      <baseDirectory>/tmp/defaultCache</baseDirectory>
+      <fileSystemBlockSize>4096</fileSystemBlockSize>
+    </FileBlobStore>
+
+    <!-- A sample Swift blob store configuration.   
+    <SwiftBlobStore default="true">
+        <id>ObjectStorageCache</id>
+        <enabled>true</enabled>
+        <container>put-your-actual-container-name-here</container>
+        <prefix>test-cache</prefix>
+        <endpoint>endpoint</endpoint>
+        <provider>openstack-swift</provider>
+        <region>put-region-here</region>
+        <keystoneVersion>3</keystoneVersion>
+        <keystoneScope>project</keystoneScope>
+        <keystoneDomainName>Default</keystoneDomainName>
+        <identity>tenant-name-here:put-username-here</identity>
+        <password>put-password-here</password>
+    </SwiftBlobStore> -->
+
+    <!-- A sample AWS S3 blob store configuration.   -->
+
+    <!-- <S3BlobStore default="true">
+      <id>s3Cache</id>
+      <enabled>true</enabled>
+      <bucket>${S3_CACHE_BUCKET}</bucket>
+      <prefix>cache</prefix>
+      <awsAccessKey>${S3_ACCESS_KEY}</awsAccessKey>
+      <awsSecretKey>${S3_SECRET_KEY}</awsSecretKey>
+      <maxConnections>50</maxConnections>
+      <useHTTPS>true</useHTTPS>
+      <endpoint>${S3_ENDPOINT}</endpoint>
+      <proxyDomain></proxyDomain>
+      <proxyWorkstation></proxyWorkstation>
+      <proxyHost></proxyHost>
+      <proxyPort></proxyPort>
+      <proxyUsername></proxyUsername>
+      <proxyPassword></proxyPassword>
+      <useGzip>true</useGzip>
+    </S3BlobStore> -->
+
+    <!-- A sample MBTiles blob store configuration.   -->
+    <!--
+    <MbtilesBlobStore default="true">
+      <id>mbtiles-store</id>
+      <enabled>true</enabled>
+      <rootDirectory>/tmp/gwc-mbtiles</rootDirectory>
+      <templatePath>{layer}{grid}{format}{params}/{z}-{x}-{y}.sqlite</templatePath>
+      <poolSize>1000</poolSize>
+      <poolReaperIntervalMs>500</poolReaperIntervalMs>
+      <rowRangeCount>250</rowRangeCount>
+      <columnRangeCount>250</columnRangeCount>
+      <eagerDelete>false</eagerDelete>
+      <useCreateTime>true</useCreateTime>
+      <executorConcurrency>5</executorConcurrency>
+      <mbtilesMetadataDirectory>/tmp/gwc-mbtiles/layersMetadata</mbtilesMetadataDirectory>
+    </MbtilesBlobStore>
+    -->
+
+  </blobStores>
+
+  <gridSets>
+    <!-- Grid Set Example, by default EPSG:900913 and EPSG:4326 are defined -->
+    <gridSet>
+      <name>EPSG:2163</name>
+      <srs>
+        <number>2163</number>
+      </srs>
+      <extent>
+        <coords>
+          <double>-2495667.977678598</double>
+          <double>-2223677.196231552</double>
+          <double>3291070.6104286816</double>
+          <double>959189.3312465074</double>
+        </coords>
+      </extent>
+      <scaleDenominators>
+        <double>25000000</double>
+        <double>1000000</double>
+        <double>100000</double>
+        <double>25000</double>
+      </scaleDenominators>
+      <tileHeight>200</tileHeight>
+      <tileWidth>200</tileWidth>
+    </gridSet>
+    <gridSet>
+      <name>CanadaAtlasNonotree</name>
+      <srs>
+        <number>3979</number>
+      </srs>
+      <extent>
+        <coords>
+          <double>-2441613</double>
+          <double>-861451</double>
+          <double>3176326</double>
+          <double>3969977</double>
+        </coords>
+      </extent>
+      <resolutions>
+        <double>21945.0742188</double>
+        <double>7315.02473958</double>
+        <double>2438.34157986</double>
+        <double>812.78052662</double>
+        <double>270.926842207</double>
+      </resolutions>
+    </gridSet> 
+  </gridSets>
+
+  <layers>
+
+    <wmsLayer>
+      <!-- 
+      <blobStoreId>myS3Cache</blobStoreId>
+      -->
+      <name>pub:WHSE_HUMAN_CULTURAL_ECONOMIC.EMRG_ORDER_AND_ALERT_AREAS_SP</name>
+      <mimeFormats>
+        <string>image/png</string>
+      </mimeFormats>
+      <gridSubsets>
+        <gridSubset>
+          <gridSetName>EPSG:3857</gridSetName>
+        </gridSubset>
+      </gridSubsets>
+      <expireCacheList>
+        <expirationRule minZoom="0" expiration="900" />
+      </expireCacheList>
+      <expireClientsList>
+        <expirationRule minZoom="0" expiration="900" />
+      </expireClientsList>
+      <parameterFilters>
+        <regexParameterFilter>
+          <key>cql_filter</key>
+          <defaultValue>INCLUDE</defaultValue>
+          <regex>.*</regex>
+        </regexParameterFilter>
+        <regexParameterFilter>
+          <key>STYLES</key>
+          <defaultValue></defaultValue>
+          <regex>.*</regex>
+        </regexParameterFilter>
+      </parameterFilters>
+      <wmsUrl>
+        <string>${WMS_BASE_URL}</string>
+      </wmsUrl>
+      <legends defaultWidth="20" defaultHeight="20" defaultFormat="image/png">
+        <legend style=""/>
+      </legends>      
+    </wmsLayer>
+  </layers>
+
+</gwcConfiguration>

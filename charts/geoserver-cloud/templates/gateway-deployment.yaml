@@ -17,7 +17,7 @@ spec:
       containers:
         - name: gateway-container
           image: >-
-            geoservercloud/geoserver-cloud-gateway:1.5.0
+            geoservercloud/geoserver-cloud-gateway:1.9-SNAPSHOT
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: "datadir"
