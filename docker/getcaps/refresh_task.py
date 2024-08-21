@@ -18,8 +18,12 @@ def refresh_task():
         { 
             "url": os.environ['GEOSERVER_WMS_URL'],
             "getcaps": [
+                "/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+                "/wms?service=WMS&version=1.1.1&request=GetCapabilities",
                 "/ows?service=WMS&version=1.3.0&request=GetCapabilities",
                 "/ows?service=WMS&version=1.1.1&request=GetCapabilities",
+                "/pub/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+                "/pub/wms?service=WMS&version=1.1.1&request=GetCapabilities",
                 "/pub/ows?service=WMS&version=1.3.0&request=GetCapabilities",
                 "/pub/ows?service=WMS&version=1.1.1&request=GetCapabilities"
             ]
@@ -27,12 +31,18 @@ def refresh_task():
         {
             "url": os.environ['GEOSERVER_WFS_URL'],
             "getcaps": [
+                "/wfs?service=WFS&version=2.0.0&request=GetCapabilities",
+                "/wfs?service=WFS&version=1.1.0&request=GetCapabilities",
+                "/wfs?service=WFS&version=1.0.0&request=GetCapabilities",
                 "/ows?service=WFS&version=2.0.0&request=GetCapabilities",
                 "/ows?service=WFS&version=1.1.0&request=GetCapabilities",
                 "/ows?service=WFS&version=1.0.0&request=GetCapabilities",
+                "/pub/wfs?service=WFS&version=2.0.0&request=GetCapabilities",
+                "/pub/wfs?service=WFS&version=1.1.0&request=GetCapabilities",
+                "/pub/wfs?service=WFS&version=1.0.0&request=GetCapabilities",
                 "/pub/ows?service=WFS&version=2.0.0&request=GetCapabilities",
                 "/pub/ows?service=WFS&version=1.1.0&request=GetCapabilities",
-                "/pub/ows?service=WFS&version=1.0.0&request=GetCapabilities",
+                "/pub/ows?service=WFS&version=1.0.0&request=GetCapabilities"
             ]
         }
     ]

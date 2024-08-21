@@ -3,7 +3,8 @@ import os
 import re
 import sys
 import logging
-from fastapi import FastAPI, Request, HTTPException
+import requests
+from fastapi import FastAPI, Request, Response, HTTPException
 from fastapi.responses import FileResponse
 from urllib.parse import urlencode
 from urllib.parse import parse_qsl
@@ -33,6 +34,16 @@ async def download_file(request: Request, rest_of_path: str):
     if os.path.isfile(filepath):
         return FileResponse(filepath)
     else:
-        logger.error("MISS URL  %s" % url)
-        logger.error("MISS PATH %s" % filepath)
-        raise HTTPException(status_code=404, detail="File not found")
+        logger.warn("MISS URL  %s" % url)
+        base_url = get_base_url(request.url)
+        logger.warn("Forwarding to %s.." % base_url)
+        fwd_res = requests.get(f'{base_url}{url}')
+        return Response(status_code=fwd_res.status_code, content=fwd_res.content, media_type=fwd_res.headers['content-type'], headers=fwd_res.headers)
+
+
+def get_base_url (url):
+    query = parse_qsl(url.query)
+    if '/wms' in url.path or ('service' in query and query['service'].upper() == 'WMS'):
+        return os.environ['GEOSERVER_WMS_URL']
+    else:
+        return os.environ['GEOSERVER_WFS_URL']
