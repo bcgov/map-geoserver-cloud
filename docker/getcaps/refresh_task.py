@@ -53,6 +53,13 @@ def refresh_task():
                     for sources in d['propertySources']:
                         if 'properties' in sources:
                             for prop, value in sources['properties'].items():
+                                # Sample contents of `s3-data`:
+                                #   status: success
+                                #   name: data.zip
+                                #   lastModified: "2024-05-02T21:45:32Z"
+                                #   size: 46363108
+                                #   etag: 3314d460a20f31fd1d202afc38e8675e-6
+                                #   type: file
                                 if prop.startswith('s3-data.'):
                                     s3_data[prop[8:]] = value['value']
 
