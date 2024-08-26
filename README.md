@@ -2,12 +2,6 @@
 
 Configuration to deploy [GeoServer Cloud](https://geoserver.org/geoserver-cloud/) into OpenShift for hosting public map layers.
 
-## Installation
+GitOps is managed in a private repository under organization `bcgov-c`.
 
-### Helm
-
-Prerequisites: `helm`
-
-```sh
-helm upgrade --install geoserver ./charts/geoserver-cloud
-```
+This repo is only used for building and registering the docker images used in the `Geoserver Cloud` solution.
