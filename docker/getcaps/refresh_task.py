@@ -83,7 +83,10 @@ def refresh_task():
                             fileoutput = f'{cache_path}/{filename}.xml'
                             logger.info(f"Getting {url}")
 
-                            response = requests.get(f'http://{ip}:8080{url}')
+                            headers = {
+                                "Host": os.environ["PROXY_BASE_URL"]
+                            }
+                            response = requests.get(f'http://{ip}:8080{url}', headers=headers)
                             if response.status_code == 200:
                                 with open(fileoutput, "wb") as f:
                                     f.write(response.content)
