@@ -8,6 +8,7 @@ from fastapi import FastAPI, Request, Response, HTTPException
 from fastapi.responses import FileResponse
 from urllib.parse import urlencode
 from urllib.parse import parse_qsl, parse_qs
+from refresh_task import is_ready
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +19,10 @@ cache_path = os.environ['CACHE_PATH']
 
 @app.get("/health")
 def health():
-    return {"status": "up"}
+    if is_ready():
+        return {"status": "up"}
+    else:
+        raise HTTPException(503)
 
 @app.get("/{rest_of_path:path}")
 async def download_file(request: Request, rest_of_path: str):

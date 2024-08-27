@@ -51,6 +51,7 @@ def refresh_task():
     patch_http_and_https_connection()
 
     while True:
+        done = 0
         for idx, base_url in enumerate(base_urls):
             try:
                 r = requests.get(f'{base_url['url']}:8081/actuator/env')
@@ -96,21 +97,26 @@ def refresh_task():
                         update_cache_state(idx, s3_data['lastModified'])
                     else:
                         logger.debug("Cache up to date, skipping calls to geoserver.")
+                    done = done + 1
                 else:
                     raise Exception(r.status_code)
                 
-                with open(f"{cache_path}/ready", "w") as f:
-                    f.write('up')
-
-            except KeyboardInterrupt:
+            except KeyboardInterrupt as ex:
                 raise ex
             except SystemExit as ex:
                 raise ex
             except BaseException as ex:
                 logger.error(f"Failed to call geoserver {ex}")
 
+        if done == 2 and not is_ready():
+            with open(f"{cache_path}/ready", "w") as f:
+                f.write('up')
+
         time.sleep(60)
 
+def is_ready ():
+    file = f"{cache_path}/ready"
+    return os.path.isfile(file)
 
 def is_cache_old (idx, current):
     file = f"{cache_path}/state{idx}"
