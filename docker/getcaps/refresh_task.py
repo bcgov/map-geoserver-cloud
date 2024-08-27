@@ -82,7 +82,7 @@ def refresh_task():
                             url = the_url.path + "?" + urlencode(sorted(parse_qsl(the_url.query)))
                             filename = re.sub(r'[^a-zA-Z0-9]', '-', url.lower()[1:])
                             fileoutput = f'{cache_path}/{filename}.xml'
-                            logger.info(f"Getting {url}")
+                            logger.info(f"GET http://{ip}:8080{url}")
 
                             headers = {
                                 "Host": os.environ["PROXY_BASE_URL"]
