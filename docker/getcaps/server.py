@@ -48,8 +48,8 @@ async def download_file(request: Request, rest_of_path: str):
 def get_base_url (url):
     query = parse_qs(url.query)
     if '/wms' in url.path or \
-        ('SERVICE' in query and query['SERVICE'].upper() == 'WMS') or \
-        ('service' in query and query['service'].upper() == 'WMS'):
+        ('SERVICE' in query and query['SERVICE'][0].upper() == 'WMS') or \
+        ('service' in query and query['service'][0].upper() == 'WMS'):
         return os.environ['GEOSERVER_WMS_URL']
     else:
         return os.environ['GEOSERVER_WFS_URL']
