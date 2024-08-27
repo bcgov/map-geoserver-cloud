@@ -7,7 +7,7 @@ import requests
 from fastapi import FastAPI, Request, Response, HTTPException
 from fastapi.responses import FileResponse
 from urllib.parse import urlencode
-from urllib.parse import parse_qsl
+from urllib.parse import parse_qsl, parse_qs
 
 logger = logging.getLogger(__name__)
 
@@ -42,8 +42,10 @@ async def download_file(request: Request, rest_of_path: str):
 
 
 def get_base_url (url):
-    query = parse_qsl(url.query)
-    if '/wms' in url.path or ('service' in query and query['service'].upper() == 'WMS'):
+    query = parse_qs(url.query)
+    if '/wms' in url.path or \
+        ('SERVICE' in query and query['SERVICE'].upper() == 'WMS') or \
+        ('service' in query and query['service'].upper() == 'WMS'):
         return os.environ['GEOSERVER_WMS_URL']
     else:
         return os.environ['GEOSERVER_WFS_URL']
