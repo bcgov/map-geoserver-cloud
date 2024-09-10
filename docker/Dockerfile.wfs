@@ -6,10 +6,10 @@ RUN git clone -b 2.25.3 --depth 1 https://github.com/geoserver/geoserver.git
 WORKDIR /app/geoserver/src/community/xslt
 RUN mvn package
 
-WORKDIR /app/geoserver/src/rest
+WORKDIR /app/geoserver/src/restconfig
 RUN mvn package
 
 FROM geoservercloud/geoserver-cloud-wfs:1.9-SNAPSHOT
 
-COPY --from=BUILD /app/geoserver/src/rest/target/gs-rest-2.25.3.jar /opt/app/bin/BOOT-INF/lib/gs-wfs-bcgov-rest-2.25.3.jar
+COPY --from=BUILD /app/geoserver/src/restconfig/target/gs-restconfig-2.25.3.jar /opt/app/bin/BOOT-INF/lib/gs-wfs-bcgov-restconfig-2.25.3.jar
 COPY --from=BUILD /app/geoserver/src/community/xslt/target/gs-xslt-2.25.3.jar /opt/app/bin/BOOT-INF/lib/gs-wfs-bcgov-xslt-2.25.3.jar
