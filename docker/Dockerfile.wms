@@ -14,3 +14,6 @@ RUN apt update && apt install -y fonts-liberation
 # LiberationSans-Regular.ttf: "Liberation Sans" "Regular"
 
 COPY --from=BUILD /app/target/gs-wms-bcgov-2.26.0.jar /opt/app/bin/BOOT-INF/lib/.
+
+# Added to try and resolve srsName discrepency for WMS.GetFeatureInfo
+COPY /opt/app/bin/BOOT-INF/lib/gs-wfs-2.26.0-SNAPSHOT.jar /opt/app/bin/BOOT-INF/lib/gs-wms-bcgov-wfs-2.26.0-SNAPSHOT.jar
