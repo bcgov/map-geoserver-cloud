@@ -18,7 +18,7 @@ app = FastAPI()
 cache_path = os.environ['CACHE_PATH']
 
 @app.get("/health")
-def health():
+async def health():
     if is_ready():
         return {"status": "up"}
     else:
