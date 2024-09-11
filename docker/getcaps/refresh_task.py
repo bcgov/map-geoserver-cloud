@@ -78,17 +78,15 @@ def refresh_task():
                     if is_cache_old(idx, s3_data['lastModified']):
                         logger.info(f'New! DATE:{s3_data['lastModified']:22} ETAG:{s3_data['etag']}')
                         for url in base_url['getcaps']:
-                            the_url = urlparse(f'http://{ip}:8080{url}')
-                            url = the_url.path + "?" + urlencode(sorted(parse_qsl(the_url.query)))
-                            filename = re.sub(r'[^a-zA-Z0-9]', '-', url.lower()[1:])
-                            fileoutput = f'{cache_path}/{filename}.xml'
-                            logger.info(f"GET http://{ip}:8080{url}")
+                            url_str = f'http://{ip}:8080{url}'
+                            logger.info(f'GET {url_str}')
 
                             headers = {
                                 "Host": os.environ["PROXY_BASE_URL"]
                             }
-                            response = requests.get(f'http://{ip}:8080{url}', headers=headers)
+                            response = requests.get(url_str, headers=headers)
                             if response.status_code == 200:
+                                fileoutput = calc_filename(url_str)
                                 with open(fileoutput, "wb") as f:
                                     f.write(response.content)
                             else:
@@ -113,6 +111,12 @@ def refresh_task():
                 f.write('up')
 
         time.sleep(60)
+
+def calc_filename (url_str):
+    the_url = urlparse(url_str)
+    url = the_url.path + "?" + urlencode(sorted(parse_qsl(the_url.query)))
+    filename = re.sub(r'[^a-zA-Z0-9]', '-', url.lower()[1:])
+    return f'{cache_path}/{filename}.xml'
 
 def is_ready ():
     file = f"{cache_path}/ready"

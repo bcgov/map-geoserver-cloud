@@ -41,9 +41,17 @@ async def download_file(request: Request, rest_of_path: str):
         logger.warn("MISS URL  %s" % url)
         base_url = f'{get_base_url(request.url)}:8080'
         logger.warn("Forwarding to %s.." % base_url)
-        fwd_res = requests.get(f'{base_url}{url}', headers=request.headers)
-        return Response(status_code=fwd_res.status_code, content=fwd_res.content, media_type=fwd_res.headers['content-type'], headers=fwd_res.headers)
+        url_str = f'{base_url}{url}'
 
+        headers = {
+            "Host": os.environ["PROXY_BASE_URL"]
+        }
+        fwd_res = requests.get(url_str, headers=headers)
+        if fwd_res.status_code == 200:
+            logger.warn("SAVING %s" % filepath)
+            with open(filepath, "wb") as f:
+                f.write(fwd_res.content)
+        return Response(status_code=fwd_res.status_code, content=fwd_res.content, media_type=fwd_res.headers['content-type'], headers=fwd_res.headers)
 
 def get_base_url (url):
     query = parse_qs(url.query)
