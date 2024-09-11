@@ -18,14 +18,14 @@ app = FastAPI()
 cache_path = os.environ['CACHE_PATH']
 
 @app.get("/health")
-async def health():
+def health():
     if is_ready():
         return {"status": "up"}
     else:
         raise HTTPException(503)
 
 @app.get("/{rest_of_path:path}")
-async def download_file(request: Request, rest_of_path: str):
+def download_file(request: Request, rest_of_path: str):
 
     url = request.url.path + "?" + urlencode(sorted(parse_qsl(request.url.query)))
     filename = re.sub(r'[^a-zA-Z0-9]', '-', url.lower()[1:])
