@@ -13,7 +13,7 @@
     <constructor-arg ref="KMLEncoder" />
     <constructor-arg ref="geoServer"/>
   </bean>
-
+<!-- 
   <!-- kml kvp parsers -->
   <bean id="superOverlayKvpParser" class="org.geoserver.ows.kvp.BooleanKvpParser">
     <constructor-arg value="superoverlay" />
@@ -70,6 +70,6 @@
     <constructor-arg value="best_guess" />
     <constructor-arg value="org.geoserver.kml.regionate.BestGuessRegionatingStrategy" />
     <constructor-arg ref="geoServer" />
-  </bean>
+  </bean> -->
 
 </beans>
