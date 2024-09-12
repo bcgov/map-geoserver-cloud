@@ -28,3 +28,5 @@ COPY --from=BUILD /gsbuild/geoserver/src/community/xslt/target/gs-xslt-2.25.3.ja
 # Adding support for KML
 COPY --from=BUILD /gsbuild/geoserver/src/kml/target/gs-kml-2.25.3.jar /opt/app/bin/BOOT-INF/lib/.
 COPY --from=BUILD /app/target/gs-wfs-bcgov-2.26.0.jar /opt/app/bin/BOOT-INF/lib/.
+
+RUN curl -o /opt/app/bin/BOOT-INF/lib/JavaAPIforKml-2.2.1.jar https://repo1.maven.org/maven2/de/micromata/jak/JavaAPIforKml/2.2.1/JavaAPIforKml-2.2.1.jar
