@@ -12,6 +12,7 @@ from urllib.parse import parse_qsl
 
 logger = logging.getLogger(__name__)
 cache_path = os.environ['CACHE_PATH']
+context_path = "/geo"
 
 def refresh_task():
     base_urls = [
@@ -78,7 +79,7 @@ def refresh_task():
                     if is_cache_old(idx, s3_data['lastModified']):
                         logger.info(f'New! DATE:{s3_data['lastModified']:22} ETAG:{s3_data['etag']}')
                         for url in base_url['getcaps']:
-                            url_str = f'http://{ip}:8080{url}'
+                            url_str = f'http://{ip}:8080{context_path}{url}'
                             logger.info(f'GET {url_str}')
 
                             headers = {
