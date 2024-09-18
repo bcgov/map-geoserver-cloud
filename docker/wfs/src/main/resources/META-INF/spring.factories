@@ -1,4 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-bcgov.geoserver.wfs.AutoConfigure,\
-org.geoserver.cloud.autoconfigure.wms.WmsApplicationAutoConfiguration,\
-org.geoserver.cloud.autoconfigure.wms.KMLAutoConfiguration
+bcgov.geoserver.wfs.AutoConfigure
