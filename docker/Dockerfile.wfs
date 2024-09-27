@@ -1,5 +1,3 @@
-FROM geoservercloud/geoserver-cloud-wms:1.9-SNAPSHOT AS wms
-
 FROM maven:latest AS BUILD
 
 WORKDIR /app
