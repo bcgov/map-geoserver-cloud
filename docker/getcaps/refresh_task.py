@@ -83,7 +83,7 @@ def refresh_task():
                             logger.info(f'GET {url_str}')
 
                             headers = {
-                                "Host": os.environ["PROXY_BASE_URL"]
+                                "Forwarded": os.environ["PROXY_FORWARDED"]
                             }
                             response = requests.get(url_str, headers=headers)
                             if response.status_code == 200:

@@ -44,7 +44,7 @@ def download_file(request: Request, rest_of_path: str):
         url_str = f'{base_url}{url}'
 
         headers = {
-            "Host": os.environ["PROXY_BASE_URL"]
+            "Forwarded": os.environ["PROXY_FORWARDED"]
         }
         fwd_res = requests.get(url_str, headers=headers)
         if fwd_res.status_code == 200:
