@@ -14,6 +14,5 @@ COPY . .
 RUN npm i
 
 COPY --from=gscloud /tmp/schemas public/schemas
-RUN chmod -R 0444 public
 
 ENTRYPOINT [ "node", "index.js" ]
