@@ -13,6 +13,6 @@ WORKDIR /app
 COPY . .
 RUN npm i
 
-COPY --from=gscloud /tmp/schemas public/schemas
+COPY --from=gscloud /tmp/schemas public/geo/schemas
 
 ENTRYPOINT [ "node", "index.js" ]
