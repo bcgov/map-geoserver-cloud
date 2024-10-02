@@ -7,8 +7,6 @@ logging.basicConfig(
     format='%(asctime)s [%(levelname)-5s] %(message)s',
     level=os.environ.get('LOGLEVEL', 'INFO').upper()
 )
-logging.getLogger("uvicorn.access").propagate = False
-logging.getLogger("uvicorn.error").propagate = False
 
 logger = logging.getLogger(__name__)
 
@@ -21,6 +19,11 @@ if __name__ == "__main__":
 
     logger.info("Starting HTTP Server on port 8000")
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")
+
+    log_config = uvicorn.config.LOGGING_CONFIG
+    log_config["formatters"]["access"]["fmt"] = "%(asctime)s [%(levelname)-5s] %(message)s"
+    log_config["formatters"]["default"]["fmt"] = "%(asctime)s [%(levelname)-5s] %(message)s"
+
+    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info", log_config=log_config)
 
     process.join()

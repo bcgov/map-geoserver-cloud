@@ -1,1 +1,36 @@
+FROM maven:latest AS BUILD
+
+WORKDIR /app
+COPY . .
+RUN mvn package
+
+WORKDIR /gsbuild
+RUN git clone -b 2.25.3 --depth 1 https://github.com/geoserver/geoserver.git
+
+WORKDIR /gsbuild/geoserver/src/community/xslt
+RUN mvn package
+
+WORKDIR /gsbuild/geoserver/src/kml
+RUN mvn package
+
+WORKDIR /gsbuild/geoserver/src/rest
+RUN mvn package
+
+WORKDIR /gsbuild/geoserver/src/restconfig
+RUN mvn package
+
 FROM geoservercloud/geoserver-cloud-wfs:1.9-SNAPSHOT
+
+COPY --from=BUILD /gsbuild/geoserver/src/rest/target/gs-rest-2.25.3.jar /opt/app/bin/BOOT-INF/lib/.
+COPY --from=BUILD /gsbuild/geoserver/src/restconfig/target/gs-restconfig-2.25.3.jar /opt/app/bin/BOOT-INF/lib/.
+COPY --from=BUILD /gsbuild/geoserver/src/community/xslt/target/gs-xslt-2.25.3.jar /opt/app/bin/BOOT-INF/lib/gs-wfs-bcgov-xslt-2.25.3.jar
+
+# Adding support for KML
+COPY --from=BUILD /gsbuild/geoserver/src/kml/target/gs-kml-2.25.3.jar /opt/app/bin/BOOT-INF/lib/.
+COPY --from=BUILD /app/target/gs-wfs-bcgov-2.26.0.jar /opt/app/bin/BOOT-INF/lib/.
+
+RUN curl -o /opt/app/bin/BOOT-INF/lib/JavaAPIforKml-2.2.1.jar \
+  https://repo1.maven.org/maven2/de/micromata/jak/JavaAPIforKml/2.2.1/JavaAPIforKml-2.2.1.jar
+
+RUN curl -O https://repo1.maven.org/maven2/p6spy/p6spy/3.9.1/p6spy-3.9.1.jar \
+ && mv p6spy-3.9.1.jar /opt/app/bin/BOOT-INF/lib/p6spy-3.9.1.jar

@@ -12,14 +12,19 @@ from urllib.parse import parse_qsl
 
 logger = logging.getLogger(__name__)
 cache_path = os.environ['CACHE_PATH']
+context_path = "/geo"
 
 def refresh_task():
     base_urls = [
         { 
             "url": os.environ['GEOSERVER_WMS_URL'],
             "getcaps": [
+                "/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+                "/wms?service=WMS&version=1.1.1&request=GetCapabilities",
                 "/ows?service=WMS&version=1.3.0&request=GetCapabilities",
                 "/ows?service=WMS&version=1.1.1&request=GetCapabilities",
+                "/pub/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+                "/pub/wms?service=WMS&version=1.1.1&request=GetCapabilities",
                 "/pub/ows?service=WMS&version=1.3.0&request=GetCapabilities",
                 "/pub/ows?service=WMS&version=1.1.1&request=GetCapabilities"
             ]
@@ -27,12 +32,18 @@ def refresh_task():
         {
             "url": os.environ['GEOSERVER_WFS_URL'],
             "getcaps": [
+                "/wfs?service=WFS&version=2.0.0&request=GetCapabilities",
+                "/wfs?service=WFS&version=1.1.0&request=GetCapabilities",
+                "/wfs?service=WFS&version=1.0.0&request=GetCapabilities",
                 "/ows?service=WFS&version=2.0.0&request=GetCapabilities",
                 "/ows?service=WFS&version=1.1.0&request=GetCapabilities",
                 "/ows?service=WFS&version=1.0.0&request=GetCapabilities",
+                "/pub/wfs?service=WFS&version=2.0.0&request=GetCapabilities",
+                "/pub/wfs?service=WFS&version=1.1.0&request=GetCapabilities",
+                "/pub/wfs?service=WFS&version=1.0.0&request=GetCapabilities",
                 "/pub/ows?service=WFS&version=2.0.0&request=GetCapabilities",
                 "/pub/ows?service=WFS&version=1.1.0&request=GetCapabilities",
-                "/pub/ows?service=WFS&version=1.0.0&request=GetCapabilities",
+                "/pub/ows?service=WFS&version=1.0.0&request=GetCapabilities"
             ]
         }
     ]
@@ -41,6 +52,7 @@ def refresh_task():
     patch_http_and_https_connection()
 
     while True:
+        done = 0
         for idx, base_url in enumerate(base_urls):
             try:
                 r = requests.get(f'{base_url['url']}:8081/actuator/env')
@@ -67,14 +79,15 @@ def refresh_task():
                     if is_cache_old(idx, s3_data['lastModified']):
                         logger.info(f'New! DATE:{s3_data['lastModified']:22} ETAG:{s3_data['etag']}')
                         for url in base_url['getcaps']:
-                            the_url = urlparse(f'http://{ip}:8080{url}')
-                            url = the_url.path + "?" + urlencode(sorted(parse_qsl(the_url.query)))
-                            filename = re.sub(r'[^a-zA-Z0-9]', '-', url.lower()[1:])
-                            fileoutput = f'{cache_path}/{filename}.xml'
-                            logger.info(f"Getting {url}")
+                            url_str = f'http://{ip}:8080{context_path}{url}'
+                            logger.info(f'GET {url_str}')
 
-                            response = requests.get(f'http://{ip}:8080{url}')
+                            headers = {
+                                "Forwarded": os.environ["PROXY_FORWARDED"]
+                            }
+                            response = requests.get(url_str, headers=headers)
                             if response.status_code == 200:
+                                fileoutput = calc_filename(url_str)
                                 with open(fileoutput, "wb") as f:
                                     f.write(response.content)
                             else:
@@ -83,21 +96,32 @@ def refresh_task():
                         update_cache_state(idx, s3_data['lastModified'])
                     else:
                         logger.debug("Cache up to date, skipping calls to geoserver.")
+                    done = done + 1
                 else:
                     raise Exception(r.status_code)
                 
-                with open(f"{cache_path}/ready", "w") as f:
-                    f.write('up')
-
-            except KeyboardInterrupt:
+            except KeyboardInterrupt as ex:
                 raise ex
             except SystemExit as ex:
                 raise ex
             except BaseException as ex:
                 logger.error(f"Failed to call geoserver {ex}")
 
+        if done == 2 and not is_ready():
+            with open(f"{cache_path}/ready", "w") as f:
+                f.write('up')
+
         time.sleep(60)
 
+def calc_filename (url_str):
+    the_url = urlparse(url_str)
+    url = the_url.path + "?" + urlencode(sorted(parse_qsl(the_url.query)))
+    filename = re.sub(r'[^a-zA-Z0-9]', '-', url.lower()[1:])
+    return f'{cache_path}/{filename}.xml'
+
+def is_ready ():
+    file = f"{cache_path}/ready"
+    return os.path.isfile(file)
 
 def is_cache_old (idx, current):
     file = f"{cache_path}/state{idx}"

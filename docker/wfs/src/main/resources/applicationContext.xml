@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+  <bean id="kmlExtension" class="org.geoserver.platform.ModuleStatusImpl">
+    <constructor-arg index="0" value="gs-kml" />
+    <constructor-arg index="1" value="GeoServer KML" />
+  </bean>
+
+  <bean id="KMLEncoder" class="org.geoserver.kml.KMLEncoder" />
+
+  <bean id="WFSKMLOutputFormat" class="org.geoserver.kml.WFSKMLOutputFormat">
+    <constructor-arg ref="KMLEncoder" />
+    <constructor-arg ref="geoServer" />
+  </bean>
+
+</beans>
