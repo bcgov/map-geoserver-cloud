@@ -21,7 +21,7 @@ name: Dockerfiles
 
 on:
   push:
-    branches: [ images/* ]
+    branches: [ main, images/* ]
   workflow_dispatch:
     inputs:
       build_all:
