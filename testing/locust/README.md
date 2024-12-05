@@ -20,8 +20,7 @@ Current `prod-samples.txt` is based on log file `openmaps.gov.bc.ca-access.20240
 ```sh
 mkdir _tmp
 
-BASE_PATH=/geo/pub/ows \
-locust --config ./master.replay.conf
+locust --config ./master.replay-baseline.conf
 ```
 
 Start with `10VU` - that is the most a single GeoServer Pod will support.
@@ -33,4 +32,18 @@ mkdir _tmp
 
 BASE_PATH=/geo/pub/ows \
 locust --config ./master.replay-timed.conf
+```
+
+## Comparing against baseline
+
+```sh
+mkdir -p _tmp/gscloud
+locust --config ./master.compare-baseline.conf
+
+```
+
+## Analyzing differences
+
+```sh
+python3 analyze.py
 ```

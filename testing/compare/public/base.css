@@ -1,0 +1,33 @@
+body a,
+span,
+tr,
+td {
+  white-space: pre;
+}
+
+h3 {
+  background-color: #efefef;
+  white-space: break-spaces;
+}
+
+table {
+  width: 80%;
+  border-collapse: collapse;
+  margin: 5px;
+}
+
+table.params td {
+  color: green;
+}
+
+td {
+  border: 1px solid black;
+  padding: 5px;
+  white-space: pre-wrap;
+}
+
+html,
+body,
+td {
+  font-size: 1.2rem;
+}

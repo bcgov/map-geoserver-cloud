@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE WMS_DescribeLayerResponse SYSTEM "https://delivery.openmaps.gov.bc.ca/geo/schemas/wms/1.1.1/WMS_DescribeLayerResponse.dtd">
+<WMS_DescribeLayerResponse version="1.1.1">
+  <LayerDescription name="pub:WHSE_FOREST_TENURE.FTEN_SPEC_ACCESS_RD_POLY_SVW" wfs="https://delivery.openmaps.gov.bc.ca/geo/pub/WHSE_FOREST_TENURE.FTEN_SPEC_ACCESS_RD_POLY_SVW/wfs?" owsURL="https://delivery.openmaps.gov.bc.ca/geo/pub/WHSE_FOREST_TENURE.FTEN_SPEC_ACCESS_RD_POLY_SVW/wfs?" owsType="WFS">
+    <Query typeName="pub:WHSE_FOREST_TENURE.FTEN_SPEC_ACCESS_RD_POLY_SVW"/>
+  </LayerDescription>
+</WMS_DescribeLayerResponse>
