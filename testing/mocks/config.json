@@ -1,0 +1,84 @@
+{
+  "/geo/pub/WHSE_LAND_AND_NATURAL_RESOURCE.PROT_CURRENT_FIRE_POLYS_SP/ows?LAYERS=pub%3AWHSE_LAND_AND_NATURAL_RESOURCE.PROT_CURRENT_FIRE_POLYS_SP&service=WMS&request=GetCapabilities&version=1.3.0": {
+    "testId": "wms-getcapabilities-130"
+  },
+  "/geo/pub/WHSE_LAND_AND_NATURAL_RESOURCE.PROT_CURRENT_FIRE_POLYS_SP/wfs?service=WFS&request=GetCapabilities&version=1.1.0": {
+    "testId": "wfs-getcapabilities-110"
+  },
+  "/geo/pub/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsname=EPSG%3A4326&cql_filter=INTERSECTS%28SHAPE%2CPOINT%281273050.7965272+457403.76083951%29%29&propertyName=%2A&outputFormat=application%2Fjson": {
+    "testId": "wfs-getfeature-60",
+    "note": "features different timeStamp"
+  },
+  "/geo/pub/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&SRS=EPSG:4326&LAYERS=pub:WHSE_BASEMAPPING.TRIM_CONTOUR_LINES&STYLES=3330&FORMAT=application/vnd.google-earth.kml+xml&TRANSPARENT=TRUE&maxFeatures=200&format_options=KMATTR:true;KMSCORE:25;MODE:refresh;SUPEROVERLAY:false&bbox=-126.0297497563784,49.84185786626158,-125.9818672022459,49.85455364287922&WIDTH=1647&HEIGHT=677": {
+    "testId": "wms-getmap-14",
+    "note": "(?? delivery.openmaps for getmap goes to openshift) kml xml file"
+  },
+  "/geo/wms?service=WMS&version=1.1.1&request=GetFeatureInfo&bbox=-14070359.105666%2C6208978.883698%2C-13662491.122794%2C6482011.948695&feature_count=1000&height=893&width=1334&format=image%2Fpng&info_format=application%2Fvnd.ogc.gml&layers=pub%3AWHSE_HUMAN_CULTURAL_ECONOMIC.HIST_HISTORIC_ENVIRONMNT_PA_SV&query_layers=pub%3AWHSE_HUMAN_CULTURAL_ECONOMIC.HIST_HISTORIC_ENVIRONMNT_PA_SV&buffer=10&srs=EPSG%3A3857&x=506&y=281": {
+    "testId": "wms-getfeatureinfo-1793",
+    "note": "srsName plus some unknown diffs"
+  },
+  "/geo/pub/WHSE_FOREST_TENURE.FTEN_SPEC_ACCESS_RD_POLY_SVW/wms?service=WMS&version=1.1.1&request=DescribeLayer&layers=pub%3AWHSE_FOREST_TENURE.FTEN_SPEC_ACCESS_RD_POLY_SVW": {
+    "testId": "wms-describelayer-233",
+    "note": "exact match; no records"
+  },
+  "/geo/pub/WHSE_TANTALIS.TA_CROWN_RSRV_NOTATIONS_SVW/wms?service=WMS&version=1.1.1&request=DescribeLayer&layers=pub%3AWHSE_TANTALIS.TA_CROWN_RSRV_NOTATIONS_SVW": {
+    "testId": "wms-describelayer-342",
+    "note": "exact match; no records"
+  },
+  "/geo/pub/wfs?service=wfs&version=1.1.0&request=GetFeature&typeNames=WHSE_FOREST_VEGETATION.BEC_BIOGEOCLIMATIC_ZONE_2M_SPG&propertyName=ZONE_NAME&FILTER=%3CFilter%20xmlns%3D%27http%3A%2F%2Fwww.opengis.net%2Fogc%27%20xmlns%3Agml%3D%27http%3A%2F%2Fwww.opengis.net%2Fgml%27%3E%3CIntersects%3E%3CPropertyName%3EGEOMETRY%3C%2FPropertyName%3E%3Cgml%3APoint%20srsName%3D%27EPSG%3A4326%27%3E%3Cgml%3Acoordinates%3E-123.326585%2C48.86732%3C%2Fgml%3Acoordinates%3E%3C%2Fgml%3APoint%3E%3C%2FIntersects%3E%3C%2FFilter%3E": {
+    "testId": "wfs-getfeature-5288",
+    "note": "_srsName diff"
+  },
+  "/geo/pub/ows?srsName=EPSG:4326&service=WFS&request=GetFeature&version=1.1.0&cql_filter=INTERSECTS(SHAPE,SRID%3D4326;POLYGON%20((-119.88021816983391%2049.87181704313287,-118.48350851825242%2049.87181704313287,-118.48350851825242%2050.76369301100499,-119.88021816983391%2050.76369301100499,-119.88021816983391%2049.87181704313287)))&typename=pub:WHSE_LAND_AND_NATURAL_RESOURCE.PROT_DANGER_RATING_SP&outputformat=application/json": {
+    "testId": "wfs-getfeature-798",
+    "note": "exact match"
+  },
+  "/geo/pub/WHSE_FOREST_TENURE.FTEN_ROAD_SECTION_LINES_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=pub:WHSE_FOREST_TENURE.FTEN_ROAD_SECTION_LINES_SVW&SRSNAME=EPSG:3005&FILTER=%3Cfes:Filter%20xmlns:fes%3D%22http://www.opengis.net/fes/2.0%22%20xmlns:gml%3D%22http://www.opengis.net/gml/3.2%22%3E%0A%20%3Cfes:And%3E%0A%20%20%3Cfes:BBOX%3E%0A%20%20%20%3Cfes:ValueReference%3EGEOMETRY%3C/fes:ValueReference%3E%0A%20%20%20%3Cgml:Envelope%20srsName%3D%22EPSG:3005%22%3E%0A%20%20%20%20%3Cgml:lowerCorner%3E993252%201365700%3C/gml:lowerCorner%3E%0A%20%20%20%20%3Cgml:upperCorner%3E1018630%201383410%3C/gml:upperCorner%3E%0A%20%20%20%3C/gml:Envelope%3E%0A%20%20%3C/fes:BBOX%3E%0A%20%20%3Cfes:PropertyIsNotEqualTo%20xmlns:fes%3D%22http://www.opengis.net/fes/2.0%22%3E%0A%20%20%20%3Cfes:ValueReference%3ELIFE_CYCLE_STATUS_CODE%3C/fes:ValueReference%3E%0A%20%20%20%3Cfes:Literal%20xmlns:fes%3D%22http://www.opengis.net/fes/2.0%22%3ERETIRED%3C/fes:Literal%3E%0A%20%20%3C/fes:PropertyIsNotEqualTo%3E%0A%20%3C/fes:And%3E%0A%3C/fes:Filter%3E%0A": {
+    "testId": "wfs-getfeature-1188",
+    "note": "schemaLocation diff http vs https"
+  },
+  "/geo/pub/wfs?service=WFS&version=2.0.0&request=GetFeature&typeName=WHSE_WATER_MANAGEMENT.WLS_WATER_NOTATION_STREAMS_SP&outputFormat=json&SRSNAME=epsg%3A3005&sortby=OBJECTID&startIndex=360000&count=1": {
+    "testId": "wfs-getfeature-2857",
+    "note": "schema http vs https and query param ordering"
+  },
+  "/geo/pub/wfs?service=WFS&version=2.0.0&request=GetFeature&typeName=WHSE_BASEMAPPING.DRA_DGTL_ROAD_ATLAS_MPAR_SP&outputFormat=json&SRSNAME=epsg%3A3005&sortby=OBJECTID&startIndex=820000&count=1": {
+    "testId": "wfs-getfeature-10582",
+    "note": "schema http vs https and query param ordering"
+  },
+  "/geo/pub/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.0.0&TYPENAME=pub:WHSE_FOREST_VEGETATION.RSLT_OPENING_SVW&SRSNAME=EPSG:3005&FILTER=%3Cogc:Filter%20xmlns:ogc%3D%22http://www.opengis.net/ogc%22%20xmlns:gml%3D%22http://www.opengis.net/gml%22%3E%0A%20%3Cogc:And%3E%0A%20%20%3Cogc:BBOX%3E%0A%20%20%20%3Cogc:PropertyName%3EGEOMETRY%3C/ogc:PropertyName%3E%0A%20%20%20%3Cgml:Box%20srsName%3D%22EPSG:3005%22%3E%0A%20%20%20%20%3Cgml:coordinates%20ts%3D%22%20%22%20cs%3D%22,%22%3E1441350,734649%201472340,751958%3C/gml:coordinates%3E%0A%20%20%20%3C/gml:Box%3E%0A%20%20%3C/ogc:BBOX%3E%0A%20%20%3Cogc:PropertyIsEqualTo%20xmlns:ogc%3D%22http://www.opengis.net/ogc%22%3E%0A%20%20%20%3Cogc:PropertyName%20xmlns:ogc%3D%22http://www.opengis.net/ogc%22%3EDISTRICT_CODE%3C/ogc:PropertyName%3E%0A%20%20%20%3Cogc:Literal%20xmlns:ogc%3D%22http://www.opengis.net/ogc%22%3EDKA%3C/ogc:Literal%3E%0A%20%20%3C/ogc:PropertyIsEqualTo%3E%0A%20%3C/ogc:And%3E%0A%3C/ogc:Filter%3E%0A&OUTPUTFORMAT=GML3": {
+    "testId": "wfs-getfeature-10804",
+    "note": "zero features; exact match"
+  },
+  "/geo/pub/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.0.0&TYPENAME=pub:WHSE_MINERAL_TENURE.MTA_ACQUIRED_TENURE_SVW&SRSNAME=EPSG:3005&FILTER=%3Cogc:Filter%20xmlns:ogc%3D%22http://www.opengis.net/ogc%22%20xmlns:gml%3D%22http://www.opengis.net/gml%22%3E%0A%20%3Cogc:And%3E%0A%20%20%3Cogc:BBOX%3E%0A%20%20%20%3Cogc:PropertyName%3EGEOMETRY%3C/ogc:PropertyName%3E%0A%20%20%20%3Cgml:Box%20srsName%3D%22EPSG:3005%22%3E%0A%20%20%20%20%3Cgml:coordinates%20ts%3D%22%20%22%20cs%3D%22,%22%3E721389,1221920%20797009,1264790%3C/gml:coordinates%3E%0A%20%20%20%3C/gml:Box%3E%0A%20%20%3C/ogc:BBOX%3E%0A%20%20%3Cogc:PropertyIsEqualTo%20xmlns:ogc%3D%22http://www.opengis.net/ogc%22%3E%0A%20%20%20%3Cogc:PropertyName%20xmlns:ogc%3D%22http://www.opengis.net/ogc%22%3ECLIENT_NUMBER_ID%3C/ogc:PropertyName%3E%0A%20%20%20%3Cogc:Literal%20xmlns:ogc%3D%22http://www.opengis.net/ogc%22%3E126630%3C/ogc:Literal%3E%0A%20%20%3C/ogc:PropertyIsEqualTo%3E%0A%20%3C/ogc:And%3E%0A%3C/ogc:Filter%3E%0A&OUTPUTFORMAT=GML3": {
+    "testId": "wfs-getfeature-31277",
+    "note": "lots of _gml:id fid differences"
+  },
+  "/geo/pub/WHSE_BASEMAPPING.DRA_DGTL_ROAD_ATLAS_MPAR_SP/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeNames=WHSE_BASEMAPPING.DRA_DGTL_ROAD_ATLAS_MPAR_SP&outputFormat=application%2Fjson": {
+    "testId": "wfs-describefeaturetype-2820",
+    "note": "exception ERROR TypeError: jso.features is not iterable"
+  },
+  "/geo/pub/WHSE_FOREST_VEGETATION.VEG_BURN_SEVERITY_SAME_YR_SP/ows?CRS=EPSG:3978&FORMAT=image/png&INFO_FORMAT=text/plain&I=202&STYLES=&J=409&WIDTH=288&HEIGHT=700&LAYERS=pub:WHSE_FOREST_VEGETATION.VEG_BURN_SEVERITY_SAME_YR_SP&REQUEST=GetFeatureInfo&BBOX=-1662814.9019981364,537059.0463286346,-1660528.8974261272,542615.307441157&VERSION=1.3.0&SERVICE=WMS&QUERY_LAYERS=pub:WHSE_FOREST_VEGETATION.VEG_BURN_SEVERITY_SAME_YR_SP": {
+    "testId": "wms-getfeatureinfo",
+    "type": "text content; dates have an added 'Z' at end"
+  },
+  "/geo/pub/WHSE_LAND_AND_NATURAL_RESOURCE.PROT_CURRENT_FIRE_POLYS_SP/ows?CRS=EPSG:3978&FORMAT=image/png&INFO_FORMAT=text/plain&I=202&STYLES=&J=409&WIDTH=288&HEIGHT=700&LAYERS=pub:WHSE_LAND_AND_NATURAL_RESOURCE.PROT_CURRENT_FIRE_POLYS_SP&REQUEST=GetFeatureInfo&BBOX=-140.99778,41.6751050889,-52.6480987209,83.23324&VERSION=1.3.0&SERVICE=WMS&QUERY_LAYERS=pub:WHSE_LAND_AND_NATURAL_RESOURCE.PROT_CURRENT_FIRE_POLYS_SP": {
+    "testId": "wms-getfeatureinfo",
+    "type": "text content; dates have an added 'Z' at end"
+  },
+  "/geo/ows?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&CRS=CRS:84&BBOX=-126.701599613612629013915,50.4485711059970114433781,-126.685182363901802204964,50.4689384179476832059663&WIDTH=1821&HEIGHT=2260&LAYERS=pub%3aWHSE_FOREST_VEGETATION.IAPP_CONTAINMENT_AREA_SP,pub%3aWHSE_FOREST_VEGETATION.IAPP_INVASIVE_PLANT_SITE_POLY,pub%3aWHSE_LAND_AND_NATURAL_RESOURCE.PROT_HISTORICAL_FIRE_POLYS_SP,pub%3aWHSE_LAND_AND_NATURAL_RESOURCE.PROT_CURRENT_FIRE_PNTS_SP,pub%3aWHSE_LAND_AND_NATURAL_RESOURCE.PROT_CURRENT_FIRE_POLYS_SP,pub%3aWHSE_LAND_AND_NATURAL_RESOURCE.PROT_HISTORICAL_INCIDENTS_SP&QUERY_LAYERS=pub%3aWHSE_FOREST_VEGETATION.IAPP_CONTAINMENT_AREA_SP,pub%3aWHSE_FOREST_VEGETATION.IAPP_INVASIVE_PLANT_SITE_POLY,pub%3aWHSE_LAND_AND_NATURAL_RESOURCE.PROT_HISTORICAL_FIRE_POLYS_SP,pub%3aWHSE_LAND_AND_NATURAL_RESOURCE.PROT_CURRENT_FIRE_PNTS_SP,pub%3aWHSE_LAND_AND_NATURAL_RESOURCE.PROT_CURRENT_FIRE_POLYS_SP,pub%3aWHSE_LAND_AND_NATURAL_RESOURCE.PROT_HISTORICAL_INCIDENTS_SP&STYLES=&EXCEPTIONS=XML&FORMAT=image/png&INFO_FORMAT=text/html&FEATURE_COUNT=50&I=901&J=1515": {
+    "testId": "wms-getfeatureinfo",
+    "note": "MAP-6887 - same content - some whitespace diffs"
+  },
+  "/geo/pub/WHSE_BASEMAPPING.BC_MAJOR_WATERSHEDS/ows?service=WMS&request=GetMap&format=application%2Fx-protobuf%3Btype%3Dmapbox-vector&layers=pub%3AWHSE_BASEMAPPING.BC_MAJOR_WATERSHEDS&styles=&transparent=true&name=BC%20Major%20Watersheds&height=256&width=256&overlay=true&srs=EPSG%3A3857&BBOX=-13608237.019666499,6289850.183530584,-13607014.027213935,6291073.175983146": {
+    "testId": "wms-getmap",
+    "note": ""
+  },
+  "/geo/pub/WHSE_WATER_MANAGEMENT.WLS_WATER_RIGHTS_APPLICTNS_SV/wms?service=WMS&version=1.1.1&request=DescribeLayer&layers=pub%3AWHSE_WATER_MANAGEMENT.WLS_WATER_RIGHTS_APPLICTNS_SV": {
+    "testId": "wms-describelayer",
+    "note": "added to confluence gaps"
+  },
+  "/geo/pub/wms?service=WMS&version=1.1.1&request=GetFeatureInfo&bbox=-13619514.403648%2C6777515.111347%2C-13616060.405432%2C6780878.340591&feature_count=1000&height=704&width=723&format=image%2Fpng&info_format=application%2Fvnd.ogc.gml&layers=WHSE_ADMIN_BOUNDARIES.CLAB_INDIAN_RESERVES&query_layers=WHSE_ADMIN_BOUNDARIES.CLAB_INDIAN_RESERVES&styles=374&buffer=10&srs=EPSG%3A3857&x=395&y=262": {
+    "testId": "wms-getfeatureinfo",
+    "note": "added to confluence gaps"
+  }
+}

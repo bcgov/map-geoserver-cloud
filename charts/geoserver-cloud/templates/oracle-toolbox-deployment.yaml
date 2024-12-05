@@ -64,6 +64,7 @@ spec:
                   key: password
             - name: ORACLE_LOGIN
               value: "$ORACLE_USERNAME/$ORACLE_PASSWORD@$ORACLE_URL"
+              # LOGIN=`eval echo $ORACLE_LOGIN` && sqlplus $LOGIN
           resources:
             limits:
               cpu: 90m

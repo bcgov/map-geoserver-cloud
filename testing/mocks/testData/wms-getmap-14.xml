@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:ns2="http://www.google.com/kml/ext/2.2" xmlns:ns3="http://www.w3.org/2005/Atom" xmlns:ns4="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0">
+    <Document>
+        <LookAt>
+            <longitude>-126.00581162347385</longitude>
+            <latitude>49.84820821983157</latitude>
+            <altitude>4593.8834269684985</altitude>
+            <heading>0.0</heading>
+            <tilt>0.0</tilt>
+            <range>3712.098765849517</range>
+            <altitudeMode>clampToGround</altitudeMode>
+        </LookAt>
+        <Folder>
+            <name>pub:WHSE_BASEMAPPING.TRIM_CONTOUR_LINES</name>
+            <LookAt>
+                <longitude>-56.88555106559889</longitude>
+                <latitude>18.259767944455703</latitude>
+                <altitude>1.505127729579167E7</altitude>
+                <heading>0.0</heading>
+                <tilt>0.0</tilt>
+                <range>1.2162221519634187E7</range>
+                <altitudeMode>clampToGround</altitudeMode>
+            </LookAt>
+            <GroundOverlay>
+                <name>pub:WHSE_BASEMAPPING.TRIM_CONTOUR_LINES</name>
+                <drawOrder>0</drawOrder>
+                <Icon>
+                    <href>https://delivery.openmaps.gov.bc.ca/geo/pub/wms?service=wms&amp;request=GetMap&amp;version=1.1.1&amp;format=image%2Fpng&amp;layers=pub%3AWHSE_BASEMAPPING.TRIM_CONTOUR_LINES&amp;styles=3330&amp;height=677&amp;width=1647&amp;transparent=true&amp;bbox=-126.0297497563784%2C49.84185786626158%2C-125.9818672022459%2C49.85455364287922&amp;srs=EPSG%3A4326&amp;format_options=KMATTR%3Atrue%3BKMSCORE%3A25%3BMODE%3Arefresh%3BSUPEROVERLAY%3Afalse&amp;maxfeatures=200</href>
+                    <refreshInterval>0.0</refreshInterval>
+                    <viewRefreshMode>never</viewRefreshMode>
+                    <viewRefreshTime>0.0</viewRefreshTime>
+                    <viewBoundScale>0.75</viewBoundScale>
+                </Icon>
+                <altitude>0.0</altitude>
+                <LatLonBox>
+                    <north>49.85455364287922</north>
+                    <south>49.84185786626158</south>
+                    <east>-125.9818672022459</east>
+                    <west>-126.0297497563784</west>
+                    <rotation>0.0</rotation>
+                </LatLonBox>
+            </GroundOverlay>
+        </Folder>
+    </Document>
+</kml>

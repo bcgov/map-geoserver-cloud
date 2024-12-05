@@ -215,7 +215,7 @@ app.get("/**", async (req, res) => {
   );
 });
 
-console.log("Listening...");
+console.log("Listening on port 3000...");
 app.listen(3000);
 
 process.on("SIGINT", function () {
