@@ -9,15 +9,30 @@ docker run -ti --rm --name getcaps \
 --read-only \
 -p 8222:8000 \
 -v `pwd`/_tmp:/work \
--e CACHE_PATH=/tmp \
+-e ENV=dev \
+-e CACHE_PATH=/work \
 -e "PROXY_FORWARDED=host=openmaps.gov.bc.ca;proto=https" \
--e GEOSERVER_WMS_URL=https://gscloud.dev.api.gov.bc.ca \
--e GEOSERVER_WFS_URL=https://gscloud.dev.api.gov.bc.ca \
+-e GEOSERVER_WMS_URL=https://gscloud.api.gov.bc.ca \
+-e GEOSERVER_WFS_URL=https://gscloud.api.gov.bc.ca \
 getcaps
 ```
 
+**GET:**
+
 ```sh
-curl -v "http:///localhost:8222/geo/wms?request=GetMap&service=WMS"
+curl -v "http:///localhost:8222/geo/wms?request=GetCapabilities&service=WMS&version=1.3.0"
+```
+
+**POST:**
+
+```sh
+curl -v "http:///localhost:8222/geo/wfs" -d '<GetCapabilities service="WFS" xmlns="http://www.opengis.net/wfs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"/>'
+```
+
+**Long filename**:
+
+```sh
+curl -v "http:///localhost:8222/geo/pub/WHSE_TERRESTRIAL_ECOLOGY.STE_TER_STABILITY_POLYS_SVW/ows?service=WMS&request=GetCapabilities&layers=pub:WHSE_TERRESTRIAL_ECOLOGY.STE_TER_STABILITY_POLYS_SVW&legend_format=image/png&feature_info_type=text/plain"
 ```
 
 ```sh
