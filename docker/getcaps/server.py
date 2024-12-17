@@ -46,11 +46,11 @@ def health():
 
 @app.post("{rest_of_path:path}")
 def download_post_file(request: Request, rest_of_path: str, bytes = Depends(get_body)):
-    url = rest_of_path
+    url = request.url.path + "?" + urlencode(sorted(parse_qsl(request.url.query)))
 
     cache : bool = False
     request_type : str = get_request_from_xml(bytes)
-    if request_type.casefold() == "GetCapabilities".casefold():
+    if request_type is not None and request_type.casefold() == "GetCapabilities".casefold():
         cache = True
 
     filename = re.sub(r'[^a-zA-Z0-9]', '-', "%s-%s" % (url.lower()[1:], str(bytes)))
