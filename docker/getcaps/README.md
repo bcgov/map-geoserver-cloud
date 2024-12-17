@@ -12,8 +12,8 @@ docker run -ti --rm --name getcaps \
 -e ENV=dev \
 -e CACHE_PATH=/work \
 -e "PROXY_FORWARDED=host=openmaps.gov.bc.ca;proto=https" \
--e GEOSERVER_WMS_URL=https://gscloud.api.gov.bc.ca \
--e GEOSERVER_WFS_URL=https://gscloud.api.gov.bc.ca \
+-e GEOSERVER_WMS_URL=https://gscloud.dev.api.gov.bc.ca \
+-e GEOSERVER_WFS_URL=https://gscloud.dev.api.gov.bc.ca \
 getcaps
 ```
 
@@ -33,6 +33,13 @@ curl -v "http:///localhost:8222/geo/wfs" -H "Content-Type: application/xml" -d '
 
 ```sh
 curl -v "http:///localhost:8222/geo/pub/WHSE_TERRESTRIAL_ECOLOGY.STE_TER_STABILITY_POLYS_SVW/ows?service=WMS&request=GetCapabilities&layers=pub:WHSE_TERRESTRIAL_ECOLOGY.STE_TER_STABILITY_POLYS_SVW&legend_format=image/png&feature_info_type=text/plain"
+```
+
+**POST with query params:**
+
+```sh
+curl -v -X POST "http:///localhost:8222/geo/pub/WHSE_WILDLIFE_MANAGEMENT.WAA_LTD_HNT_ZONE_CURR_YEAR_SVW/wfs?typeName=pub%3AWHSE_WILDLIFE_MANAGEMENT.WAA_LTD_HNT_ZONE_CURR_YEAR_SVW&outputFormat=application%2Fjson&CQL_Filter=LTD_ENTRY_HUNTING_ZONE_TYPE+%3D+%27MOUNTAIN+SHEEP%27+AND+INTERSECTS%28GEOMETRY%2C+POINT%28783756.021+1387674.783%29%29&version=2.0.0&service=WFS&request=GetFeature"
+
 ```
 
 ```sh
@@ -88,4 +95,7 @@ cat s3_stat.json | ./yq -o yaml '. as $item ireduce({person: {} }; .person = $it
 
 ```sh
 curl -v "https:///gscloud.dev.api.gov.bc.ca/geo/wfs" -H "Content-Type: application/xml" -d '<GetCapabilities service="WFS" xmlns="http://www.opengis.net/wfs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"/>'
+
+curl -v "https:///delivery.openmaps.gov.bc.ca/geo/wfs" -H "Content-Type: application/xml" -d '<GetCapabilities service="WFS" xmlns="http://www.opengis.net/wfs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"/>'
+
 ```
