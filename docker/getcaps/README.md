@@ -11,8 +11,8 @@ docker run -ti --rm --name getcaps \
 -v `pwd`/_tmp:/work \
 -e CACHE_PATH=/tmp \
 -e "PROXY_FORWARDED=host=openmaps.gov.bc.ca;proto=https" \
--e GEOSERVER_WMS_URL=https://gscloud-wms-headless \
--e GEOSERVER_WFS_URL=https://gscloud-wfs-headless \
+-e GEOSERVER_WMS_URL=https://gscloud.dev.api.gov.bc.ca \
+-e GEOSERVER_WFS_URL=https://gscloud.dev.api.gov.bc.ca \
 getcaps
 ```
 
