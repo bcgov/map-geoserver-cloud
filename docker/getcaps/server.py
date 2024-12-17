@@ -48,10 +48,10 @@ def health():
 def download_post_file(request: Request, rest_of_path: str, bytes = Depends(get_body)):
     url = rest_of_path
 
-    cache : bool = True
+    cache : bool = False
     request_type : str = get_request_from_xml(bytes)
-    if request_type.casefold() is not "GetCapabilities".casefold():
-        cache = False
+    if request_type.casefold() == "GetCapabilities".casefold():
+        cache = True
 
     filename = re.sub(r'[^a-zA-Z0-9]', '-', "%s-%s" % (url.lower()[1:], str(bytes)))
     if len(filename) > 200:

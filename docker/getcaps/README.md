@@ -26,7 +26,7 @@ curl -v "http:///localhost:8222/geo/wms?request=GetCapabilities&service=WMS&vers
 **POST:**
 
 ```sh
-curl -v "http:///localhost:8222/geo/wfs" -d '<GetCapabilities service="WFS" xmlns="http://www.opengis.net/wfs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"/>'
+curl -v "http:///localhost:8222/geo/wfs" -H "Content-Type: application/xml" -d '<GetCapabilities service="WFS" xmlns="http://www.opengis.net/wfs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"/>'
 ```
 
 **Long filename**:
@@ -82,4 +82,10 @@ cat s3_stat.json | ./yq -o yaml '. as $item ireduce({person: {} }; .person = $it
 
 ./yq -oy -p=json s3_stat.json | ./yq -o yaml '. as $item ireduce({"s3-data": {} }; .s3-data = $item )'
 
+```
+
+## Verification - DEV
+
+```sh
+curl -v "https:///gscloud.dev.api.gov.bc.ca/geo/wfs" -H "Content-Type: application/xml" -d '<GetCapabilities service="WFS" xmlns="http://www.opengis.net/wfs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"/>'
 ```
