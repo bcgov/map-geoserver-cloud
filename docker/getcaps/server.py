@@ -4,6 +4,7 @@ import re
 import sys
 import logging
 import requests
+from xml.dom.pulldom import parseString, START_ELEMENT
 from fastapi import FastAPI, Depends, Request, Response, HTTPException
 from fastapi.responses import FileResponse
 from urllib.parse import urlencode
@@ -17,6 +18,12 @@ app = FastAPI()
 # Directory where static files will be stored
 cache_path = os.environ['CACHE_PATH']
 
+def get_request_from_xml (xml_buffer: bytes):
+    event_stream = parseString(xml_buffer.decode())
+    for event, node in event_stream:
+        if event == START_ELEMENT:
+            return node.tagName
+    return None
 
 async def get_body(request: Request):
     return await request.body()
@@ -41,6 +48,11 @@ def health():
 def download_post_file(request: Request, rest_of_path: str, bytes = Depends(get_body)):
     url = rest_of_path
 
+    cache : bool = True
+    request_type : str = get_request_from_xml(bytes)
+    if request_type.casefold() is not "GetCapabilities".casefold():
+        cache = False
+
     filename = re.sub(r'[^a-zA-Z0-9]', '-', "%s-%s" % (url.lower()[1:], str(bytes)))
     if len(filename) > 200:
         hash_object = hashlib.md5(filename.encode())
@@ -55,17 +67,17 @@ def download_post_file(request: Request, rest_of_path: str, bytes = Depends(get_
     if os.path.isfile(filepath):
         return FileResponse(filepath)
     else:
-        logger.warn("MISS POST %s" % url)
+        logger.warning("POST (%s) %s" % (request_type, url))
         base_url = f'{get_base_url(request.url)}'
-        logger.warn("Forwarding to %s" % base_url)
+        logger.warning("Forwarding to %s" % base_url)
         url_str = f'{base_url}{url}'
 
         headers = {
             "Forwarded": os.environ["PROXY_FORWARDED"]
         }
         fwd_res = requests.post(url_str, headers=headers, data=bytes)
-        if fwd_res.status_code == 200:
-            logger.warn("SAVING %s" % filepath)
+        if cache and fwd_res.status_code == 200:
+            logger.warning("SAVING %s" % filepath)
             with open(filepath, "wb") as f:
                 f.write(fwd_res.content)
         return Response(status_code=fwd_res.status_code, content=fwd_res.content, media_type=fwd_res.headers['content-type'], headers=fwd_res.headers)
@@ -89,9 +101,9 @@ def download_file(request: Request, rest_of_path: str):
     if os.path.isfile(filepath):
         return FileResponse(filepath)
     else:
-        logger.warn("MISS URL  %s" % url)
+        logger.warning("MISS URL  %s" % url)
         base_url = f'{get_base_url(request.url)}'
-        logger.warn("Forwarding to %s" % base_url)
+        logger.warning("Forwarding to %s" % base_url)
         url_str = f'{base_url}{url}'
 
         headers = {
@@ -99,7 +111,7 @@ def download_file(request: Request, rest_of_path: str):
         }
         fwd_res = requests.get(url_str, headers=headers)
         if fwd_res.status_code == 200:
-            logger.warn("SAVING %s" % filepath)
+            logger.warning("SAVING %s" % filepath)
             with open(filepath, "wb") as f:
                 f.write(fwd_res.content)
         return Response(status_code=fwd_res.status_code, content=fwd_res.content, media_type=fwd_res.headers['content-type'], headers=fwd_res.headers)

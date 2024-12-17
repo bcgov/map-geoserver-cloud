@@ -123,7 +123,7 @@ def calc_filename (url_str):
     the_url = urlparse(url_str)
     url = the_url.path + "?" + urlencode(sorted(parse_qsl(the_url.query)))
     filename = re.sub(r'[^a-zA-Z0-9]', '-', url.lower()[1:])
-    return f'{cache_path}/{filename}.xml'
+    return f'{cache_path}/PRECACHE_{filename}.xml'
 
 def is_ready ():
     file = f"{cache_path}/ready"
