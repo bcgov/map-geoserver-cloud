@@ -114,9 +114,10 @@ def download_file(request: Request, rest_of_path: str):
         logger.warning("Forwarding to %s" % base_url)
         url_str = f'{base_url}{url}'
 
-        headers = {
-            "Forwarded": os.environ["PROXY_FORWARDED"]
-        }
+        headers = request.headers.mutablecopy()
+        headers.__delitem__("Host")
+        headers["Forwarded"] = os.environ["PROXY_FORWARDED"]
+
         fwd_res = requests.get(url_str, headers=headers)
         if fwd_res.status_code == 200:
             logger.warning("SAVING %s" % filepath)
