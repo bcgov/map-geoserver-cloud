@@ -4,8 +4,9 @@ import re
 import sys
 import logging
 import requests
+from typing import Annotated
 from xml.dom.pulldom import parseString, START_ELEMENT
-from fastapi import FastAPI, Depends, Request, Response, HTTPException
+from fastapi import FastAPI, Depends, Request, Response, HTTPException, Header
 from fastapi.responses import FileResponse
 from urllib.parse import urlencode
 from urllib.parse import parse_qsl, parse_qs
@@ -45,11 +46,17 @@ def health():
         raise HTTPException(503)
 
 @app.post("{rest_of_path:path}")
-def download_post_file(request: Request, rest_of_path: str, bytes = Depends(get_body)):
+def download_post_file(request: Request,
+                    content_type: Annotated[str | None, Header()] = None,
+                    rest_of_path: str = None,
+                    bytes = Depends(get_body)):
     url = request.url.path + "?" + urlencode(sorted(parse_qsl(request.url.query)))
 
+    request_type = None
+    if "xml" in content_type:
+        request_type : str = get_request_from_xml(bytes)
+
     cache : bool = False
-    request_type : str = get_request_from_xml(bytes)
     if request_type is not None and request_type.casefold() == "GetCapabilities".casefold():
         cache = True
 
@@ -67,7 +74,7 @@ def download_post_file(request: Request, rest_of_path: str, bytes = Depends(get_
     if os.path.isfile(filepath):
         return FileResponse(filepath)
     else:
-        logger.warning("POST (%s) %s" % (request_type, url))
+        logger.warning("POST %s (%s) %s" % (content_type, request_type, url))
         base_url = f'{get_base_url(request.url)}'
         logger.warning("Forwarding to %s" % base_url)
         url_str = f'{base_url}{url}'
