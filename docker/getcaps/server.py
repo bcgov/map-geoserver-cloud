@@ -79,9 +79,10 @@ def download_post_file(request: Request,
         logger.warning("Forwarding to %s" % base_url)
         url_str = f'{base_url}{url}'
 
-        headers = {
-            "Forwarded": os.environ["PROXY_FORWARDED"]
-        }
+        headers = request.headers.mutablecopy()
+        headers.__delitem__("Host")
+        headers["Forwarded"] = os.environ["PROXY_FORWARDED"]
+
         fwd_res = requests.post(url_str, headers=headers, data=bytes)
         if cache and fwd_res.status_code == 200:
             logger.warning("SAVING %s" % filepath)
