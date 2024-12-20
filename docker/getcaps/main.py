@@ -14,8 +14,10 @@ if __name__ == "__main__":
     from server import app
 
     from refresh_task import refresh_task
-    process = Process(target=refresh_task)
-    process.start()
+    process = None
+    if os.environ.get('ENV', 'prod') == "prod":
+        process = Process(target=refresh_task)
+        process.start()
 
     logger.info("Starting HTTP Server on port 8000")
     import uvicorn
@@ -26,4 +28,5 @@ if __name__ == "__main__":
 
     uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info", log_config=log_config)
 
-    process.join()
+    if process is not None:
+        process.join()
