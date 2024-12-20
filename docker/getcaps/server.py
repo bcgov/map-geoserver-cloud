@@ -1,7 +1,6 @@
 import hashlib
 import os
 import re
-import sys
 import logging
 import requests
 from typing import Annotated
@@ -79,12 +78,16 @@ async def download_post_file(request: Request,
     url = request.url.path + "?" + urlencode(sorted(parse_qsl(request.url.query)))
 
     request_type = None
-    if "xml" in content_type:
+    if content_type is not None and "xml" in content_type:
         request_type : str = get_request_from_xml(request_body)
 
     cache : bool = False
     if request_type is not None and request_type.casefold() == "GetCapabilities".casefold():
         cache = True
+
+    # If no caching then act as a simple reverse proxy
+    if cache is False:
+        return await _reverse_proxy(request, request_body)
 
     filename = re.sub(r'[^a-zA-Z0-9]', '-', "%s-%s" % (url.lower()[1:], str(request_body)))
     if len(filename) > 200:
@@ -109,15 +112,12 @@ async def download_post_file(request: Request,
         headers.__delitem__("Host")
         headers["Forwarded"] = os.environ["PROXY_FORWARDED"]
 
-        if cache:
-            fwd_res = requests.post(url_str, headers=headers, data=request_body)
-            if fwd_res.status_code == 200:
-                logger.warning("SAVING %s" % filepath)
-                with open(filepath, "wb") as f:
-                    f.write(fwd_res.content)
-            return Response(status_code=fwd_res.status_code, content=fwd_res.content, media_type=fwd_res.headers['content-type'], headers=fwd_res.headers)
-        else:
-            return await _reverse_proxy(request, request_body)
+        fwd_res = requests.post(url_str, headers=headers, data=request_body)
+        if fwd_res.status_code == 200:
+            logger.warning("SAVING %s" % filepath)
+            with open(filepath, "wb") as f:
+                f.write(fwd_res.content)
+        return Response(status_code=fwd_res.status_code, content=fwd_res.content, media_type=fwd_res.headers['content-type'], headers=fwd_res.headers)
 
 @app.get("{rest_of_path:path}")
 def download_file(request: Request, rest_of_path: str):
