@@ -8,13 +8,39 @@ from typing import Annotated
 from xml.dom.pulldom import parseString, START_ELEMENT
 from fastapi import FastAPI, Depends, Request, Response, HTTPException, Header
 from fastapi.responses import FileResponse
+from starlette.responses import StreamingResponse
+from starlette.background import BackgroundTask
 from urllib.parse import urlencode
 from urllib.parse import parse_qsl, parse_qs
 from refresh_task import is_ready
+import httpx
 
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
+
+client = httpx.AsyncClient(base_url=os.environ['GEOSERVER_WFS_URL'])
+
+async def _reverse_proxy(request: Request, request_body: bytes):
+    url = httpx.URL(path=request.url.path,
+                    query=request.url.query.encode("utf-8"))
+
+    headers = request.headers.mutablecopy()
+    headers.__delitem__("Host")
+    headers["Forwarded"] = os.environ["PROXY_FORWARDED"]
+
+    rp_req = client.build_request(request.method, url,
+                                  headers=headers,
+                                  content=request_body,
+                                  timeout=60.0)
+
+    rp_resp = await client.send(rp_req, stream=True)
+    return StreamingResponse(
+        rp_resp.aiter_raw(),
+        status_code=rp_resp.status_code,
+        headers=rp_resp.headers,
+        background=BackgroundTask(rp_resp.aclose),
+    )
 
 # Directory where static files will be stored
 cache_path = os.environ['CACHE_PATH']
@@ -46,21 +72,21 @@ def health():
         raise HTTPException(503)
 
 @app.post("{rest_of_path:path}")
-def download_post_file(request: Request,
+async def download_post_file(request: Request,
                     content_type: Annotated[str | None, Header()] = None,
                     rest_of_path: str = None,
-                    bytes = Depends(get_body)):
+                    request_body = Depends(get_body)):
     url = request.url.path + "?" + urlencode(sorted(parse_qsl(request.url.query)))
 
     request_type = None
     if "xml" in content_type:
-        request_type : str = get_request_from_xml(bytes)
+        request_type : str = get_request_from_xml(request_body)
 
     cache : bool = False
     if request_type is not None and request_type.casefold() == "GetCapabilities".casefold():
         cache = True
 
-    filename = re.sub(r'[^a-zA-Z0-9]', '-', "%s-%s" % (url.lower()[1:], str(bytes)))
+    filename = re.sub(r'[^a-zA-Z0-9]', '-', "%s-%s" % (url.lower()[1:], str(request_body)))
     if len(filename) > 200:
         hash_object = hashlib.md5(filename.encode())
         filename = "%s-%s" % (filename[:200], hash_object.hexdigest())
@@ -83,13 +109,15 @@ def download_post_file(request: Request,
         headers.__delitem__("Host")
         headers["Forwarded"] = os.environ["PROXY_FORWARDED"]
 
-        fwd_res = requests.post(url_str, headers=headers, data=bytes)
-        if cache and fwd_res.status_code == 200:
-            logger.warning("SAVING %s" % filepath)
-            with open(filepath, "wb") as f:
-                f.write(fwd_res.content)
-        return Response(status_code=fwd_res.status_code, content=fwd_res.content, media_type=fwd_res.headers['content-type'], headers=fwd_res.headers)
-
+        if cache:
+            fwd_res = requests.post(url_str, headers=headers, data=request_body)
+            if fwd_res.status_code == 200:
+                logger.warning("SAVING %s" % filepath)
+                with open(filepath, "wb") as f:
+                    f.write(fwd_res.content)
+            return Response(status_code=fwd_res.status_code, content=fwd_res.content, media_type=fwd_res.headers['content-type'], headers=fwd_res.headers)
+        else:
+            return await _reverse_proxy(request, request_body)
 
 @app.get("{rest_of_path:path}")
 def download_file(request: Request, rest_of_path: str):

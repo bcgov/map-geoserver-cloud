@@ -48,6 +48,14 @@ curl -v -X POST "http:///localhost:8222/geo/pub/WHSE_WILDLIFE_MANAGEMENT.WAA_LTD
 curl -v -d "SERVICE=WFS&VERSION=2.0.0&REQUEST=DescribeFeatureType&typeNames=WHSE_LAND_AND_NATURAL_RESOURCE.PROT_HISTORICAL_FIRE_POLYS_SP" http://localhost:8222/geo/pub/wfs
 ```
 
+**Streaming:**
+
+```sh
+curl -v --no-buffer -d "SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&outputFormat=application%2Fjson&typeNames=WHSE_FOREST_VEGETATION.BEC_NATURAL_DISTURBANCE_SV&SRSNAME=EPSG%3A3005&sortby=OBJECTID&startIndex=0&count=1000" http://localhost:8222/geo/pub/wfs
+```
+
+## Appendix
+
 ```sh
 python -m venv tutorial-env
 
