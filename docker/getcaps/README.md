@@ -3,7 +3,7 @@
 ## Development
 
 ```sh
-docker build --tag getcaps .
+docker build --tag getcaps -f ../Dockerfile.getcaps .
 
 docker run -ti --rm --name getcaps \
 --read-only \
