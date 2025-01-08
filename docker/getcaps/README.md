@@ -48,6 +48,13 @@ curl -v -X POST "http:///localhost:8222/geo/pub/WHSE_WILDLIFE_MANAGEMENT.WAA_LTD
 curl -v -d "SERVICE=WFS&VERSION=2.0.0&REQUEST=DescribeFeatureType&typeNames=WHSE_LAND_AND_NATURAL_RESOURCE.PROT_HISTORICAL_FIRE_POLYS_SP" http://localhost:8222/geo/pub/wfs
 ```
 
+**POST with /ows:**
+
+```sh
+curl -v -X POST "http:///localhost:8222/geo/ows?service=wms"
+```
+
+
 **Streaming:**
 
 ```sh

@@ -20,10 +20,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 
 client_wfs = httpx.AsyncClient(base_url=os.environ['GEOSERVER_WFS_URL'])
-atexit.register(client_wfs.aclose)
-
 client_wms = httpx.AsyncClient(base_url=os.environ['GEOSERVER_WMS_URL'])
-atexit.register(client_wms.aclose)
 
 async def _reverse_proxy(request: Request, request_body: bytes):
     url = httpx.URL(path=request.url.path,
@@ -37,6 +34,7 @@ async def _reverse_proxy(request: Request, request_body: bytes):
     if is_wms(url):
         client = client_wms
 
+    logger.warning("%s -> %s" % (url, str(is_wms(url))))
     rp_req = client.build_request(request.method, url,
                                   headers=headers,
                                   content=request_body,
@@ -63,11 +61,11 @@ def get_request_from_xml (xml_buffer: bytes):
 async def get_body(request: Request):
     return await request.body()
 
-def is_wms(url):
+def is_wms(url: str):
     query = parse_qs(url.query)
     return '/wms' in url.path or \
-        ('SERVICE' in query and query['SERVICE'][0].upper() == 'WMS') or \
-        ('service' in query and query['service'][0].upper() == 'WMS')
+        (b'SERVICE' in query and query[b'SERVICE'][0].upper() == b'WMS') or \
+        (b'service' in query and query[b'service'][0].upper() == b'WMS')
 
 def get_base_url (url):
     if is_wms(url):
