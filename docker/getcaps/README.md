@@ -3,22 +3,65 @@
 ## Development
 
 ```sh
-docker build --tag getcaps .
+docker build --tag getcaps -f ../Dockerfile.getcaps .
 
 docker run -ti --rm --name getcaps \
 --read-only \
 -p 8222:8000 \
 -v `pwd`/_tmp:/work \
--e CACHE_PATH=/tmp \
+-e ENV=dev \
+-e CACHE_PATH=/work \
 -e "PROXY_FORWARDED=host=openmaps.gov.bc.ca;proto=https" \
--e GEOSERVER_WMS_URL=https://gscloud-wms-headless \
--e GEOSERVER_WFS_URL=https://gscloud-wfs-headless \
+-e GEOSERVER_WMS_URL=https://gscloud.dev.api.gov.bc.ca \
+-e GEOSERVER_WFS_URL=https://gscloud.dev.api.gov.bc.ca \
 getcaps
 ```
 
+**GET:**
+
 ```sh
-curl -v "http:///localhost:8222/geo/wms?request=GetMap&service=WMS"
+curl -v "http:///localhost:8222/geo/wms?request=GetCapabilities&service=WMS&version=1.3.0"
 ```
+
+**POST:**
+
+```sh
+curl -v "http:///localhost:8222/geo/wfs" -H "Content-Type: application/xml" -d '<GetCapabilities service="WFS" xmlns="http://www.opengis.net/wfs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"/>'
+```
+
+**Long filename**:
+
+```sh
+curl -v "http:///localhost:8222/geo/pub/WHSE_TERRESTRIAL_ECOLOGY.STE_TER_STABILITY_POLYS_SVW/ows?service=WMS&request=GetCapabilities&layers=pub:WHSE_TERRESTRIAL_ECOLOGY.STE_TER_STABILITY_POLYS_SVW&legend_format=image/png&feature_info_type=text/plain"
+```
+
+**POST with query params:**
+
+```sh
+curl -v -X POST "http:///localhost:8222/geo/pub/WHSE_WILDLIFE_MANAGEMENT.WAA_LTD_HNT_ZONE_CURR_YEAR_SVW/wfs?typeName=pub%3AWHSE_WILDLIFE_MANAGEMENT.WAA_LTD_HNT_ZONE_CURR_YEAR_SVW&outputFormat=application%2Fjson&CQL_Filter=LTD_ENTRY_HUNTING_ZONE_TYPE+%3D+%27MOUNTAIN+SHEEP%27+AND+INTERSECTS%28GEOMETRY%2C+POINT%28783756.021+1387674.783%29%29&version=2.0.0&service=WFS&request=GetFeature"
+
+```
+
+**POST with url encoding:**
+
+```sh
+curl -v -d "SERVICE=WFS&VERSION=2.0.0&REQUEST=DescribeFeatureType&typeNames=WHSE_LAND_AND_NATURAL_RESOURCE.PROT_HISTORICAL_FIRE_POLYS_SP" http://localhost:8222/geo/pub/wfs
+```
+
+**POST with /ows:**
+
+```sh
+curl -v -X POST "http:///localhost:8222/geo/ows?service=wms"
+```
+
+
+**Streaming:**
+
+```sh
+curl -v --no-buffer -d "SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&outputFormat=application%2Fjson&typeNames=WHSE_FOREST_VEGETATION.BEC_NATURAL_DISTURBANCE_SV&SRSNAME=EPSG%3A3005&sortby=OBJECTID&startIndex=0&count=1000" http://localhost:8222/geo/pub/wfs
+```
+
+## Appendix
 
 ```sh
 python -m venv tutorial-env
@@ -66,5 +109,14 @@ cat s3_stat.json | ./yq -o yaml '. as $item ireduce({person: {} }; .person = $it
 ./yq -o yaml '. as $item ireduce({"person": {} }; .person = $item )' s3_stat.yaml
 
 ./yq -oy -p=json s3_stat.json | ./yq -o yaml '. as $item ireduce({"s3-data": {} }; .s3-data = $item )'
+
+```
+
+## Verification - DEV
+
+```sh
+curl -v "https:///gscloud.dev.api.gov.bc.ca/geo/wfs" -H "Content-Type: application/xml" -d '<GetCapabilities service="WFS" xmlns="http://www.opengis.net/wfs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"/>'
+
+curl -v "https:///delivery.openmaps.gov.bc.ca/geo/wfs" -H "Content-Type: application/xml" -d '<GetCapabilities service="WFS" xmlns="http://www.opengis.net/wfs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"/>'
 
 ```

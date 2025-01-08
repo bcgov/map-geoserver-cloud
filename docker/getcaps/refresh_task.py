@@ -14,6 +14,12 @@ logger = logging.getLogger(__name__)
 cache_path = os.environ['CACHE_PATH']
 context_path = "/geo"
 
+discovery_port = 8081
+
+def remove_port (url):
+    u = urlparse(url)
+    return u._replace(netloc = u.netloc.split(":")[0]).geturl()
+
 def refresh_task():
     base_urls = [
         { 
@@ -55,7 +61,7 @@ def refresh_task():
         done = 0
         for idx, base_url in enumerate(base_urls):
             try:
-                r = requests.get(f'{base_url['url']}:8081/actuator/env')
+                r = requests.get(f'{remove_port(base_url['url'])}:{discovery_port}/actuator/env')
                 if r.status_code == 200:
                     d = r.json()
                     ip = r.raw._original_response._remote[0]
@@ -117,7 +123,7 @@ def calc_filename (url_str):
     the_url = urlparse(url_str)
     url = the_url.path + "?" + urlencode(sorted(parse_qsl(the_url.query)))
     filename = re.sub(r'[^a-zA-Z0-9]', '-', url.lower()[1:])
-    return f'{cache_path}/{filename}.xml'
+    return f'{cache_path}/PRECACHE_{filename}.xml'
 
 def is_ready ():
     file = f"{cache_path}/ready"
