@@ -21,7 +21,7 @@ app = FastAPI()
 client_wfs = httpx.AsyncClient(base_url=os.environ['GEOSERVER_WFS_URL'])
 client_wms = httpx.AsyncClient(base_url=os.environ['GEOSERVER_WMS_URL'])
 
-async def _reverse_proxy(request: Request, request_body: bytes):
+async def _reverse_proxy(request: Request, request_body: bytes, is_wms_flag: bool):
     url = httpx.URL(path=request.url.path,
                     query=request.url.query.encode("utf-8"))
 
@@ -30,10 +30,10 @@ async def _reverse_proxy(request: Request, request_body: bytes):
     headers["Forwarded"] = os.environ["PROXY_FORWARDED"]
 
     client = client_wfs
-    if is_wms(url):
+    if is_wms_flag:
         client = client_wms
 
-    logger.warning("%s -> %s" % (url, str(is_wms(url))))
+    logger.warning("%s -> %s" % (url, str(is_wms_flag)))
     rp_req = client.build_request(request.method, url,
                                   headers=headers,
                                   content=request_body,
@@ -87,8 +87,14 @@ async def download_post_file(request: Request,
     url = request.url.path + "?" + urlencode(sorted(parse_qsl(request.url.query)))
 
     request_type = None
+    is_wms_flag = is_wms(request.url)
+
     if content_type is not None and "xml" in content_type:
         request_type : str = get_request_from_xml(request_body)
+    elif content_type is not None and content_type.casefold() == "application/x-www-form-urlencoded".casefold():
+        post_url = httpx.URL(path=request.url.path,
+                        query=request_body)
+        is_wms_flag = is_wms(post_url)
 
     cache : bool = False
     if request_type is not None and request_type.casefold() == "GetCapabilities".casefold():
@@ -96,7 +102,7 @@ async def download_post_file(request: Request,
 
     # If no caching then act as a simple reverse proxy
     if cache is False:
-        return await _reverse_proxy(request, request_body)
+        return await _reverse_proxy(request, request_body, is_wms_flag)
 
     filename = re.sub(r'[^a-zA-Z0-9]', '-', "%s-%s" % (url.lower()[1:], str(request_body)))
     if len(filename) > 200:
