@@ -13,7 +13,6 @@ from urllib.parse import urlencode
 from urllib.parse import parse_qsl, parse_qs
 from refresh_task import is_ready
 import httpx
-import atexit
 
 logger = logging.getLogger(__name__)
 
