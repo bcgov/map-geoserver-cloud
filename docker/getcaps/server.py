@@ -21,7 +21,7 @@ app = FastAPI()
 client_wfs = httpx.AsyncClient(base_url=os.environ['GEOSERVER_WFS_URL'])
 client_wms = httpx.AsyncClient(base_url=os.environ['GEOSERVER_WMS_URL'])
 
-async def _reverse_proxy(request: Request, request_body: bytes, is_wms_flag: bool):
+async def _reverse_proxy(request: Request, request_body: bytes, checked_service: str):
     url = httpx.URL(path=request.url.path,
                     query=request.url.query.encode("utf-8"))
 
@@ -30,10 +30,10 @@ async def _reverse_proxy(request: Request, request_body: bytes, is_wms_flag: boo
     headers["Forwarded"] = os.environ["PROXY_FORWARDED"]
 
     client = client_wfs
-    if is_wms_flag:
+    if checked_service == "wms":
         client = client_wms
 
-    logger.warning("%s -> %s" % (url, str(is_wms_flag)))
+    logger.warning("%s -> %s" % (url, checked_service))
     rp_req = client.build_request(request.method, url,
                                   headers=headers,
                                   content=request_body,
@@ -60,14 +60,31 @@ def get_request_from_xml (xml_buffer: bytes):
 async def get_body(request: Request):
     return await request.body()
 
-def is_wms(url: str):
+def check_service(url: str):
     query = parse_qs(url.query)
-    return '/wms' in url.path or \
-        (b'SERVICE' in query and query[b'SERVICE'][0].upper() == b'WMS') or \
-        (b'service' in query and query[b'service'][0].upper() == b'WMS')
+    if '/wms' in url.path:
+        return "wms"
+    elif '/wfs' in url.path:
+        return "wfs"
+    elif 'SERVICE' in query or 'service' in query:
+        is_wms = ('SERVICE' in query and query['SERVICE'][0].upper() == 'WMS') or \
+                 ('service' in query and query['service'][0].upper() == 'WMS')
+        if is_wms:
+            return "wms"
+        else:
+            return "wfs"    
+    elif b'SERVICE' in query or b'service' in query:
+        is_wms = (b'SERVICE' in query and query[b'SERVICE'][0].upper() == b'WMS') or \
+                 (b'service' in query and query[b'service'][0].upper() == b'WMS')
+        if is_wms:
+            return "wms"
+        else:
+            return "wfs"    
+    else:
+        return None
 
 def get_base_url (url):
-    if is_wms(url):
+    if check_service(url) == "wms":
         return os.environ['GEOSERVER_WMS_URL']
     else:
         return os.environ['GEOSERVER_WFS_URL']
@@ -87,14 +104,8 @@ async def download_post_file(request: Request,
     url = request.url.path + "?" + urlencode(sorted(parse_qsl(request.url.query)))
 
     request_type = None
-    is_wms_flag = is_wms(request.url)
-
     if content_type is not None and "xml" in content_type:
         request_type : str = get_request_from_xml(request_body)
-    elif content_type is not None and content_type.casefold() == "application/x-www-form-urlencoded".casefold():
-        post_url = httpx.URL(path=request.url.path,
-                        query=request_body)
-        is_wms_flag = is_wms(post_url)
 
     cache : bool = False
     if request_type is not None and request_type.casefold() == "GetCapabilities".casefold():
@@ -102,7 +113,12 @@ async def download_post_file(request: Request,
 
     # If no caching then act as a simple reverse proxy
     if cache is False:
-        return await _reverse_proxy(request, request_body, is_wms_flag)
+        checked_service = check_service(request.url)
+        if checked_service is None and content_type is not None and content_type.casefold() == "application/x-www-form-urlencoded".casefold():
+            post_url = httpx.URL(path=request.url.path,
+                            query=request_body)
+            checked_service = check_service(post_url)
+        return await _reverse_proxy(request, request_body, checked_service)
 
     filename = re.sub(r'[^a-zA-Z0-9]', '-', "%s-%s" % (url.lower()[1:], str(request_body)))
     if len(filename) > 200:
