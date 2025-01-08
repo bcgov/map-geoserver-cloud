@@ -20,10 +20,10 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 
 client_wfs = httpx.AsyncClient(base_url=os.environ['GEOSERVER_WFS_URL'])
-atexit.register(client_wfs.close)
+atexit.register(client_wfs.aclose)
 
 client_wms = httpx.AsyncClient(base_url=os.environ['GEOSERVER_WMS_URL'])
-atexit.register(client_wms.close)
+atexit.register(client_wms.aclose)
 
 async def _reverse_proxy(request: Request, request_body: bytes):
     url = httpx.URL(path=request.url.path,
