@@ -109,7 +109,9 @@ async def download_post_file(request: Request,
     filename = f'POST_{filename}.xml'
 
     # Create a filename from the encoded URL
-    filepath = os.path.join(cache_path, filename)
+    filepath = os.path.normpath(os.path.join(cache_path, filename))
+    if not filepath.startswith(os.path.normpath(cache_path)):
+        raise HTTPException(status_code=400, detail="Invalid file path")
 
     # Check if the file already exists
     if os.path.isfile(filepath):
@@ -143,7 +145,9 @@ def download_file(request: Request, rest_of_path: str):
     filename = f'GET_{filename}.xml'
 
     # Create a filename from the encoded URL
-    filepath = os.path.join(cache_path, filename)
+    filepath = os.path.normpath(os.path.join(cache_path, filename))
+    if not filepath.startswith(os.path.normpath(cache_path)):
+        raise HTTPException(status_code=400, detail="Invalid file path")
 
     # Check if the file already exists
     if os.path.isfile(filepath):
