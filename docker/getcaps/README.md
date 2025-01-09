@@ -45,7 +45,7 @@ curl -v -X POST "http:///localhost:8222/geo/pub/WHSE_WILDLIFE_MANAGEMENT.WAA_LTD
 **POST with url encoding:**
 
 ```sh
-curl -v -d "SERVICE=WFS&VERSION=2.0.0&REQUEST=DescribeFeatureType&typeNames=WHSE_LAND_AND_NATURAL_RESOURCE.PROT_HISTORICAL_FIRE_POLYS_SP" http://localhost:8222/geo/pub/wfs
+curl -v -d "SERVICE=WMS&VERSION=2.0.0&REQUEST=DescribeFeatureType&typeNames=WHSE_LAND_AND_NATURAL_RESOURCE.PROT_HISTORICAL_FIRE_POLYS_SP" http://localhost:8222/geo/pub/ows
 ```
 
 **POST with /ows:**
@@ -54,6 +54,20 @@ curl -v -d "SERVICE=WFS&VERSION=2.0.0&REQUEST=DescribeFeatureType&typeNames=WHSE
 curl -v -X POST "http:///localhost:8222/geo/ows?service=wms"
 ```
 
+**POST with /ows and large data query parameter:**
+
+Checking related to `URL component 'query' too long` error
+
+```sh
+DATA=$(LC_ALL=C tr -dc A-Za-z0-9 </dev/urandom | head -c 100000; echo)
+curl -v -X POST --data "data=$DATA&service=wms" "http:///localhost:8222/geo/ows"
+```
+
+**POST with large data query parameter:**
+
+```sh
+
+```
 
 **Streaming:**
 
