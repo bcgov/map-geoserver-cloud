@@ -33,7 +33,7 @@ async def _reverse_proxy(request: Request, request_body: bytes, checked_service:
     if checked_service == "wms":
         client = client_wms
 
-    logger.warning("%s -> %s" % (url, checked_service))
+    logger.info("%s -> %s" % (url, checked_service))
     rp_req = client.build_request(request.method, url,
                                   headers=headers,
                                   content=request_body,
@@ -60,11 +60,11 @@ def get_request_from_xml (xml_buffer: bytes):
 async def get_body(request: Request):
     return await request.body()
 
-def check_service(url: str):
-    query = parse_qs(url.query)
-    if '/wms' in url.path:
+def check_service(path: str, query: bytes):
+    query = parse_qs(query)
+    if '/wms' in path:
         return "wms"
-    elif '/wfs' in url.path:
+    elif '/wfs' in path:
         return "wfs"
     elif 'SERVICE' in query or 'service' in query:
         is_wms = ('SERVICE' in query and query['SERVICE'][0].upper() == 'WMS') or \
@@ -84,7 +84,7 @@ def check_service(url: str):
         return None
 
 def get_base_url (url):
-    if check_service(url) == "wms":
+    if check_service(url.path, url.query) == "wms":
         return os.environ['GEOSERVER_WMS_URL']
     else:
         return os.environ['GEOSERVER_WFS_URL']
@@ -113,11 +113,13 @@ async def download_post_file(request: Request,
 
     # If no caching then act as a simple reverse proxy
     if cache is False:
-        checked_service = check_service(request.url)
+        checked_service = check_service(request.url.path, request.url.query)
         if checked_service is None and content_type is not None and content_type.casefold() == "application/x-www-form-urlencoded".casefold():
-            post_url = httpx.URL(path=request.url.path,
-                            query=request_body)
-            checked_service = check_service(post_url)
+            try:
+                checked_service = check_service(request.url.path, request_body)
+            except Exception as ex:
+                logger.error("Error checking body: %s", ex)
+                raise HTTPException(status_code=400, detail="Invalid data")
         return await _reverse_proxy(request, request_body, checked_service)
 
     filename = re.sub(r'[^a-zA-Z0-9]', '-', "%s-%s" % (url.lower()[1:], str(request_body)))
@@ -136,9 +138,9 @@ async def download_post_file(request: Request,
     if os.path.isfile(filepath):
         return FileResponse(filepath)
     else:
-        logger.warning("POST %s (%s) %s" % (content_type, request_type, url))
+        logger.info("POST %s (%s) %s" % (content_type, request_type, url))
         base_url = f'{get_base_url(request.url)}'
-        logger.warning("Forwarding to %s" % base_url)
+        logger.info("Forwarding to %s" % base_url)
         url_str = f'{base_url}{url}'
 
         headers = request.headers.mutablecopy()
@@ -147,7 +149,7 @@ async def download_post_file(request: Request,
 
         fwd_res = requests.post(url_str, headers=headers, data=request_body)
         if fwd_res.status_code == 200:
-            logger.warning("SAVING %s" % filepath)
+            logger.info("SAVING %s" % filepath)
             with open(filepath, "wb") as f:
                 f.write(fwd_res.content)
         return Response(status_code=fwd_res.status_code, content=fwd_res.content, media_type=fwd_res.headers['content-type'], headers=fwd_res.headers)
@@ -172,9 +174,9 @@ def download_file(request: Request, rest_of_path: str):
     if os.path.isfile(filepath):
         return FileResponse(filepath)
     else:
-        logger.warning("MISS URL  %s" % url)
+        logger.info("MISS URL  %s" % url)
         base_url = f'{get_base_url(request.url)}'
-        logger.warning("Forwarding to %s" % base_url)
+        logger.info("Forwarding to %s" % base_url)
         url_str = f'{base_url}{url}'
 
         headers = request.headers.mutablecopy()
@@ -183,7 +185,7 @@ def download_file(request: Request, rest_of_path: str):
 
         fwd_res = requests.get(url_str, headers=headers)
         if fwd_res.status_code == 200:
-            logger.warning("SAVING %s" % filepath)
+            logger.info("SAVING %s" % filepath)
             with open(filepath, "wb") as f:
                 f.write(fwd_res.content)
         return Response(status_code=fwd_res.status_code, content=fwd_res.content, media_type=fwd_res.headers['content-type'], headers=fwd_res.headers)
