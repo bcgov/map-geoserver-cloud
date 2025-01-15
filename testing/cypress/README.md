@@ -1,6 +1,6 @@
 # Cypress Test Automation Framework
 
-## Executing suite of tests
+## Executing suite of tests in Docker
 
 Build the images:
 
@@ -24,11 +24,17 @@ Then choose one of `openmap` or `gscloud`:
 ```sh
 cd e2e
 npm i
-BASE_URL=http://localhost:3000 npm run cy:run:noexit
+npm run cy:run:noexit
 ```
 
 ## Image Comparison
 
 ```
-BASE_URL=http://localhost:3000 npm run cy:imgdiff
+npm run cy:imgdiff
+```
+
+## Run interactively in a browser
+
+```
+npm run cy:open
 ```
