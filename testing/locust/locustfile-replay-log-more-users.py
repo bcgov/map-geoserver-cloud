@@ -7,7 +7,7 @@ from urllib.parse import urlparse, parse_qs
 from datetime import datetime
 import time
 
-file_queue = open("data/July-23-2024.txt", "r")
+file_queue = open("data/July-22-2024.txt", "r")
 
 class GeoserverQueries(HttpUser):
     counter = 0
