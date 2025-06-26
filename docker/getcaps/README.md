@@ -100,9 +100,9 @@ minio/mc
 ```
 
 ```
-mc config host add s3 https://bc-data-obj.objectstore.gov.bc.ca data_map_geoserver_prod_usr V/kZN17SzBL85DMZl9t+Y5/aw4eeECbJ+96dE4a0
+mc config host add s3 <s3_url> <s3_username> <s3_pwd>
 
-mc stat s3/data-map-geoserver-prod-bkt/data.zip --json
+mc stat s3/<s3_bucket_name>/data.zip --json
 ```
 
 ## CURL
