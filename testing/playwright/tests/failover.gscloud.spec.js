@@ -27,7 +27,7 @@ test.describe("WMS Map Gold == GoldDR", () => {
             await page.goto(prodRequestUrl);            
             // Path is relative to the executing directory (probably testing/playwright).
             // Refactor: Could update this to use the config parameter for the snapshots directory in playwright.config.js
-            let screenshotPath = "./snapshots/" + testName + ".png";
+            let screenshotPath = "./tests/snapshots/" + testName + ".png";
             await page.screenshot({ path: screenshotPath });
 
             // Compare against the failover on GoldDR

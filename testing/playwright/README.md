@@ -21,8 +21,7 @@ The following is an overview of the installation, configuration and usage of Geo
    - [Test Targets](#test-targets)
    - [Screenshots and Image Comparison Tests](#screenshots-and-image-comparison-tests)
    - [Reporters](#reporters)
-4. [Running Tests](#running-tests)
-   - [Examples](#examples)
+4. [Running GS Cloud Tests](#running-gs-cloud-tests)
 
 ## Setting up the test environment
 
@@ -49,14 +48,19 @@ Playwright installs with a default project folder structure, config files, and e
 ## GS Cloud testing file structure
 
 `testing`: Playwright (E2E) & Locust (load testing) parent directory
+
 `testing/playwright`: E2E testing
+
 `testing/playwright/fixtures`: URL requests to Geoserver used in test cases. Add a request to include it in testing.
+
 `testing/playwright/tests`: Parent directory for Playwright specs.
 
 ### `tests` directory
 
 `envs/`: Contains .spec.js files for base Geoserver tests.
+
 `failover.gscloud.spec.js`: Tests to ensure Gold and GoldDR are in sync.
+
 `ratelimiting.gscloud.spec.js`: Tests to check configuration of rate limiting plugin for GS Cloud APS routes. Requires resetting environment rate limit to something that the test can hit.
 
 ## Configuration
@@ -96,7 +100,7 @@ The location of base images for comparison can be relative to the grouping/test 
 snapshotPathTemplate: '{testDir}/snapshots/{testFilePath}/{arg}{ext}',
 ```
 
-This configuration will look for/place base images for comparison at `../playwright/tests/snapshots/{test file path/name}/{test name}`
+This configuration will look for/place base images for comparison at `../playwright/tests/snapshots/{test file path/name}/{test name}`.
 
 ### Reporters
 
@@ -108,17 +112,22 @@ If tests succeed, the result is output to the console, with an associated comman
 
 All of this behaviour can be configured, [described here](https://playwright.dev/docs/test-reporters).
 
-## Running tests
+## Running GS Cloud tests
 
 GS Cloud testing is organized so that [standard Playwright commands](https://playwright.dev/docs/test-cli) can be used to run tests, or a subset of tests. There are many different options for running specific tests, groups of tests, all tests in a single file, or all tests in a directory.
 
-### GS Cloud examples
+### Run base GS Cloud development tests
 
-1. Run base GS Cloud development tests
 `./testing/playwright/tests % npx playwright test envs/dev.gscloud.spec.js`
-2. Run base GS Cloud production tests
+
+### Run base GS Cloud production tests
+
 `./testing/playwright/tests % npx playwright test envs/prod.gscloud.spec.js`
-3. Run ALL base GS Cloud tests
+
+### Run ALL base GS Cloud tests
+
 `./testing/playwright/tests % npx playwright test envs`
-4. Run Gold -> GoldDR failover tests
+
+### Run Gold -> GoldDR failover tests
+
 `./testing/playwright % failover.gscloud.spec.js`
