@@ -1,12 +1,12 @@
-FROM geoservercloud/geoserver-cloud-wms:1.9-RC as gscloud
+FROM geoservercloud/geoserver-cloud-wms:2.28.2.2 as gscloud
 
 RUN apt-get update && apt-get install unzip
 WORKDIR /tmp
 
-RUN cp /opt/app/bin/BOOT-INF/lib/gs-main-2.26.0-SNAPSHOT.jar gs-main.jar \
+RUN cp /opt/app/bin/BOOT-INF/lib/gs-main-2.28.2.2.jar gs-main.jar \
  && unzip gs-main.jar
 
-FROM docker.io/node:22.6-bookworm
+FROM docker.io/node:25.8-bookworm
 
 WORKDIR /app
 
