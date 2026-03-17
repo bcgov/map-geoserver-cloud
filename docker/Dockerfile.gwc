@@ -5,6 +5,7 @@ RUN yum install -y unzip
 RUN mkdir /usr/local/tomcat/webapps/gwc 
 WORKDIR /usr/local/tomcat/webapps
 
+# TODO update?
 RUN curl -o /geowebcache.war "https://master.dl.sourceforge.net/project/geowebcache/geowebcache/1.25.2/geowebcache-1.25.2-war.zip?viasf=1"
 RUN unzip -d war /geowebcache.war
 RUN unzip -d gwc war/geowebcache.war

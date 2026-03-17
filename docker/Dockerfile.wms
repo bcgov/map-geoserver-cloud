@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . .
 RUN mvn package
 
-FROM geoservercloud/geoserver-cloud-wms:1.9-SNAPSHOT
+FROM geoservercloud/geoserver-cloud-wms:2.28.2.2
 
 RUN apt update && apt install -y fonts-liberation
 

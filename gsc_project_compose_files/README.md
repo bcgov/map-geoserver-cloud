@@ -1,0 +1,1 @@
+This stores Docker compose files from the GeoServer Cloud project. They are copied from the "Getting Started" section of https://geoserver.org/geoserver-cloud/.
