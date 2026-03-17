@@ -8,14 +8,14 @@ RUN mvn package
 WORKDIR /gsbuild
 RUN git clone -b 2.25.3 --depth 1 https://github.com/geoserver/geoserver.git
 
-WORKDIR /gsbuild/geoserver/src/community/xslt
+# rename the dir to keep it distinct from the "geoserver" dir we clone below
+RUN mv geoserver geoserver-2.25.3
+
+WORKDIR /gsbuild/geoserver-2.25.3/src/community/xslt
 RUN mvn package
 
-COPY --from=BUILD /gsbuild/geoserver/src/community/xslt/target/gs-xslt-2.25.3.jar /opt/app/bin/BOOT-INF/lib/gs-wfs-bcgov-xslt-2.25.3.jar
-
-# Checkout and build from a new version of GeoServer
+# Clone and build from a new version of GeoServer
 WORKDIR /gsbuild
-RUN rm -rf geoserver
 RUN git clone -b 2.28.2 --depth 1 https://github.com/geoserver/geoserver.git
 
 WORKDIR /gsbuild/geoserver/src/kml
@@ -28,6 +28,8 @@ WORKDIR /gsbuild/geoserver/src/restconfig
 RUN mvn package
 
 FROM geoservercloud/geoserver-cloud-wfs:2.28.2.2
+
+COPY --from=BUILD /gsbuild/geoserver-2.25.3/src/community/xslt/target/gs-xslt-2.25.3.jar /opt/app/bin/BOOT-INF/lib/gs-wfs-bcgov-xslt-2.25.3.jar
 
 COPY --from=BUILD /gsbuild/geoserver/src/rest/target/gs-rest-2.28.2.jar /opt/app/bin/BOOT-INF/lib/.
 COPY --from=BUILD /gsbuild/geoserver/src/restconfig/target/gs-restconfig-2.28.2.jar /opt/app/bin/BOOT-INF/lib/.
