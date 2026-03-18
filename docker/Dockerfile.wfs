@@ -9,7 +9,7 @@ WORKDIR /gsbuild
 RUN git clone -b 2.25.3 --depth 1 https://github.com/geoserver/geoserver.git
 
 WORKDIR /gsbuild/geoserver/src/community/xslt
-RUN mvn package
+RUN mvn package -DskipTests=true
 
 # rename the dir to keep it distinct from the "geoserver" dir we clone below
 RUN mv geoserver geoserver-2.25.3
