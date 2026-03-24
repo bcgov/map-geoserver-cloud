@@ -1,4 +1,4 @@
-FROM maven:latest AS BUILD
+FROM maven:3.9.9 AS BUILD
 
 WORKDIR /app
 COPY . .
