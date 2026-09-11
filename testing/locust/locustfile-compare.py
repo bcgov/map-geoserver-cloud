@@ -8,7 +8,6 @@ from datetime import datetime
 import time
 
 file_queue = open("data/prod-samples.txt", "r")
-
 class GeoserverQueries(HttpUser):
     counter = 0
 
